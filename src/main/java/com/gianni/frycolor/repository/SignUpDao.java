@@ -22,12 +22,7 @@ public interface SignUpDao extends JpaRepository<User, Integer> {
 	int setStatusRegisterUser(@Param("userId") int userId);
 	
 	/*@Modifying
-	@Transactional
-	@Query(value = "INSERT INTO UserInformation uif (uif.usInfName) VALUES (:userName)", nativeQuery = true)
-	int addNewUser(@Param("userName") String userName);*/
-	
-	@Modifying
 	@Query("UPDATE User u SET u.usInfId = :userInfId WHERE u.usId = :userId")
-	int setIdUserInf(@Param("userInfId") int userInfId, @Param("userId") int userId);
+	int setIdUserInf(@Param("userInfId") int userInfId, @Param("userId") int userId);*/
 
 }

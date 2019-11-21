@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ public class UserInformation {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "US_INF_ID")
 	private int usInfId;
 	
 	@NotEmpty(message = "the name is empty")
@@ -29,6 +32,7 @@ public class UserInformation {
 	private String usInfLastname;
 	
 	@Column(name = "US_INF_BIRTHDAY")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date usInfBirthday;
 	
 	@Column(name = "US_INF_PATH_IMAGE")

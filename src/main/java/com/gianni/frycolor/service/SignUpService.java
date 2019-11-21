@@ -22,9 +22,6 @@ public class SignUpService {
 	SignUpDao data;
 	
 	@Autowired
-	ProfileUserDao dataUserInfo;
-	
-	@Autowired
 	ResponseApi response;
 	
 	@Autowired
@@ -35,13 +32,12 @@ public class SignUpService {
 			user.setUsEmail(user.getUsEmail().toLowerCase());
 			
 			userInfo.setUsInfName(user.getUsUser());
-			UserInformation userInfId = dataUserInfo.save(userInfo);
+			user.setUsInfId(userInfo);
 			
 			response.setCodeStatus(200);
 			response.setMessage("User created");
 			response.setData(data.save(user));
 			
-			data.setIdUserInf(userInfId.getUsInfId(), user.getUsId());
 			
 			try {
 				SendMail.sendEmail(user.getUsEmail(), user.getUsId());
@@ -52,7 +48,8 @@ public class SignUpService {
 			return response;
 		}
 		response.setCodeStatus(500);
-		response.setMessage("There is something wrong in the server");
+		response.setMessage("It already exist the user");
+		//response.setMessage("There is something wrong in the server");
 		return response;
 	}
 	
