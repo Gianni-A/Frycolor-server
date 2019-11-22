@@ -36,9 +36,18 @@ public class ProfileUserService {
 	}
 	
 	public ResponseApi updateUserInformation(UserInformation userInformation) {
-		response.setCodeStatus(200);
-		response.setMessage("User updated");
-		response.setData(data.save(userInformation));
+		//Validate if the user exist in order to update their information
+		if(data.existUser(userInformation.getUsInfId()) <= 0) {
+			response.setCodeStatus(404);
+			response.setMessage("User not found");
+			response.setData(null);
+		}
+		else {
+			response.setCodeStatus(200);
+			response.setMessage("User updated");
+			response.setData(data.save(userInformation));	
+		}
+		
 		return response;
 	}
 

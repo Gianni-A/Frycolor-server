@@ -12,5 +12,8 @@ public interface ProfileUserDao extends JpaRepository<UserInformation, Integer> 
 	
 	@Query("SELECT uf FROM UserInformation uf WHERE uf.usInfId = :userId")
 	UserInformation getUserInfoById(@Param("userId") int userId);
+	
+	@Query("SELECT count(1) FROM UserInformation uf WHERE uf.usInfId = :userId")
+	int existUser(@Param("userId") int userId);
 
 }
