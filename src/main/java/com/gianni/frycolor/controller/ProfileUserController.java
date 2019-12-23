@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gianni.frycolor.controller.api.ProfileUserControllerApi;
+import com.gianni.frycolor.entities.UserFriends;
 import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.model.ResponseApi;
 import com.gianni.frycolor.service.ProfileUserService;
@@ -24,6 +25,17 @@ public class ProfileUserController implements ProfileUserControllerApi {
 	@Override
 	public ResponseEntity<ResponseApi> updateUserInformation(UserInformation userInformation) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.updateUserInformation(userInformation));
+	}
+
+	@Override
+	public ResponseEntity<ResponseApi> getListFriends(int userId) {
+		
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<ResponseApi> addFriend(UserFriends userFriends) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.addFriend(userFriends));
 	}
 
 }
