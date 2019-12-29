@@ -1,5 +1,8 @@
 package com.gianni.frycolor.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +61,24 @@ public class ProfileUserService {
 	}
 	
 	public ResponseApi getListFriends(int userId) {
-		return null;
+		List<Integer> idsUser = dataFriend.getIdListFriends(userId);
+		List<UserInformation> infoFriends = new ArrayList<UserInformation>();
+		for (int userFrdId : idsUser) {
+			infoFriends.add(dataFriend.getInfFriend(userFrdId));
+		}
+		
+		if(infoFriends.size() > 0) {
+			response.setCodeStatus(200);
+			response.setMessage("List of friends");
+			response.setData(infoFriends);
+		}
+		else {
+			response.setCodeStatus(500);
+			response.setMessage("There is no friends listed");
+			response.setData(null);
+		}
+		
+		return response;
 	}
 	
 	public ResponseApi addFriend(UserFriends userFriend) {

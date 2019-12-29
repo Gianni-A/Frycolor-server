@@ -29,8 +29,7 @@ public class ProfileUserController implements ProfileUserControllerApi {
 
 	@Override
 	public ResponseEntity<ResponseApi> getListFriends(int userId) {
-		
-		return null;
+		return ResponseEntity.status(HttpStatus.OK).body(service.getListFriends(userId));
 	}
 
 	@Override
