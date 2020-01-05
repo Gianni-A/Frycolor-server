@@ -49,31 +49,5 @@ public interface ProfileUserControllerApi {
 	ResponseEntity<ResponseApi> updateUserInformation(
 			@ApiParam(value = "Payload information of the user to be update", required = true)
 			@RequestBody UserInformation userInformation);
-	
-	
-	@PostMapping("/profile/friends")
-	@ApiOperation(value = "Add a friend of the user giving their userID")
-	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Successfully user IDS information added"),
-		    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-		    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-		    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-		})
-	ResponseEntity<ResponseApi> addFriend(
-			@ApiParam(value = "Payload information of the user with its friendID", required = true)
-			@RequestBody UserFriends userFriend);
-	
-	
-	@GetMapping("/profile/{userId}/friends")
-	@ApiOperation(value = "Get friend list by userID")
-	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Successfully found"),
-		    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-		    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-		    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-		})
-	ResponseEntity<ResponseApi> getListFriends(
-			@ApiParam(value = "UserID value to find their friends", required = true)
-			@PathVariable("userId") int userId);
 
 }
