@@ -19,11 +19,5 @@ public interface ProfileUserDao extends JpaRepository<UserInformation, Integer> 
 	@Query(value = "SELECT count(1) FROM users_app WHERE us_inf_id = :userInfId", nativeQuery = true)
 	int existUser(@Param("userInfId") int userInfId);
 	
-	
-	/*@Query("SELECT usFrd FROM UserFriends usFrd "
-			+ "INNER JOIN User us ON  us.usId = usFrd.frdUsId"
-			+ "INNER JOIN "
-			+ "WHERE usFrd.frdUsId = :userId")
-	List<UserInformation> getListFriends(@Param("userId") int userId);*/
 
 }
