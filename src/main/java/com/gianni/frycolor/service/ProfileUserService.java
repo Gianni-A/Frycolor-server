@@ -1,25 +1,32 @@
 package com.gianni.frycolor.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gianni.frycolor.entities.UserFriends;
 import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.model.ResponseApi;
 import com.gianni.frycolor.repository.FriendsDao;
 import com.gianni.frycolor.repository.ProfileUserDao;
+import com.gianni.frycolor.util.Utilities;
 
 @Service
 public class ProfileUserService {
 	
 	@Autowired
-	ProfileUserDao data;
+	ProfileUserDao repository;
 	
 	@Autowired
-	FriendsDao dataFriend;
+	FriendsDao repFriend;
 	
 	@Autowired
 	ResponseApi response;
@@ -27,9 +34,18 @@ public class ProfileUserService {
 	@Autowired
 	UserInformation uInf;
 	
+	@Autowired
+	ServletContext context;
+	
+	final public String PATH_MEDIA_IMAGE_PROFILE = "media\\profile_images\\";
+	
 	public ResponseApi getUserInformation(int userId) {	
-		uInf = data.getUserInfoById(userId);
+		uInf = repository.getUserInfoById(userId);
 		if(uInf != null) {
+			//Formating PathImage of the user profile
+			String pathImageProfile = Utilities.getPath(PATH_MEDIA_IMAGE_PROFILE);
+			uInf.setUsInfPath_image(pathImageProfile + uInf.getUsInfPath_image());
+			
 			response.setCodeStatus(200);
 			response.setMessage("User found");
 			response.setData(uInf);
@@ -49,7 +65,7 @@ public class ProfileUserService {
 		if(userActiveOrExist(userInformation.getUsInfId())) {
 			response.setCodeStatus(200);
 			response.setMessage("User updated");
-			response.setData(data.save(userInformation));	
+			response.setData(repository.save(userInformation));	
 		}
 		else {
 			response.setCodeStatus(404);
@@ -61,10 +77,10 @@ public class ProfileUserService {
 	}
 	
 	public ResponseApi getListFriends(int userId) {
-		List<Integer> idsUser = dataFriend.getIdListFriends(userId);
+		List<Integer> idsUser = repFriend.getIdListFriends(userId);
 		List<UserInformation> infoFriends = new ArrayList<UserInformation>();
 		for (int userFrdId : idsUser) {
-			infoFriends.add(dataFriend.getInfFriend(userFrdId));
+			infoFriends.add(repFriend.getInfFriend(userFrdId));
 		}
 		
 		if(infoFriends.size() > 0) {
@@ -82,7 +98,7 @@ public class ProfileUserService {
 	}
 	
 	public ResponseApi addFriend(UserFriends userFriend) {
-		int friendResponse = dataFriend.addNewFriend(userFriend.getFrdUsId(), userFriend.getFrdUsIdUf());
+		int friendResponse = repFriend.addNewFriend(userFriend.getFrdUsId(), userFriend.getFrdUsIdUf());
 		if(friendResponse != 0) {
 			response.setCodeStatus(200);
 			response.setMessage("Friend added");
@@ -97,9 +113,36 @@ public class ProfileUserService {
 		return response;
 	}
 	
+	public ResponseApi deleteFriend(UserFriends userFriend) {
+		repFriend.deleteFriend(userFriend.getFrdUsId(), userFriend.getFrdUsIdUf());
+		response.setCodeStatus(200);
+		response.setMessage("Friend deleted");
+		response.setData(null);
+		
+		return response;
+	}
+	
+	public ResponseApi addOrUpdateMediaProfile(MultipartFile pathImage, int userInfId) throws IOException {
+		String mediaDirectory = Utilities.getPath(PATH_MEDIA_IMAGE_PROFILE);
+		File convertFile = new File(mediaDirectory + pathImage.getOriginalFilename());
+		convertFile.createNewFile();
+		FileOutputStream fout = new FileOutputStream(convertFile);
+		fout.write(pathImage.getBytes());
+		fout.close();
+		
+		uInf = repository.getUserInfoById(userInfId);
+		uInf.setUsInfPath_image(pathImage.getOriginalFilename());
+		
+		response.setCodeStatus(200);
+		response.setMessage("Image Profile updated");
+		response.setData(repository.save(uInf));
+		
+		return response;
+	}
+	
 	//Check if the user is still active or exists, returns true if exist
 	private boolean userActiveOrExist(int userID) {
-		if(data.existUser(userID) <= 0) {
+		if(repository.existUser(userID) <= 0) {
 			return false;
 		} else {
 			return true;
