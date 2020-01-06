@@ -12,11 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 
 @Entity
+@Component
 @Table(name = "users_app")
 @ApiModel(description = "All details about the User. ")
 public class User {

@@ -23,7 +23,7 @@ public class SendMail {
 	@Autowired
     public JavaMailSender javaMailSender;
 	
-	public static void sendEmail(String recipient, int userId) throws AddressException, MessagingException, IOException {
+	public static void sendEmail(String recipient, String contentBody) throws AddressException, MessagingException, IOException {
 	   Properties props = new Properties();
 	   props.put("mail.smtp.auth", "true");
 	   props.put("mail.smtp.starttls.enable", "true");
@@ -42,7 +42,7 @@ public class SendMail {
 	   msg.setSubject("Tutorials point email");
 	   //msg.setContent("Tutorials point email", "text/html");
 	   //String html = "<html lang='en' dir='ltr'><head><meta charset='utf-8'><title></title><style media='screen'>p {font-size: 25px; border: 1px solid blue;}</style></head><body><p class='texto'>This is a demo</p></body></html>";
-	   msg.setContent("Thank you for registered at Frycolor, to finish you need to enter to this URL: http://localhost:8090/users/" + userId, "text/html");
+	   msg.setContent(contentBody, "text/html");
 	   msg.setSentDate(new Date());
 
 	   /*MimeBodyPart messageBodyPart = new MimeBodyPart();

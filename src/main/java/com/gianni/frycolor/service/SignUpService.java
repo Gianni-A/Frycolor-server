@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.model.ResponseApi;
-import com.gianni.frycolor.repository.ProfileUserDao;
 import com.gianni.frycolor.repository.SignUpDao;
 import com.gianni.frycolor.util.SendMail;
 
@@ -40,7 +39,8 @@ public class SignUpService {
 			
 			
 			try {
-				SendMail.sendEmail(user.getUsEmail(), user.getUsId());
+				String content = "Thank you for registered at Frycolor, to finish you need to enter to this URL: http://localhost:8090/users/" + user.getUsId();
+				SendMail.sendEmail(user.getUsEmail(), content);
 			} catch (MessagingException | IOException e) {
 				e.printStackTrace();
 			}
