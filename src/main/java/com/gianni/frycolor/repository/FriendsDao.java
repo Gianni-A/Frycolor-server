@@ -24,7 +24,7 @@ public interface FriendsDao extends JpaRepository<UserFriends, Integer> {
 	@Query(value = "DELETE FROM user_friends WHERE frd_us_id = :userId AND frd_us_id_uf =  :friendId", nativeQuery = true)
 	void deleteFriend(@Param("userId") int userId, @Param("friendId") int friendId);
 	
-	
+	//Obtener la lista de IDS de los amigos del usuario buscado
 	@Query(value = "SELECT frd_us_id_uf FROM user_friends WHERE frd_us_id = :userId", nativeQuery = true)
 	List<Integer> getIdListFriends(@Param("userId") int userId);
 	
