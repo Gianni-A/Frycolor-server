@@ -1,5 +1,7 @@
 package com.gianni.frycolor.controller.api;
 
+import java.io.IOException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,12 +54,12 @@ public interface NewsFeedControllerApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity<ResponseApi> getAddNews(
+	ResponseEntity<ResponseApi> saveNews(
 			@ApiParam(value = "File (Image) of the user profile", required = false)
 			@RequestParam("file") MultipartFile file,
 			@ApiParam(value = "comment field is not require, the user can only upload an image or a comment", required = false)
 			@PathVariable("userId") String comment,
 			@ApiParam(value = "userId is required to insert a new post", required = true)
-			@PathVariable("userId") int userId);
+			@PathVariable("userId") int userId) throws IOException;
 
 }

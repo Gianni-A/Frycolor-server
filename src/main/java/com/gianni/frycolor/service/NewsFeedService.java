@@ -1,5 +1,8 @@
 package com.gianni.frycolor.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +14,7 @@ import com.gianni.frycolor.entities.NewsFeed;
 import com.gianni.frycolor.model.ResponseApi;
 import com.gianni.frycolor.repository.FriendsDao;
 import com.gianni.frycolor.repository.NewsFeedDao;
+import com.gianni.frycolor.util.Utilities;
 
 @Service
 public class NewsFeedService {
@@ -24,40 +28,36 @@ public class NewsFeedService {
 	@Autowired
 	private ResponseApi response;
 	
+	@Autowired
+	private NewsFeed newsFeed;
+	
+	final public String PATH_MEDIA_IMAGE_PROFILE = "media\\post\\";
+	
 	
 	public ResponseApi getAllNews(int userId) {
-		List<Integer> getIdsFriends = friendsRepository.getIdListFriends(userId);
-		List<NewsFeed> listNews = new ArrayList<>();
-		NewsFeed news = new NewsFeed();
-		
-		news = newsRepository.getNewsUser(userId);
-		listNews.add(news);
-		
-		for(int id : getIdsFriends) {
-			news = newsRepository.getNewsUser(id);
-			if(news != null)
-				listNews.add(news);
-				
-		}
-		
-		response.setCodeStatus(200);
-		response.setMessage("Successfully get news");
-		response.setData(listNews);
-		return response;
+		return null;
 	}
 	
 	
 	public ResponseApi getNewsPerUser(int userId) {
-		NewsFeed news = newsRepository.getNewsUser(userId);
-		
-		response.setCodeStatus(200);
-		response.setMessage("Successfully get news");
-		response.setData(news);
-		return response;
+		return null;
 	}
 	
-	public ResponseApi saveNews(MultipartFile file, String comment, int userId) {
+	public ResponseApi saveNews(MultipartFile pathImage, String comment, int userId) throws IOException {
+		//Add an image if there is one
+		if(pathImage.getOriginalFilename() != "") {
+			String mediaDirectory = Utilities.getPath(PATH_MEDIA_IMAGE_PROFILE);
+			File convertFile = new File(mediaDirectory + pathImage.getOriginalFilename());
+			convertFile.createNewFile();
+			FileOutputStream fout = new FileOutputStream(convertFile);
+			fout.write(pathImage.getBytes());
+			fout.close();
+		}
 		
+		//Add a comment if there is one
+		if(!comment.equals("")) {
+			
+		}
 		return response;
 	}
 

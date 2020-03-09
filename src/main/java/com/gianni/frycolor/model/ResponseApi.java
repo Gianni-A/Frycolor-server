@@ -8,11 +8,7 @@ public class ResponseApi {
 	private int codeStatus;
 	private String message;
 	private Object objectData;
-	
-	/*public ResponseApi() {
-		super();
-	}*/
-	
+
 	public int getCodeStatus() {
 		return codeStatus;
 	}

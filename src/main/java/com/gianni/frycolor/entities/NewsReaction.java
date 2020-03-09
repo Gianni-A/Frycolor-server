@@ -24,11 +24,11 @@ public class NewsReaction {
 	@Column(name = "NWR_ID", columnDefinition = "int")
 	private int nwr_id;
 	
-	@Column(name = "NWR_US_ID")
-	private int nwr_us_id;
+	@Column(name = "US_ID")
+	private int us_id;
 	
-	@Column(name = "NW_NW_ID")
-	private int nwr_nw_id;
+	@Column(name = "NW_ID")
+	private int nw_id;
 
 	public int getNwr_id() {
 		return nwr_id;
@@ -38,20 +38,19 @@ public class NewsReaction {
 		this.nwr_id = nwr_id;
 	}
 
-	public int getNwr_us_id() {
-		return nwr_us_id;
+	public int getUs_id() {
+		return us_id;
 	}
 
-	public void setNwr_us_id(int nwr_us_id) {
-		this.nwr_us_id = nwr_us_id;
+	public void setUs_id(int us_id) {
+		this.us_id = us_id;
 	}
 
-	public int getNwr_nw_id() {
-		return nwr_nw_id;
+	public int getNw_id() {
+		return nw_id;
 	}
 
-	public void setNwr_nw_id(int nwr_nw_id) {
-		this.nwr_nw_id = nwr_nw_id;
+	public void setNw_id(int nw_id) {
+		this.nw_id = nw_id;
 	}
-
 }

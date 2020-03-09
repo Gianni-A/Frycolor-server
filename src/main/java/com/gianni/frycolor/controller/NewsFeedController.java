@@ -1,5 +1,7 @@
 package com.gianni.frycolor.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,7 @@ public class NewsFeedController implements NewsFeedControllerApi {
 	}
 
 	@Override
-	public ResponseEntity<ResponseApi> getAddNews(MultipartFile file, String comment, int userId) {
+	public ResponseEntity<ResponseApi> saveNews(MultipartFile file, String comment, int userId) throws IOException {
 		return ResponseEntity.status(HttpStatus.OK).body(service.saveNews(file, comment, userId));
 	}
 
