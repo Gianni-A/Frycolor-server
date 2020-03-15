@@ -1,15 +1,11 @@
 package com.gianni.frycolor.entities;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.stereotype.Component;
@@ -32,8 +28,7 @@ public class UserInformation {
 	private String usInfLastname;
 	
 	@Column(name = "US_INF_BIRTHDAY")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date usInfBirthday;
+	private String usInfBirthday;
 	
 	@Column(name = "US_INF_PATH_IMAGE")
 	private String usInfPath_image;
@@ -46,6 +41,12 @@ public class UserInformation {
 	
 	@Column(name = "US_INF_COUNTRY")
 	private String usInfCountry;
+	
+	@Column(name = "US_INF_TS_CREATED")
+	private String usInfTsCreated;
+	
+	@Column(name = "US_INF_TS_UPDATED")
+	private String usInfTsUpdated;
 
 	public int getUsInfId() {
 		return usInfId;
@@ -71,11 +72,11 @@ public class UserInformation {
 		this.usInfLastname = usInfLastname;
 	}
 
-	public Date getUsInfBirthday() {
+	public String getUsInfBirthday() {
 		return usInfBirthday;
 	}
 
-	public void setUsInfBirthday(Date usInfBirthday) {
+	public void setUsInfBirthday(String usInfBirthday) {
 		this.usInfBirthday = usInfBirthday;
 	}
 
@@ -111,4 +112,20 @@ public class UserInformation {
 		this.usInfCountry = usInfCountry;
 	}
 
+	public String getUsInfTsCreated() {
+		return usInfTsCreated;
+	}
+
+	public void setUsInfTsCreated(String usInfTsCreated) {
+		this.usInfTsCreated = usInfTsCreated;
+	}
+
+	public String getUsInfTsUpdated() {
+		return usInfTsUpdated;
+	}
+
+	public void setUsInfTsUpdated(String usInfTsUpdated) {
+		this.usInfTsUpdated = usInfTsUpdated;
+	}
+	
 }

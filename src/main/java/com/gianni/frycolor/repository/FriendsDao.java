@@ -14,10 +14,12 @@ import com.gianni.frycolor.entities.UserInformation;
 
 public interface FriendsDao extends JpaRepository<UserFriends, Integer> {
 	
-	@Query(value = "INSERT INTO user_friends (frd_us_id, frd_us_id_uf) VALUES (:frdUsId, :frdUsIdUf) RETURNING frd_id", 
-		   nativeQuery = true)
+	@Query(value = "INSERT INTO user_friends (frd_us_id, frd_us_id_uf, frd_ts_created, frd_ts_updated) "
+			+ "VALUES (:frdUsId, :frdUsIdUf, :frdUsTsCreated, :frdUsTsUpdated) RETURNING frd_id", nativeQuery = true)
 	int addNewFriend(@Param("frdUsId") int userInfId,
-							 @Param("frdUsIdUf") int userFrdId);
+					 @Param("frdUsIdUf") int userFrdId,
+					 @Param("frdUsTsCreated") String frdTsCreated,
+					 @Param("frdUsTsUpdated") String frdTsUpdated);
 	
 	@Modifying // Para no esperar un resultado y poder poner el metodo en 'void'
 	@Transactional //Para que no de un error al eliminar

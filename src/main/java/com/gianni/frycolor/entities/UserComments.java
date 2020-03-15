@@ -22,36 +22,58 @@ public class UserComments {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "US_COM_ID", columnDefinition = "int")
 	@ApiModelProperty(notes = "The ID generated from database for id comment")
-	private int us_com_id;
+	private int usComId;
 	
 	@Column(name = "US_COM_COMMENT")
-	private String us_com_comment;
+	private String usComComment;
 
 	@Column(name = "US_ID")
 	@ApiModelProperty(notes = "The ID of the user, it is a foreign key")
-	private int us_id;
+	private int usId;
+	
+	@Column(name = "US_COM_TS_CREATED")
+	private String usComTsCreated;
+	
+	@Column(name = "US_COM_TS_UPDATED")
+	private String usComTsUpdated;
 
-	public int getUs_com_id() {
-		return us_com_id;
+	public int getUsComId() {
+		return usComId;
 	}
 
-	public void setUs_com_id(int us_com_id) {
-		this.us_com_id = us_com_id;
+	public void setUsComId(int usComId) {
+		this.usComId = usComId;
 	}
 
-	public String getUs_com_comment() {
-		return us_com_comment;
+	public String getUsComComment() {
+		return usComComment;
 	}
 
-	public void setUs_com_comment(String us_com_comment) {
-		this.us_com_comment = us_com_comment;
+	public void setUsComComment(String usComComment) {
+		this.usComComment = usComComment;
 	}
 
-	public int getUs_id() {
-		return us_id;
+	public int getUsId() {
+		return usId;
 	}
 
-	public void setUs_id(int us_id) {
-		this.us_id = us_id;
+	public void setUsId(int usId) {
+		this.usId = usId;
+	}
+
+	public String getUsComTsCreated() {
+		return usComTsCreated;
+	}
+
+	public void setUsComTsCreated(String usComTsCreated) {
+		this.usComTsCreated = usComTsCreated;
+	}
+
+	public String getUsComTsUpdated() {
+		return usComTsUpdated;
+	}
+
+	public void setUsComTsUpdated(String usComTsUpdated) {
+		this.usComTsUpdated = usComTsUpdated;
 	}
 }

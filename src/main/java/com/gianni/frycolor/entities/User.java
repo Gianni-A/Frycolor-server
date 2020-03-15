@@ -1,6 +1,5 @@
 package com.gianni.frycolor.entities;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,6 +46,13 @@ public class User {
 	@JoinColumn(name = "US_INF_ID")
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserInformation usInfId;
+	
+	@Column(name = "US_TS_CREATED")
+	private String usTsCreated;
+	
+	@Column(name = "US_TS_UPDATED")
+	private String usTsUpdated;
+	
 
 	public int getUsId() {
 		return usId;
@@ -94,6 +100,22 @@ public class User {
 
 	public void setUsInfId(UserInformation usInfId) {
 		this.usInfId = usInfId;
+	}
+
+	public String getUsTsCreated() {
+		return usTsCreated;
+	}
+
+	public void setUsTsCreated(String usTsCreated) {
+		this.usTsCreated = usTsCreated;
+	}
+
+	public String getUsTsUpdated() {
+		return usTsUpdated;
+	}
+
+	public void setUsTsUpdated(String usTsUpdated) {
+		this.usTsUpdated = usTsUpdated;
 	}
 
 }

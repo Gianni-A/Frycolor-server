@@ -22,36 +22,60 @@ public class UserMedia {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "US_COM_ID", columnDefinition = "int")
 	@ApiModelProperty(notes = "The database generated media ID")
-	private int us_md_id;
+	private int usMdId;
 	
 	@Column(name = "US_MD_PATH")
-	private String us_md_path;
+	private String usMdPath;
 	
 	@Column(name = "US_ID")
 	@ApiModelProperty(notes = "The foreign key of the id user for the table users_app")
-	private int us_id;
+	private int usId;
+	
+	@Column(name = "US_MD_TS_CREATED")
+	private String usMdTsCreated;
+	
+	@Column(name = "US_MD_TS_UPDATED")
+	private String usMdTsUpdated;
 
-	public int getUs_md_id() {
-		return us_md_id;
+	public int getUsMdId() {
+		return usMdId;
 	}
 
-	public void setUs_md_id(int us_md_id) {
-		this.us_md_id = us_md_id;
+	public void setUsMdId(int usMdId) {
+		this.usMdId = usMdId;
 	}
 
-	public String getUs_md_path() {
-		return us_md_path;
+	public String getUsMdPath() {
+		return usMdPath;
 	}
 
-	public void setUs_md_path(String us_md_path) {
-		this.us_md_path = us_md_path;
+	public void setUsMdPath(String usMdPath) {
+		this.usMdPath = usMdPath;
 	}
 
-	public int getUs_id() {
-		return us_id;
+	public int getUsId() {
+		return usId;
 	}
 
-	public void setUs_id(int us_id) {
-		this.us_id = us_id;
+	public void setUsId(int usId) {
+		this.usId = usId;
 	}
+
+	public String getUsMdTsCreated() {
+		return usMdTsCreated;
+	}
+
+	public void setUsMdTsCreated(String usMdTsCreated) {
+		this.usMdTsCreated = usMdTsCreated;
+	}
+
+	public String getUsMdTsUpdated() {
+		return usMdTsUpdated;
+	}
+
+	public void setUsMdTsUpdated(String usMdTsUpdated) {
+		this.usMdTsUpdated = usMdTsUpdated;
+	}
+
+	
 }

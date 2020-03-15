@@ -53,6 +53,10 @@ public class SessionService {
 		String userIdDecoded = Utilities.encodeOrDecodeBase64(userId, false);
 		user = repository.getUserCredentials(Integer.parseInt(userIdDecoded));
 		user.setUsPassword(newPassword);
+		
+		String dateTime = Utilities.getTimestamp();
+		user.setUsTsUpdated(dateTime);
+		
 		repository.save(user);
 		
 		response.setCodeStatus(200);

@@ -1,5 +1,7 @@
 package com.gianni.frycolor.entities;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,48 +24,70 @@ public class NewsFeed {
 	@ApiModelProperty(notes = "The database generated news ID")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "NW_ID", columnDefinition = "int")
-	private int nw_id;
+	private int nwId;
 	
 	@Column(name = "US_ID")
-	private int us_id;
+	private int usId;
 	
 	@Column(name = "US_COMMENT_ID")
-	private int us_comment_id;
+	private int usCommentId;
 
 	@Column(name = "US_MD_ID")
 	@ApiModelProperty(notes = "The foreign key for the table user_media")
-	private int us_md_id;
+	private int usMdId;
+	
+	@Column(name = "NW_TS_CREATED")
+	private String nwTsCreated;
+	
+	@Column(name = "NW_TS_UPDATED")
+	private String nwTsUpdated;
 
-	public int getNw_id() {
-		return nw_id;
+	public int getNwId() {
+		return nwId;
 	}
 
-	public void setNw_id(int nw_id) {
-		this.nw_id = nw_id;
+	public void setNwId(int nwId) {
+		this.nwId = nwId;
 	}
 
-	public int getUs_id() {
-		return us_id;
+	public int getUsId() {
+		return usId;
 	}
 
-	public void setUs_id(int us_id) {
-		this.us_id = us_id;
+	public void setUsId(int usId) {
+		this.usId = usId;
 	}
 
-	public int getUs_comment_id() {
-		return us_comment_id;
+	public int getUsCommentId() {
+		return usCommentId;
 	}
 
-	public void setUs_comment_id(int us_comment_id) {
-		this.us_comment_id = us_comment_id;
+	public void setUsCommentId(int usCommentId) {
+		this.usCommentId = usCommentId;
 	}
 
-	public int getUs_md_id() {
-		return us_md_id;
+	public int getUsMdId() {
+		return usMdId;
 	}
 
-	public void setUs_md_id(int us_md_id) {
-		this.us_md_id = us_md_id;
+	public void setUsMdId(int usMdId) {
+		this.usMdId = usMdId;
+	}
+
+	public String getNwTsCreated() {
+		return nwTsCreated;
+	}
+
+	public void setNwTsCreated(String nwTsCreated) {
+		this.nwTsCreated = nwTsCreated;
+	}
+
+	public String getNwTsUpdated() {
+		return nwTsUpdated;
+	}
+
+	public void setNwTsUpdated(String nwTsUpdated) {
+		this.nwTsUpdated = nwTsUpdated;
 	}
 
 }

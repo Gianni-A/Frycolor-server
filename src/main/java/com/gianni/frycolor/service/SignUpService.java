@@ -13,6 +13,7 @@ import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.model.ResponseApi;
 import com.gianni.frycolor.repository.SignUpDao;
 import com.gianni.frycolor.util.SendMail;
+import com.gianni.frycolor.util.Utilities;
 
 @Service
 public class SignUpService {
@@ -26,17 +27,25 @@ public class SignUpService {
 	@Autowired
 	UserInformation userInfo;
 	
+	
 	public ResponseApi signUpUser(User user) {
 		if(!validateUserAndEmail(user)) {
+			String dateTime = Utilities.getTimestamp();
 			user.setUsEmail(user.getUsEmail().toLowerCase());
 			
+			userInfo.setUsInfId(0);
 			userInfo.setUsInfName(user.getUsUser());
+			userInfo.setUsInfTsCreated(dateTime);
+			userInfo.setUsInfTsUpdated(dateTime);
 			user.setUsInfId(userInfo);
+			
+			//Set up the date and time of the record
+			user.setUsTsCreated(dateTime);
+			user.setUsTsUpdated(dateTime);
 			
 			response.setCodeStatus(200);
 			response.setMessage("User created");
 			response.setData(data.save(user));
-			
 			
 			try {
 				String content = "Thank you for registered at Frycolor, to finish you need to enter to this URL: http://localhost:8090/users/" + user.getUsId();
@@ -47,9 +56,9 @@ public class SignUpService {
 			
 			return response;
 		}
+		
 		response.setCodeStatus(500);
 		response.setMessage("It already exist the user");
-		//response.setMessage("There is something wrong in the server");
 		return response;
 	}
 	

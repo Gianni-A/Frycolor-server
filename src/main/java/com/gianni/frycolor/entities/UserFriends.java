@@ -28,6 +28,12 @@ public class UserFriends {
 	@Column(name = "FRD_US_ID_UF", columnDefinition = "int")
 	@ApiModelProperty(notes = "The ID of the user of its friend")
 	private int frdUsIdUf;
+	
+	@Column(name = "FRD_TS_CREATED")
+	private String frdTsCreated;
+	
+	@Column(name = "FRD_TS_UPDATED")
+	private String frdTsUpdated;
 
 	public int getFrdId() {
 		return frdId;
@@ -53,4 +59,19 @@ public class UserFriends {
 		this.frdUsIdUf = frdUsIdUf;
 	}
 
+	public String getFrdTsCreated() {
+		return frdTsCreated;
+	}
+
+	public void setFrdTsCreated(String frdTsCreated) {
+		this.frdTsCreated = frdTsCreated;
+	}
+
+	public String getFrdTsUpdated() {
+		return frdTsUpdated;
+	}
+
+	public void setFrdTsUpdated(String frdTsUpdated) {
+		this.frdTsUpdated = frdTsUpdated;
+	}
 }

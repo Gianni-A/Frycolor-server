@@ -22,35 +22,57 @@ public class NewsReaction {
 	@ApiModelProperty(notes = "The database generated reaction news ID")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "NWR_ID", columnDefinition = "int")
-	private int nwr_id;
+	private int nwrId;
 	
 	@Column(name = "US_ID")
-	private int us_id;
+	private int usId;
 	
 	@Column(name = "NW_ID")
-	private int nw_id;
+	private int nwId;
+	
+	@Column(name = "NWR_TS_CREATED")
+	private String nwrTsCreated;
+	
+	@Column(name = "NWR_TS_UPDATED")
+	private String nwrTsUpdated;
 
-	public int getNwr_id() {
-		return nwr_id;
+	public int getNwrId() {
+		return nwrId;
 	}
 
-	public void setNwr_id(int nwr_id) {
-		this.nwr_id = nwr_id;
+	public void setNwrId(int nwrId) {
+		this.nwrId = nwrId;
 	}
 
-	public int getUs_id() {
-		return us_id;
+	public int getUsId() {
+		return usId;
 	}
 
-	public void setUs_id(int us_id) {
-		this.us_id = us_id;
+	public void setUsId(int usId) {
+		this.usId = usId;
 	}
 
-	public int getNw_id() {
-		return nw_id;
+	public int getNwId() {
+		return nwId;
 	}
 
-	public void setNw_id(int nw_id) {
-		this.nw_id = nw_id;
+	public void setNwId(int nwId) {
+		this.nwId = nwId;
+	}
+
+	public String getNwrTsCreated() {
+		return nwrTsCreated;
+	}
+
+	public void setNwrTsCreated(String nwrTsCreated) {
+		this.nwrTsCreated = nwrTsCreated;
+	}
+
+	public String getNwrTsUpdated() {
+		return nwrTsUpdated;
+	}
+
+	public void setNwrTsUpdated(String nwrTsUpdated) {
+		this.nwrTsUpdated = nwrTsUpdated;
 	}
 }

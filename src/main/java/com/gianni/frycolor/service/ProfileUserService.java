@@ -63,6 +63,8 @@ public class ProfileUserService {
 	public ResponseApi updateUserInformation(UserInformation userInformation) {
 		//Validate if the user exist in order to update their information
 		if(userActiveOrExist(userInformation.getUsInfId())) {
+			userInformation.setUsInfTsUpdated(Utilities.getTimestamp());
+			
 			response.setCodeStatus(200);
 			response.setMessage("User updated");
 			response.setData(repository.save(userInformation));	
@@ -98,8 +100,16 @@ public class ProfileUserService {
 	}
 	
 	public ResponseApi addFriend(UserFriends userFriend) {
-		int friendResponse = repFriend.addNewFriend(userFriend.getFrdUsId(), userFriend.getFrdUsIdUf());
+		String dateTime = Utilities.getTimestamp();
+		userFriend.setFrdTsCreated(dateTime);
+		userFriend.setFrdTsUpdated(dateTime);
+		
+		int friendResponse = repFriend.addNewFriend(userFriend.getFrdUsId(), 
+				                                    userFriend.getFrdUsIdUf(),
+				                                    userFriend.getFrdTsCreated(),
+				                                    userFriend.getFrdTsUpdated());
 		if(friendResponse != 0) {
+
 			response.setCodeStatus(200);
 			response.setMessage("Friend added");
 			response.setData(friendResponse);
@@ -132,6 +142,7 @@ public class ProfileUserService {
 		
 		uInf = repository.getUserInfoById(userInfId);
 		uInf.setUsInfPath_image(pathImage.getOriginalFilename());
+		uInf.setUsInfTsUpdated(Utilities.getTimestamp());
 		
 		response.setCodeStatus(200);
 		response.setMessage("Image Profile updated");
