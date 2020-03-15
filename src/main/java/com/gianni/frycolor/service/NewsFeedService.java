@@ -11,9 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gianni.frycolor.entities.NewsFeed;
+import com.gianni.frycolor.entities.UserComments;
+import com.gianni.frycolor.entities.UserMedia;
 import com.gianni.frycolor.model.ResponseApi;
 import com.gianni.frycolor.repository.FriendsDao;
 import com.gianni.frycolor.repository.NewsFeedDao;
+import com.gianni.frycolor.repository.UserCommentsDao;
+import com.gianni.frycolor.repository.UserMediaDao;
 import com.gianni.frycolor.util.Utilities;
 
 @Service
@@ -23,13 +27,22 @@ public class NewsFeedService {
 	private NewsFeedDao newsRepository;
 	
 	@Autowired
-	private FriendsDao friendsRepository;
+	private UserMediaDao userMediaRepository;
+	
+	@Autowired
+	private UserCommentsDao userCommentsRepository;
 	
 	@Autowired
 	private ResponseApi response;
 	
 	@Autowired
 	private NewsFeed newsFeed;
+	
+	@Autowired
+	private UserMedia userMedia;
+	
+	@Autowired
+	private UserComments userComments;
 	
 	final public String PATH_MEDIA_IMAGE_PROFILE = "media\\post\\";
 	
@@ -43,21 +56,51 @@ public class NewsFeedService {
 		return null;
 	}
 	
-	public ResponseApi saveNews(MultipartFile pathImage, String comment, int userId) throws IOException {
+	public ResponseApi saveNews(MultipartFile pathImage, String input_comment, int userId) throws IOException {
+		String dateTime = Utilities.getTimestamp();
+		newsFeed.setUsMdId(0);
+		newsFeed.setUsCommentId(0);
+		
 		//Add an image if there is one
-		if(pathImage.getOriginalFilename() != "") {
+		if(!pathImage.getOriginalFilename().isEmpty()) {
 			String mediaDirectory = Utilities.getPath(PATH_MEDIA_IMAGE_PROFILE);
 			File convertFile = new File(mediaDirectory + pathImage.getOriginalFilename());
 			convertFile.createNewFile();
 			FileOutputStream fout = new FileOutputStream(convertFile);
 			fout.write(pathImage.getBytes());
 			fout.close();
+			
+			userMedia.setUsMdId(0);
+			userMedia.setUsId(userId);
+			userMedia.setUsMdPath(pathImage.getOriginalFilename());
+			userMedia.setUsMdTsCreated(dateTime);
+			userMedia.setUsMdTsUpdated(dateTime);
+			userMediaRepository.save(userMedia);
+			
+			newsFeed.setUsMdId(userMedia.getUsMdId());
 		}
 		
 		//Add a comment if there is one
-		if(!comment.equals("")) {
+		if(!input_comment.isEmpty()) {
+			userComments.setUsComId(0);
+			userComments.setUsId(userId);
+			userComments.setUsComComment(input_comment);
+			userComments.setUsComTsCreated(dateTime);
+			userComments.setUsComTsUpdated(dateTime);
+			userCommentsRepository.save(userComments);
 			
+			newsFeed.setUsCommentId(userComments.getUsComId());
 		}
+		
+		newsFeed.setNwId(0);
+		newsFeed.setUsId(userId);
+		newsFeed.setNwTsCreated(dateTime);
+		newsFeed.setNwTsUpdated(dateTime);
+		
+		response.setCodeStatus(200);
+		response.setMessage("Data inserted");
+		response.setData(newsRepository.save(newsFeed));
+		
 		return response;
 	}
 

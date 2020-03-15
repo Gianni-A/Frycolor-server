@@ -20,7 +20,7 @@ public class UserMedia {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "US_COM_ID", columnDefinition = "int")
+	@Column(name = "US_MD_ID", columnDefinition = "int")
 	@ApiModelProperty(notes = "The database generated media ID")
 	private int usMdId;
 	

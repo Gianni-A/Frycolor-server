@@ -46,7 +46,7 @@ public interface NewsFeedControllerApi {
 			@PathVariable("userId") int userId);
 	
 	
-	@PostMapping("/newsfeed/{userId}/newpost")
+	@PostMapping("/newsfeed/newpost")
 	@ApiOperation(value = "Enlist all newsfeed for the user is logged")
 	@ApiResponses(value = {
 	    @ApiResponse(code = 200, message = "Successfully get all news from the user"),
@@ -58,8 +58,8 @@ public interface NewsFeedControllerApi {
 			@ApiParam(value = "File (Image) of the user profile", required = false)
 			@RequestParam("file") MultipartFile file,
 			@ApiParam(value = "comment field is not require, the user can only upload an image or a comment", required = false)
-			@PathVariable("userId") String comment,
+			@RequestParam("comment") String comment,
 			@ApiParam(value = "userId is required to insert a new post", required = true)
-			@PathVariable("userId") int userId) throws IOException;
+			@RequestParam("userId") int userId) throws IOException;
 
 }
