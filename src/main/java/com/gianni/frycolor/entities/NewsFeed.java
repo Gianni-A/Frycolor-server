@@ -36,6 +36,10 @@ public class NewsFeed {
 	@ApiModelProperty(notes = "The foreign key for the table user_media")
 	private int usMdId;
 	
+	@Column(name = "NW_STATUS")
+	@ApiModelProperty(notes = "The status means if it is 1 = can show the post, 0 = the post is hide")
+	private int nwStatus;
+	
 	@Column(name = "NW_TS_CREATED")
 	private String nwTsCreated;
 	
@@ -72,6 +76,14 @@ public class NewsFeed {
 
 	public void setUsMdId(int usMdId) {
 		this.usMdId = usMdId;
+	}
+
+	public int getNwStatus() {
+		return nwStatus;
+	}
+
+	public void setNwStatus(int nwStatus) {
+		this.nwStatus = nwStatus;
 	}
 
 	public String getNwTsCreated() {

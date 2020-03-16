@@ -4,8 +4,10 @@ import java.io.IOException;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,5 +63,33 @@ public interface NewsFeedControllerApi {
 			@RequestParam("comment") String comment,
 			@ApiParam(value = "userId is required to insert a new post", required = true)
 			@RequestParam("userId") int userId) throws IOException;
+	
+	
+	@PatchMapping("/newsfeed/{commentId}/edit")
+	@ApiOperation(value = "User can edit a post, in this case they can edit just for comments")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successfully update a post (Comment)"),
+	    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+	})
+	ResponseEntity<ResponseApi> editNews(
+			@ApiParam(value = "Comment Id, which is the comment where is the post that the user selected to edit", required = true)
+			@PathVariable("commentId") int commentId,
+			@ApiParam(value = "The comment value where the user want to edit the post", required = true)
+			@RequestParam("inputComment") String inputComment);
+	
+	
+	@PatchMapping("/newsfeed/{nwId}/delete")
+	@ApiOperation(value = "A service where is going to delete a post of a user")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successfully deleted a post"),
+	    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+	})
+	ResponseEntity<ResponseApi> deleteNews(
+			@ApiParam(value = "Post Id, where is used to change the status of the post", required = true)
+			@PathVariable("nwId") int nwId);
 
 }

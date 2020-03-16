@@ -46,6 +46,8 @@ public class NewsFeedService {
 	
 	final public String PATH_MEDIA_IMAGE_PROFILE = "media\\post\\";
 	
+	String dateTime = "";
+	
 	
 	public ResponseApi getAllNews(int userId) {
 		return null;
@@ -57,7 +59,7 @@ public class NewsFeedService {
 	}
 	
 	public ResponseApi saveNews(MultipartFile pathImage, String input_comment, int userId) throws IOException {
-		String dateTime = Utilities.getTimestamp();
+		dateTime = Utilities.getTimestamp();
 		newsFeed.setUsMdId(0);
 		newsFeed.setUsCommentId(0);
 		
@@ -93,6 +95,7 @@ public class NewsFeedService {
 		}
 		
 		newsFeed.setNwId(0);
+		newsFeed.setNwStatus(1);
 		newsFeed.setUsId(userId);
 		newsFeed.setNwTsCreated(dateTime);
 		newsFeed.setNwTsUpdated(dateTime);
@@ -104,4 +107,34 @@ public class NewsFeedService {
 		return response;
 	}
 
+	public ResponseApi editNews(int commentId, String inputComment) {
+		UserComments request = new UserComments();
+		dateTime = Utilities.getTimestamp();
+		request = userCommentsRepository.getOne(commentId);
+		request.setUsComComment(inputComment);
+		request.setUsComTsUpdated(dateTime);
+		
+		response.setCodeStatus(200);
+		response.setMessage("Comment updated");
+		response.setData(userCommentsRepository.save(request));
+		
+		return response;
+	}
+	
+	public ResponseApi deleteNews(int nwId) {
+		NewsFeed request = new NewsFeed();
+		dateTime = Utilities.getTimestamp();
+		
+		request = newsRepository.getOne(nwId);
+		request.setNwStatus(0);
+		request.setNwTsUpdated(dateTime);
+
+		response.setCodeStatus(200);
+		response.setMessage("Post deleted");
+		response.setData(newsRepository.save(request));
+		
+		return response;
+	}
+	
+	
 }

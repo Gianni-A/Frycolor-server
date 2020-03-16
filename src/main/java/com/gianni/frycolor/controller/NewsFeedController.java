@@ -33,5 +33,15 @@ public class NewsFeedController implements NewsFeedControllerApi {
 		return ResponseEntity.status(HttpStatus.OK).body(service.saveNews(file, comment, userId));
 	}
 
+	@Override
+	public ResponseEntity<ResponseApi> editNews(int commentId, String inputComment) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.editNews(commentId, inputComment));
+	}
+
+	@Override
+	public ResponseEntity<ResponseApi> deleteNews(int nwId) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.deleteNews(nwId));
+	}
+
 	
 }
