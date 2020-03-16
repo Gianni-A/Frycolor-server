@@ -18,6 +18,7 @@ import com.gianni.frycolor.model.ResponseApi;
 import com.gianni.frycolor.repository.FriendsDao;
 import com.gianni.frycolor.repository.ProfileUserDao;
 import com.gianni.frycolor.util.Utilities;
+import com.gianni.frycolor.util.ValidationsDao;
 
 @Service
 public class ProfileUserService {
@@ -36,6 +37,9 @@ public class ProfileUserService {
 	
 	@Autowired
 	ServletContext context;
+	
+	@Autowired
+	ValidationsDao utilValidations;
 	
 	final public String PATH_MEDIA_IMAGE_PROFILE = "media\\profile_images\\";
 	
@@ -62,7 +66,7 @@ public class ProfileUserService {
 	
 	public ResponseApi updateUserInformation(UserInformation userInformation) {
 		//Validate if the user exist in order to update their information
-		if(userActiveOrExist(userInformation.getUsInfId())) {
+		if(utilValidations.userActiveOrExist(userInformation.getUsInfId())) {
 			userInformation.setUsInfTsUpdated(Utilities.getTimestamp());
 			
 			response.setCodeStatus(200);
@@ -149,15 +153,6 @@ public class ProfileUserService {
 		response.setData(repository.save(uInf));
 		
 		return response;
-	}
-	
-	//Check if the user is still active or exists, returns true if exist
-	private boolean userActiveOrExist(int userID) {
-		if(repository.existUser(userID) <= 0) {
-			return false;
-		} else {
-			return true;
-		}
 	}
 
 }
