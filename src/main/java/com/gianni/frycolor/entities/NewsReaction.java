@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 @Component
 @Table(name = "news_reaction")
-@ApiModel(description = "All details about the reactions of the people about the news (likes, emojis, etc)")
+@ApiModel(description = "All details about the reactions of the people about the news (likes)")
 public class NewsReaction {
 	
 	@Id
@@ -32,9 +32,6 @@ public class NewsReaction {
 	
 	@Column(name = "NWR_TS_CREATED")
 	private String nwrTsCreated;
-	
-	@Column(name = "NWR_TS_UPDATED")
-	private String nwrTsUpdated;
 
 	public int getNwrId() {
 		return nwrId;
@@ -66,13 +63,5 @@ public class NewsReaction {
 
 	public void setNwrTsCreated(String nwrTsCreated) {
 		this.nwrTsCreated = nwrTsCreated;
-	}
-
-	public String getNwrTsUpdated() {
-		return nwrTsUpdated;
-	}
-
-	public void setNwrTsUpdated(String nwrTsUpdated) {
-		this.nwrTsUpdated = nwrTsUpdated;
 	}
 }

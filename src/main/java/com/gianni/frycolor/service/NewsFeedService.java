@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gianni.frycolor.entities.NewsFeed;
+import com.gianni.frycolor.entities.NewsReaction;
 import com.gianni.frycolor.entities.UserComments;
 import com.gianni.frycolor.entities.UserMedia;
 import com.gianni.frycolor.model.ResponseApi;
 import com.gianni.frycolor.repository.FriendsDao;
 import com.gianni.frycolor.repository.NewsFeedDao;
+import com.gianni.frycolor.repository.NewsReactionDao;
 import com.gianni.frycolor.repository.UserCommentsDao;
 import com.gianni.frycolor.repository.UserMediaDao;
 import com.gianni.frycolor.util.Utilities;
@@ -31,6 +33,9 @@ public class NewsFeedService {
 	
 	@Autowired
 	private UserCommentsDao userCommentsRepository;
+	
+	@Autowired
+	private NewsReactionDao nwReactionRepository;
 	
 	@Autowired
 	private ResponseApi response;
@@ -136,5 +141,27 @@ public class NewsFeedService {
 		return response;
 	}
 	
-	
+	public ResponseApi addOrRemoveReactionToPost(NewsReaction newsReaction) {
+		dateTime = Utilities.getTimestamp();
+		
+		if(newsReaction.getNwrId() == 0) {
+			//Add a reaction
+			newsReaction.setNwrTsCreated(dateTime);
+			
+			response.setCodeStatus(200);
+			response.setMessage("Reaction's news added");
+			response.setData(nwReactionRepository.save(newsReaction));
+		}
+		else {
+			//Delete reaction
+			nwReactionRepository.delete(newsReaction);
+			
+			response.setCodeStatus(200);
+			response.setMessage("Reaction's news deleted");
+			response.setData(null);
+		}
+		
+		return response;
+	}
+
 }
