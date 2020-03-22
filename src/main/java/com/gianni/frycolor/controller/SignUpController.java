@@ -10,7 +10,6 @@ import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.model.ResponseApi;
 import com.gianni.frycolor.service.SignUpService;
 
-//http://localhost:8090/swagger-ui.html
 @RestController
 public class SignUpController implements SignUpControllerApi {
 	

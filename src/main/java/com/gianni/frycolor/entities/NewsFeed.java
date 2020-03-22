@@ -11,13 +11,12 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Component
 @Table(name = "news")
-@ApiModel(description = "All details about the news feed of the user ")
+//@ApiModel(description = "All details about the news feed of the user ")
 public class NewsFeed {
 	
 	@Id
@@ -26,14 +25,16 @@ public class NewsFeed {
 	@Column(name = "NW_ID", columnDefinition = "int")
 	private int nwId;
 	
+	@ApiModelProperty(notes = "User ID from the table users_app (User.java)")
 	@Column(name = "US_ID")
 	private int usId;
 	
+	@ApiModelProperty(notes = "Comment ID from the table user_comments (UserComments.java)")
 	@Column(name = "US_COMMENT_ID")
 	private int usCommentId;
 
+	@ApiModelProperty(notes = "User Media ID, from the table user_media (UserMedia.java)")
 	@Column(name = "US_MD_ID")
-	@ApiModelProperty(notes = "The foreign key for the table user_media")
 	private int usMdId;
 	
 	@Column(name = "NW_STATUS")
