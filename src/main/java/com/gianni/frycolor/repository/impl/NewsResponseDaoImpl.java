@@ -58,7 +58,7 @@ public class NewsResponseDaoImpl {
 		return validations.userActiveOrExist(userId);
 	}
 	
-	public boolean postExistsOrActive(int newsId) {
+	public boolean originExistsOrActive(int newsId) {
 		if(newsFeedRepository.existsById(newsId)) {
 			if(newsFeedRepository.isPostActive(newsId) <= 0) {
 				return false;

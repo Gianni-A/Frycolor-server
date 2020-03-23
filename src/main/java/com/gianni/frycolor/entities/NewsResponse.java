@@ -37,6 +37,10 @@ public class NewsResponse {
 	@Column(name = "NW_COM_ORIGIN_ID")
 	private int nwComOriginId;
 	
+	@ApiModelProperty(notes = "Status of the response, if status is 1 = Active | 0 = NOT Active")
+	@Column(name = "NW_RES_STATUS")
+	private int nwResStatus;
+	
 	@Column(name = "NW_RES_TS_CREATED")
 	private String nwResTsCreated;
 	
@@ -73,6 +77,14 @@ public class NewsResponse {
 
 	public void setNwComOriginId(int nwComOriginId) {
 		this.nwComOriginId = nwComOriginId;
+	}
+
+	public int getNwResStatus() {
+		return nwResStatus;
+	}
+
+	public void setNwResStatus(int nwResStatus) {
+		this.nwResStatus = nwResStatus;
 	}
 
 	public String getNwResTsCreated() {

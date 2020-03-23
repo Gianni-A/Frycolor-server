@@ -22,4 +22,9 @@ public class NewsResponseController implements NewsResponseControllerApi {
 		return ResponseEntity.status(HttpStatus.OK).body(service.addResponse(request));
 	}
 
+	@Override
+	public ResponseEntity<ResponseApi> editResponse(int nwResId, int userId, String comment) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.editResponse(nwResId, userId, comment));
+	}
+
 }
