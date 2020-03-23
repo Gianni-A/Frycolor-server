@@ -8,6 +8,7 @@ public class RequestNewsResponse {
 	private int usId;
 	private int nwComOriginId;
 	private String comment;
+	
 	public int getUsId() {
 		return usId;
 	}

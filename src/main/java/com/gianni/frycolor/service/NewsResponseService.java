@@ -3,13 +3,9 @@ package com.gianni.frycolor.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gianni.frycolor.entities.NewsResponse;
-import com.gianni.frycolor.entities.UserComments;
 import com.gianni.frycolor.model.RequestNewsResponse;
 import com.gianni.frycolor.model.ResponseApi;
-import com.gianni.frycolor.repository.NewsResponseDao;
-import com.gianni.frycolor.repository.UserCommentsDao;
-import com.gianni.frycolor.util.Utilities;
+import com.gianni.frycolor.repository.impl.NewsResponseDaoImpl;
 
 @Service
 public class NewsResponseService {
@@ -18,41 +14,34 @@ public class NewsResponseService {
 	private ResponseApi response;
 	
 	@Autowired
-	private NewsResponseDao newsResponseRepository;
+	private NewsResponseDaoImpl repositoryImpl;
 	
-	@Autowired
-	private UserCommentsDao userCommentsRepository;
-	
-	@Autowired
-	private NewsResponse newsResponse;
-	
-	@Autowired
-	private UserComments userComments;
-	
-	private String dateTime;
 	
 	public ResponseApi addResponse(RequestNewsResponse request) {
-		dateTime = Utilities.getTimestamp();
-		//First add the comment
-		if(request.getComment().isEmpty()) return null;
+		if(request.getComment().isEmpty()) {
+			response.setCodeStatus(400);
+			response.setMessage("Comment input is empty");
+			response.setData(null);
+			return response;
+		} 
 		
-		//Adding a comment into user_comments
-		userComments.setUsId(request.getUsId());
-		userComments.setUsComComment(request.getComment());
-		userComments.setUsComTsCreated(dateTime);
-		userComments.setUsComTsUpdated(dateTime);
-		userComments = userCommentsRepository.save(userComments);
+		if(!repositoryImpl.userStatusActive(request.getUsId())) {
+			response.setCodeStatus(404);
+			response.setMessage("The user is not active or exist.");
+			response.setData(null);
+			return response;
+		} 
 		
-		//Adding the response
-		newsResponse.setUsId(request.getUsId());
-		newsResponse.setUsComId(userComments.getUsComId());
-		newsResponse.setNwComOriginId(request.getNwComOriginId());
-		newsResponse.setNwResTsCreated(dateTime);
-		newsResponse.setNwResTsUpdated(dateTime);
+		if(!repositoryImpl.postExistsOrActive(request.getNwComOriginId())) {
+			response.setCodeStatus(404);
+			response.setMessage("The post is not active or exist");
+			response.setData(null);
+			return response;
+		} 
 		
 		response.setCodeStatus(200);
 		response.setMessage("Response added");
-		response.setData(newsResponseRepository.save(newsResponse));
+		response.setData(repositoryImpl.addResponse(request));
 		
 		return response;
 	}
