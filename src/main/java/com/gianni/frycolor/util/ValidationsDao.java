@@ -16,8 +16,11 @@ public class ValidationsDao {
 		if(repository.existUser(userID) <= 0) {
 			return false;
 		} else {
-			return true;
+			if(repository.isUserActive(userID) <= 0) {
+				return false;
+			} else {
+				return true;
+			}
 		}
 	}
-
 }
