@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gianni.frycolor.entities.NewsResponse;
+import com.gianni.frycolor.entities.ResponseReaction;
 import com.gianni.frycolor.entities.UserComments;
 import com.gianni.frycolor.model.RequestNewsResponse;
 import com.gianni.frycolor.model.ResponseApi;
@@ -79,7 +80,30 @@ public class NewsResponseService {
 		return response;
 	}
 	
-	//Validations before to insert the response
+	public ResponseApi addOrRemoveReaction(ResponseReaction responseReaction) {
+		response = new ResponseApi();
+		response = validateResponseForReaction(responseReaction.getUsId(), responseReaction.getNwResId());
+		if(response.getCodeStatus() != 0) {
+			return response;
+		}
+		
+		if(responseReaction.getRrId() != 0) {
+			repositoryImpl.deleteReactionResponse(responseReaction);
+			response.setCodeStatus(200);
+			response.setMessage("Reaction deleted");
+			response.setData(null);
+		}
+		else {
+			response.setCodeStatus(200);
+			response.setMessage("Reaction added");
+			response.setData(repositoryImpl.addReactionResponse(responseReaction));
+		}
+		
+		
+		return response;
+	}
+	
+	//Validations before to insert or edit the response
 	private ResponseApi validationsResponse(ValidateResponsesModel validate) {
 		if(validate.getComment().isEmpty()) {
 			response.setCodeStatus(400);
@@ -117,4 +141,19 @@ public class NewsResponseService {
 		return response;
 	}
 	
+	private ResponseApi validateResponseForReaction(int userId, int rrId) {
+		if(!repositoryImpl.userStatusActive(userId)) {
+			response.setCodeStatus(404);
+			response.setMessage("The user is not active or exist.");
+			response.setData(null);
+			return response;
+		} else if(!repositoryImpl.responseExistsOrActive(rrId)) {
+			response.setCodeStatus(404);
+			response.setMessage("The response of a post is not active or exist");
+			response.setData(null);
+			return response;
+		} else {
+			return response;
+		}
+	}
 }

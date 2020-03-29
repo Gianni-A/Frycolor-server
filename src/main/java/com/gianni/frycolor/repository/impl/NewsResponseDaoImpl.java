@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gianni.frycolor.entities.NewsResponse;
+import com.gianni.frycolor.entities.ResponseReaction;
 import com.gianni.frycolor.entities.UserComments;
 import com.gianni.frycolor.model.RequestNewsResponse;
 import com.gianni.frycolor.repository.NewsFeedDao;
 import com.gianni.frycolor.repository.NewsResponseDao;
+import com.gianni.frycolor.repository.ResponseReactionDao;
 import com.gianni.frycolor.repository.UserCommentsDao;
 import com.gianni.frycolor.util.Utilities;
 import com.gianni.frycolor.util.ValidationsDao;
@@ -23,6 +25,9 @@ public class NewsResponseDaoImpl {
 	
 	@Autowired
 	private NewsFeedDao newsFeedRepository;
+	
+	@Autowired
+	private ResponseReactionDao responseReactionRepository;
 	
 	@Autowired
 	private NewsResponse newsResponse;
@@ -72,6 +77,16 @@ public class NewsResponseDaoImpl {
 		response.setNwResStatus(0);
 		response.setNwResTsUpdated(dateTime);
 		repository.save(response);
+	}
+	
+	public ResponseReaction addReactionResponse(ResponseReaction reaction) {
+		dateTime = Utilities.getTimestamp();
+		reaction.setRrTsCreated(dateTime);
+		return responseReactionRepository.save(reaction);
+	}
+	
+	public void deleteReactionResponse(ResponseReaction reaction) {
+		responseReactionRepository.delete(reaction);
 	}
 	
 	public boolean userStatusActive(int userId) {

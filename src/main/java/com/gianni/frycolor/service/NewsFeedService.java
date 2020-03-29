@@ -3,8 +3,6 @@ package com.gianni.frycolor.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,6 @@ import com.gianni.frycolor.entities.NewsReaction;
 import com.gianni.frycolor.entities.UserComments;
 import com.gianni.frycolor.entities.UserMedia;
 import com.gianni.frycolor.model.ResponseApi;
-import com.gianni.frycolor.repository.FriendsDao;
 import com.gianni.frycolor.repository.NewsFeedDao;
 import com.gianni.frycolor.repository.NewsReactionDao;
 import com.gianni.frycolor.repository.UserCommentsDao;

@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gianni.frycolor.controller.api.NewsResponseControllerApi;
-import com.gianni.frycolor.entities.NewsResponse;
 import com.gianni.frycolor.entities.ResponseReaction;
 import com.gianni.frycolor.model.RequestNewsResponse;
 import com.gianni.frycolor.model.ResponseApi;
@@ -31,6 +30,11 @@ public class NewsResponseController implements NewsResponseControllerApi {
 	@Override
 	public ResponseEntity<ResponseApi> deleteResponse(int nwResId) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.deleteResponse(nwResId));
+	}
+
+	@Override
+	public ResponseEntity<ResponseApi> AddOrRemoveReaction(ResponseReaction responseReaction) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.addOrRemoveReaction(responseReaction));
 	}
 
 }
