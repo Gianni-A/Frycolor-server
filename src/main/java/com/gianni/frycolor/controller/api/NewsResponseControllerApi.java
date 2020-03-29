@@ -43,8 +43,6 @@ public interface NewsResponseControllerApi {
 	ResponseEntity<ResponseApi> editResponse(
 			@ApiParam(value = "Response Id to identify the response which is going to being edited", required = true)
 			@RequestParam("nwResId") int nwResId,
-			@ApiParam(value = "UserId to identify the user of the response", required = true)
-			@RequestParam("userId") int userId,
 			@ApiParam(value = "Comment value to change it", required = true)
 			@RequestParam("comment") String comment);
 	

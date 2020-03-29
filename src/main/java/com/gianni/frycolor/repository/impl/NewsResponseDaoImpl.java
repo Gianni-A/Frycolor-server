@@ -48,17 +48,30 @@ public class NewsResponseDaoImpl {
 		newsResponse.setUsId(request.getUsId());
 		newsResponse.setUsComId(userComments.getUsComId());
 		newsResponse.setNwComOriginId(request.getNwComOriginId());
+		newsResponse.setNwResStatus(1);
 		newsResponse.setNwResTsCreated(dateTime);
 		newsResponse.setNwResTsUpdated(dateTime);
 		
 		return repository.save(newsResponse);
 	}
 	
+	public UserComments editComment(UserComments comment) {
+		dateTime = Utilities.getTimestamp();
+		comment.setUsComTsUpdated(dateTime);
+		return userCommentsRepository.save(comment);
+	}
+	
+	public NewsResponse updateResponse(NewsResponse response) {
+		dateTime = Utilities.getTimestamp();
+		response.setNwResTsUpdated(dateTime);
+		return repository.save(response);
+	}
+	
 	public boolean userStatusActive(int userId) {
 		return validations.userActiveOrExist(userId);
 	}
 	
-	public boolean originExistsOrActive(int newsId) {
+	public boolean postExistsOrActive(int newsId) {
 		if(newsFeedRepository.existsById(newsId)) {
 			if(newsFeedRepository.isPostActive(newsId) <= 0) {
 				return false;
@@ -68,6 +81,26 @@ public class NewsResponseDaoImpl {
 		} else {
 			return false;
 		}
+	}
+	
+	public boolean responseExistsOrActive(int nwResId) {
+		if(repository.existsById(nwResId)) {
+			if(repository.isResponseActive(nwResId) <= 0) {
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	public NewsResponse getResponseById(int nwResId) {
+		return repository.getOne(nwResId);
+	}
+	
+	public UserComments getCommentById(int comId) {
+		return userCommentsRepository.getOne(comId);
 	}
 	
 }
