@@ -66,6 +66,19 @@ public class NewsResponseService {
 		return response;
 	}
 	
+	public ResponseApi deleteResponse(int nwResId) {
+		NewsResponse nwResponse = new NewsResponse();
+		nwResponse = repositoryImpl.getResponseById(nwResId);
+		
+		repositoryImpl.deleteResponse(nwResponse);
+		
+		response.setCodeStatus(200);
+		response.setMessage("Response deleted");
+		response.setData(null);
+		
+		return response;
+	}
+	
 	//Validations before to insert the response
 	private ResponseApi validationsResponse(ValidateResponsesModel validate) {
 		if(validate.getComment().isEmpty()) {

@@ -67,6 +67,13 @@ public class NewsResponseDaoImpl {
 		return repository.save(response);
 	}
 	
+	public void deleteResponse(NewsResponse response) {
+		dateTime = Utilities.getTimestamp();
+		response.setNwResStatus(0);
+		response.setNwResTsUpdated(dateTime);
+		repository.save(response);
+	}
+	
 	public boolean userStatusActive(int userId) {
 		return validations.userActiveOrExist(userId);
 	}
