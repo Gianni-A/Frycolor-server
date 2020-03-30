@@ -50,16 +50,6 @@ public class NewsFeedService {
 	
 	String dateTime = "";
 	
-	
-	public ResponseApi getAllNews(int userId) {
-		return null;
-	}
-	
-	
-	public ResponseApi getNewsPerUser(int userId) {
-		return null;
-	}
-	
 	public ResponseApi saveNews(MultipartFile pathImage, String input_comment, int userId) throws IOException {
 		dateTime = Utilities.getTimestamp();
 		newsFeed.setUsMdId(0);

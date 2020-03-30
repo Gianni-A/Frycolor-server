@@ -20,16 +20,6 @@ public class NewsFeedController implements NewsFeedControllerApi {
 	private NewsFeedService service;
 
 	@Override
-	public ResponseEntity<ResponseApi> getAllNews(int userId) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.getAllNews(userId));
-	}
-
-	@Override
-	public ResponseEntity<ResponseApi> getNewsPerUser(int userId) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.getNewsPerUser(userId));
-	}
-
-	@Override
 	public ResponseEntity<ResponseApi> saveNews(MultipartFile file, String comment, int userId) throws IOException {
 		return ResponseEntity.status(HttpStatus.OK).body(service.saveNews(file, comment, userId));
 	}
