@@ -16,8 +16,9 @@ public interface SignUpDao extends JpaRepository<User, Integer> {
 	int findByEmail(@Param("email") String email);
 	
 	@Modifying
-	@Query("UPDATE User u SET u.usStatus = 1 WHERE u.usId = :userId")
-	int setStatusRegisterUser(@Param("userId") int userId);
+	@Query("UPDATE User u SET u.usStatus = 1, u.usTsUpdated = :date WHERE u.usId = :userId")
+	int setStatusRegisterUser(@Param("userId") int userId,
+							  @Param("date") String date);
 	
 	/*@Modifying
 	@Query("UPDATE User u SET u.usInfId = :userInfId WHERE u.usId = :userId")

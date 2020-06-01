@@ -1,6 +1,9 @@
 package com.gianni.frycolor.controller.api;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gianni.frycolor.entities.User;
-import com.gianni.frycolor.model.ResponseApi;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,10 +20,12 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin("*")
+@Validated
 @RequestMapping("/")
 @Api(value = "User Management System")
 public interface SignUpControllerApi {
 	
+	@SuppressWarnings("rawtypes")
 	@PostMapping("/users")
 	@ApiOperation(value = "Create an user")
 	@ApiResponses(value = {
@@ -30,13 +34,19 @@ public interface SignUpControllerApi {
 		    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 		    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 		})
-	ResponseEntity<ResponseApi> signUpUser(
-			@ApiParam(value = "User object containing the information of a user", required = true) @RequestBody User user);
+	ResponseEntity signUpUser(
+			@ApiParam(value = "User object containing the information of a user", required = true) 
+			@Valid @RequestBody User user);
 	
 	
 	
+	@SuppressWarnings("rawtypes")
 	@PatchMapping("/users/{userId}")
 	@ApiOperation(value = "Update register status of a user")
-	ResponseEntity<ResponseApi> updateUserRegister(@PathVariable("userId") int userId);
+	@ApiResponses(value = {
+		    @ApiResponse(code = 201, message = "Successfully updated"),
+		    @ApiResponse(code = 500, message = "Error on the server")
+		})
+	ResponseEntity updateUserRegister(@PathVariable("userId") int userId);
 
 }
