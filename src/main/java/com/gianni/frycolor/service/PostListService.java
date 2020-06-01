@@ -7,19 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.gianni.frycolor.entities.NewsFeed;
 import com.gianni.frycolor.entities.UserComments;
-import com.gianni.frycolor.model.ResponseApi;
 import com.gianni.frycolor.repository.impl.PostListDaoImpl;
 
 @Service
 public class PostListService {
 	
 	@Autowired
-	private ResponseApi response;
-	
-	@Autowired
 	private PostListDaoImpl repositoryImpl;
 	
-	public ResponseApi getNews(int userId, int pagination) {
+	public void getNews(int userId, int pagination) {
 		List<NewsFeed> listNewsFeed = repositoryImpl.getNewsFeed(userId);
 		UserComments comments = new UserComments();
 		String pathImage = "";
@@ -31,7 +27,7 @@ public class PostListService {
 			//Needs to get the count of reactions.
 			
 		}
-		return response;
+		
 	}
 
 }
