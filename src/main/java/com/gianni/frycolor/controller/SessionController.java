@@ -6,7 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gianni.frycolor.controller.api.SessionControllerApi;
-import com.gianni.frycolor.model.ResponseApi;
+import com.gianni.frycolor.exception.EmailException;
+import com.gianni.frycolor.exception.UserExistException;
 import com.gianni.frycolor.service.SessionService;
 
 @RestController
@@ -15,14 +16,26 @@ public class SessionController implements SessionControllerApi {
 	@Autowired
 	SessionService service;
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity<ResponseApi> requestChangePasswordForgotten(String emailID) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.sendChangesPassword(emailID));
+	public ResponseEntity requestChangePasswordForgotten(String emailID) {
+		try {
+			service.sendChangesPassword(emailID);
+			return new ResponseEntity(HttpStatus.OK);
+		} 
+		catch(UserExistException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
+		catch(EmailException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity<ResponseApi> changePasswordForgotten(String userId, String newPassword) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.changePasswordForgotten(userId, newPassword));
+	public ResponseEntity changePasswordForgotten(String userId, String newPassword) {
+		service.changePasswordForgotten(userId, newPassword);
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 }

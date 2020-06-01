@@ -11,7 +11,7 @@ import com.gianni.frycolor.entities.User;
 public interface SessionDao extends JpaRepository<User, Integer> {
 
 	@Query(value = "SELECT us_id FROM users_app WHERE us_email = :emailID", nativeQuery = true)
-	int getUserIdByEmail(@Param("emailID") String emailID);
+	Integer getUserIdByEmail(@Param("emailID") String emailID);
 
 	@Query(value = "SELECT u FROM User u WHERE u.usId = :userId", nativeQuery = false)
 	User getUserCredentials(@Param("userId") int userId);
