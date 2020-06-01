@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gianni.frycolor.entities.ResponseReaction;
 import com.gianni.frycolor.model.RequestNewsResponse;
-import com.gianni.frycolor.model.ResponseApi;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -19,6 +18,7 @@ import io.swagger.annotations.ApiResponses;
 
 public interface NewsResponseControllerApi {
 
+	@SuppressWarnings("rawtypes")
 	@PostMapping("/newsresponse")
 	@ApiOperation(value = "It adds a new response, for now it adds to the post")
 	@ApiResponses(value = {
@@ -27,11 +27,12 @@ public interface NewsResponseControllerApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity<ResponseApi> addResponse(
+	ResponseEntity addResponse(
 			@ApiParam(value = "Payload of the object RequestNewsResponse", required = true)
 			@RequestBody RequestNewsResponse request);
 	
 	
+	@SuppressWarnings("rawtypes")
 	@PatchMapping("/newsresponse/edit")
 	@ApiOperation(value = "It edits an existing response")
 	@ApiResponses(value = {
@@ -40,13 +41,14 @@ public interface NewsResponseControllerApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity<ResponseApi> editResponse(
+	ResponseEntity editResponse(
 			@ApiParam(value = "Response Id to identify the response which is going to being edited", required = true)
 			@RequestParam("nwResId") int nwResId,
 			@ApiParam(value = "Comment value to change it", required = true)
 			@RequestParam("comment") String comment);
 	
 	
+	@SuppressWarnings("rawtypes")
 	@DeleteMapping("/newsresponse/{nwResId}/delete")
 	@ApiOperation(value = "It deletes an existing response")
 	@ApiResponses(value = {
@@ -55,11 +57,12 @@ public interface NewsResponseControllerApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity<ResponseApi> deleteResponse(
+	ResponseEntity deleteResponse(
 			@ApiParam(value = "Response Id to identify the response which is going to being deleted", required = true)
 			@PathVariable("nwResId") int nwResId);
 	
 	
+	@SuppressWarnings("rawtypes")
 	@PostMapping("/newsresponse/reaction")
 	@ApiOperation(value = "It adds or removes a reaction of a response")
 	@ApiResponses(value = {
@@ -68,7 +71,7 @@ public interface NewsResponseControllerApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity<ResponseApi> AddOrRemoveReaction(
+	ResponseEntity AddOrRemoveReaction(
 			@ApiParam(value = "Payload of the responseReaction", required = true)
 			@RequestBody ResponseReaction responseReaction);
 	
