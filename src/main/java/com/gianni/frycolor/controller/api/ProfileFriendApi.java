@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.gianni.frycolor.entities.UserFriends;
-import com.gianni.frycolor.model.ResponseApi;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -17,6 +16,7 @@ import io.swagger.annotations.ApiResponses;
 
 public interface ProfileFriendApi {
 	
+	@SuppressWarnings("rawtypes")
 	@PostMapping("/profile/friends")
 	@ApiOperation(value = "Add a friend of the user giving their userID")
 	@ApiResponses(value = {
@@ -25,11 +25,12 @@ public interface ProfileFriendApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity<ResponseApi> addFriend(
+	ResponseEntity addFriend(
 			@ApiParam(value = "Payload information of the user with its friendID", required = true)
 			@RequestBody UserFriends userFriend);
 	
 	
+	@SuppressWarnings("rawtypes")
 	@DeleteMapping("/profile/friends")
 	@ApiOperation(value = "Delete a friend of the user giving their userID and the friendId which needs to delete")
 	@ApiResponses(value = {
@@ -38,11 +39,12 @@ public interface ProfileFriendApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity<ResponseApi> deleteFriend(
+	ResponseEntity deleteFriend(
 			@ApiParam(value = "Payload of the userId and his friendId", required = true)
 			@RequestBody UserFriends userFriend);
 
 
+	@SuppressWarnings("rawtypes")
 	@GetMapping("/profile/{userId}/friends")
 	@ApiOperation(value = "Get friend list by userID")
 	@ApiResponses(value = {
@@ -51,7 +53,7 @@ public interface ProfileFriendApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity<ResponseApi> getListFriends(
+	ResponseEntity getListFriends(
 			@ApiParam(value = "UserID value to find their friends", required = true)
 			@PathVariable("userId") int userId);
 

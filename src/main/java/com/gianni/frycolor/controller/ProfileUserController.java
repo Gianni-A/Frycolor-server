@@ -1,7 +1,5 @@
 package com.gianni.frycolor.controller;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +11,9 @@ import com.gianni.frycolor.controller.api.ProfileMediaApi;
 import com.gianni.frycolor.controller.api.ProfileUserControllerApi;
 import com.gianni.frycolor.entities.UserFriends;
 import com.gianni.frycolor.entities.UserInformation;
-import com.gianni.frycolor.model.ResponseApi;
+import com.gianni.frycolor.exception.FriendsException;
+import com.gianni.frycolor.exception.MediaException;
+import com.gianni.frycolor.exception.UserExistException;
 import com.gianni.frycolor.service.ProfileUserService;
 
 @RestController
@@ -22,34 +22,70 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 	@Autowired
 	ProfileUserService service;
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity<ResponseApi> getUserInformation(int userInfId) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.getUserInformation(userInfId));
+	public ResponseEntity getUserInformation(int userInfId) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(service.getUserInformation(userInfId));
+		}
+		catch (UserExistException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity<ResponseApi> updateUserInformation(UserInformation userInformation) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.updateUserInformation(userInformation));
+	public ResponseEntity updateUserInformation(UserInformation userInformation) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(service.updateUserInformation(userInformation));
+		}
+		catch (UserExistException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity<ResponseApi> getListFriends(int userId) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.getListFriends(userId));
+	public ResponseEntity getListFriends(int userId) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(service.getListFriends(userId));
+		} catch(FriendsException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity<ResponseApi> addFriend(UserFriends userFriends) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.addFriend(userFriends));
+	public ResponseEntity addFriend(UserFriends userFriends) {
+		try {
+			service.addFriend(userFriends);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch (FriendsException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+		
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity<ResponseApi> deleteFriend(UserFriends userFriend) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.deleteFriend(userFriend));
+	public ResponseEntity deleteFriend(UserFriends userFriend) {
+		try {
+			service.deleteFriend(userFriend);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch(FriendsException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity<ResponseApi> addOrUpdateMediaProfile(MultipartFile file, int userId) throws IOException {
-		return ResponseEntity.status(HttpStatus.OK).body(service.addOrUpdateMediaProfile(file, userId));
+	public ResponseEntity addOrUpdateMediaProfile(MultipartFile file, int userId) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(service.addOrUpdateMediaProfile(file, userId));
+		} catch (MediaException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+		
 	}
 
 }
