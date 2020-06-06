@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gianni.frycolor.controller.api.PostListControllerApi;
+import com.gianni.frycolor.exception.PostListException;
 import com.gianni.frycolor.service.PostListService;
 
 @RestController
@@ -17,8 +18,12 @@ public class PostListController implements PostListControllerApi {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ResponseEntity getNewsPerUser(int userId, int pagination) {
-		service.getNews(userId, pagination);
-		return new ResponseEntity(HttpStatus.OK);
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(service.getNewsPerUser(userId, pagination));
+		}
+		catch(PostListException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
 	}
 
 }

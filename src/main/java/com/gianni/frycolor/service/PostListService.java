@@ -1,12 +1,18 @@
 package com.gianni.frycolor.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gianni.frycolor.entities.NewsFeed;
+import com.gianni.frycolor.entities.NewsResponse;
 import com.gianni.frycolor.entities.UserComments;
+import com.gianni.frycolor.exception.PostListException;
+import com.gianni.frycolor.model.Post;
+import com.gianni.frycolor.model.ResponsePost;
 import com.gianni.frycolor.repository.impl.PostListDaoImpl;
 
 @Service
@@ -15,19 +21,59 @@ public class PostListService {
 	@Autowired
 	private PostListDaoImpl repositoryImpl;
 	
-	public void getNews(int userId, int pagination) {
+	public List<Post> getNewsPerUser(int userId, int pagination) {
 		List<NewsFeed> listNewsFeed = repositoryImpl.getNewsFeed(userId);
-		UserComments comments = new UserComments();
-		String pathImage = "";
-		int contReactions = 0;
 		
-		for(NewsFeed post : listNewsFeed) {
-			comments = repositoryImpl.getComment(post.getUsCommentId());
-			pathImage = repositoryImpl.getPathImage(post.getUsMdId());
-			//Needs to get the count of reactions.
-			
+		if(listNewsFeed.size() <= 0) {
+			throw new PostListException("No records in the DB");
 		}
 		
+		Post post;
+		ResponsePost res;
+		List<Post> postList = new ArrayList<>();
+		List<ResponsePost> responseList;
+		Optional<UserComments> comments;
+		String pathImage = "";
+		int contReactions = 0;
+		int contResponseReactions = 0;
+		String nameUser = "";
+		
+		for(NewsFeed news : listNewsFeed) {
+			post = new Post();
+			comments = repositoryImpl.getComment(news.getUsCommentId());
+			pathImage = repositoryImpl.getPathImage(news.getUsMdId());
+			contReactions = repositoryImpl.getTotalReactionsByNwId(news.getNwId());
+			nameUser = repositoryImpl.getCompleteName(news.getUsId());
+			
+			//Object for the News
+			post.setNwId(news.getNwId());
+			post.setComment(comments);
+			post.setImage(pathImage);
+			post.setContReactions(contReactions);
+			post.setNameUser(nameUser);
+			
+			//Objects for the responses
+			List<NewsResponse> listResponse = repositoryImpl.getResponsesByNwId(news.getNwId());
+			responseList = new ArrayList<>();
+			for(NewsResponse response : listResponse) {
+				res = new ResponsePost();
+				comments = repositoryImpl.getComment(response.getUsComId());
+				nameUser = repositoryImpl.getCompleteName(response.getUsId());
+				contResponseReactions = repositoryImpl.getTotalResponseReactions(response.getNwResId());
+				
+				res.setNwResId(response.getNwResId());
+				res.setComment(comments);
+				res.setNameUser(nameUser);
+				res.setContReactions(contResponseReactions);
+				responseList.add(res);
+			}
+			
+			post.setListResponses(responseList);
+			
+			postList.add(post);
+		}
+		
+		return postList;
 	}
 
 }
