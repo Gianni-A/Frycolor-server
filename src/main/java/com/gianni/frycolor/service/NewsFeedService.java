@@ -57,6 +57,10 @@ public class NewsFeedService {
 		//Add an image if there is one in the request
 		if(!pathImage.getOriginalFilename().isEmpty()) {
 			try {
+				if(pathImage.getSize() > 5000000) {
+					throw new NewsException("The image is too heaver, please under 5 mb");
+				}
+				
 				String mediaDirectory = Utilities.getPath(PATH_MEDIA_IMAGE_PROFILE);
 				File convertFile = new File(mediaDirectory + pathImage.getOriginalFilename());
 				convertFile.createNewFile();
@@ -67,7 +71,6 @@ public class NewsFeedService {
 			catch(IOException e) {
 				throw new NewsException(HUBO_ERROR + e.getMessage());
 			}
-			
 			
 			userMedia.setUsMdId(0);
 			userMedia.setUsId(userId);
@@ -81,6 +84,11 @@ public class NewsFeedService {
 		
 		//Add a comment if there is one in the request
 		if(!input_comment.isEmpty()) {
+			
+			if(input_comment.length() > 180) {
+				throw new NewsException("The maximum character per comment is 180");
+			}
+			
 			userComments.setUsComId(0);
 			userComments.setUsId(userId);
 			userComments.setUsComComment(input_comment);

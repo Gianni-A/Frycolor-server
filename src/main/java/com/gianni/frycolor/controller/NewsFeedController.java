@@ -23,7 +23,7 @@ public class NewsFeedController implements NewsFeedControllerApi {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.saveNews(file, comment, userId));
 		} catch (NewsException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 		
 	}
