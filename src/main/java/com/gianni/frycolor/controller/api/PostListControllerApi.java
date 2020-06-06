@@ -13,7 +13,7 @@ public interface PostListControllerApi {
 	
 	@SuppressWarnings("rawtypes")
 	@GetMapping("/postlist/{userId}/{pagination}")
-	@ApiOperation(value = "Enlist newsfeed's user, including his friends")
+	@ApiOperation(value = "Enlist newsfeed's user")
 	@ApiResponses(value = {
 	    @ApiResponse(code = 200, message = "Successfully get news from the user"),
 	    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -26,4 +26,20 @@ public interface PostListControllerApi {
 			@ApiParam(value = "Pagination, the number of posts to show", required = true)
 			@PathVariable("pagination") int pagination);
 
+	
+	
+	@SuppressWarnings("rawtypes")
+	@GetMapping("/postlist/friends/{userId}/{pagination}")
+	@ApiOperation(value = "Enlist newsfeed's user, including his friends")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successfully get news from the user"),
+	    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+	})
+	ResponseEntity getNewsWithFriends(
+			@ApiParam(value = "userId is required to find all his news and his friends", required = true)
+			@PathVariable("userId") int userId,
+			@ApiParam(value = "Pagination, the number of posts to show", required = true)
+			@PathVariable("pagination") int pagination);
 }

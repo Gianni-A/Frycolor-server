@@ -75,5 +75,9 @@ public class PostListService {
 		
 		return postList;
 	}
+	
+	public void getNewsWithFriends(int userId, int pagination) {
+		
+	}
 
 }
