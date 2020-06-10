@@ -20,7 +20,7 @@ public class UserInformation {
 	@Column(name = "US_INF_ID")
 	private int usInfId;
 	
-	@NotEmpty(message = "the name is empty")
+	@NotEmpty(message = "Name should not be empty")
 	@Column(name = "US_INF_NAME")
 	private String usInfName;
 	

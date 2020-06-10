@@ -26,7 +26,7 @@ public class SignUpController implements SignUpControllerApi {
 			return ResponseEntity.status(HttpStatus.OK).body(signUpService.signUpUser(user));	
 		}
 		catch(UserValidationsException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 		catch(UserExistException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(HUBO_ERROR + e.getMessage());

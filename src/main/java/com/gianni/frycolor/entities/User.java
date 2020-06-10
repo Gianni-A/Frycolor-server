@@ -10,11 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Component;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import static com.gianni.frycolor.util.Constantes.EMAIL_PATTERN;;
 
 
 @Entity
@@ -30,14 +34,16 @@ public class User {
 	private int usId;
 	
 	@Column(name = "US_USER")
+	@NotEmpty(message = "User should not be empty")
 	private String usUser;
 	
 	@Column(name = "US_PASSWORD")
+	@NotEmpty(message = "Password should not be empty")
 	private String usPassword;
 	
+	@NotEmpty
 	@Column(name = "US_EMAIL")
-	//@Pattern(regexp = "/^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/")
-	//@Pattern(regexp = "^[_A-Za-z0-9-\\\\+]+(\\\\.[_A-Za-z0-9-]+)*@\" + \"[A-Za-z0-9-]+(\\\\.[A-Za-z0-9]+)*(\\\\.[A-Za-z]{2,})$")
+	@Pattern(regexp = EMAIL_PATTERN, message = "The email format is invalid")
 	private String usEmail;
 	
 	@Column(name = "US_STATUS")

@@ -28,10 +28,6 @@ public class SignUpService {
 	
 	public User signUpUser(User user) {
 		
-		if(user.getUsUser().isEmpty() || user.getUsPassword().isEmpty() || user.getUsEmail().isEmpty()) {
-			throw new UserValidationsException("Needs to comple the required data");
-		}
-		
 		if(validateUserAndEmail(user)) {
 			throw new UserExistException("It already exist the user");
 		}

@@ -1,6 +1,9 @@
 package com.gianni.frycolor.controller.api;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+@Validated
 @CrossOrigin("*")
 @RequestMapping("/")
 @Api(value = "Profile Management System")
@@ -46,6 +50,6 @@ public interface ProfileUserControllerApi {
 		})
 	ResponseEntity updateUserInformation(
 			@ApiParam(value = "Payload information of the user to be update", required = true)
-			@RequestBody UserInformation userInformation);
+			@Valid @RequestBody UserInformation userInformation);
 
 }
