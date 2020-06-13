@@ -79,5 +79,65 @@ public class PostListService {
 	public void getNewsWithFriends(int userId, int pagination) {
 		
 	}
+	
+	//Needs to test later or when it is the moment
+	public List<Post> getNewsJustImages(int userId, int pagination) {
+		List<NewsFeed> listNewsFeed = repositoryImpl.getNewsFeed(userId);
+		
+		if(listNewsFeed.size() <= 0) {
+			throw new PostListException("No records in the DB");
+		}
+		
+		Post post;
+		ResponsePost res;
+		List<Post> postList = new ArrayList<>();
+		List<ResponsePost> responseList;
+		Optional<UserComments> comments;
+		String pathImage = "";
+		int contReactions = 0;
+		int contResponseReactions = 0;
+		String nameUser = "";
+		
+		for(NewsFeed news : listNewsFeed) {
+			pathImage = repositoryImpl.getPathImage(news.getUsMdId());
+			
+			if(pathImage != "") {
+				post = new Post();
+				comments = repositoryImpl.getComment(news.getUsCommentId());
+				contReactions = repositoryImpl.getTotalReactionsByNwId(news.getNwId());
+				nameUser = repositoryImpl.getCompleteName(news.getUsId());
+				
+				//Object for the News
+				post.setNwId(news.getNwId());
+				post.setComment(comments);
+				post.setImage(pathImage);
+				post.setContReactions(contReactions);
+				post.setNameUser(nameUser);
+				
+				//Objects for the responses
+				List<NewsResponse> listResponse = repositoryImpl.getResponsesByNwId(news.getNwId());
+				responseList = new ArrayList<>();
+				for(NewsResponse response : listResponse) {
+					res = new ResponsePost();
+					comments = repositoryImpl.getComment(response.getUsComId());
+					nameUser = repositoryImpl.getCompleteName(response.getUsId());
+					contResponseReactions = repositoryImpl.getTotalResponseReactions(response.getNwResId());
+					
+					res.setNwResId(response.getNwResId());
+					res.setComment(comments);
+					res.setNameUser(nameUser);
+					res.setContReactions(contResponseReactions);
+					responseList.add(res);
+				}
+				
+				post.setListResponses(responseList);
+				
+				postList.add(post);
+			}
+			
+		}
+		
+		return postList;
+	}
 
 }

@@ -42,4 +42,21 @@ public interface PostListControllerApi {
 			@PathVariable("userId") int userId,
 			@ApiParam(value = "Pagination, the number of posts to show", required = true)
 			@PathVariable("pagination") int pagination);
+	
+	
+	
+	@SuppressWarnings("rawtypes")
+	@GetMapping("/postlist/images/{userId}/{pagination}")
+	@ApiOperation(value = "Enlist image's feed foreach user")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successfully get images' feed from the user"),
+	    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+	})
+	ResponseEntity getNewsJustImages(
+			@ApiParam(value = "userId is required to find all his news", required = true)
+			@PathVariable("userId") int userId,
+			@ApiParam(value = "Pagination, the number of posts to show", required = true)
+			@PathVariable("pagination") int pagination);
 }

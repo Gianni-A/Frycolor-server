@@ -32,7 +32,15 @@ public class PostListController implements PostListControllerApi {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
 
+	@SuppressWarnings("rawtypes")
+	@Override
+	public ResponseEntity getNewsJustImages(int userId, int pagination) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(service.getNewsJustImages(userId, pagination));
+		}
+		catch(PostListException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
+	}
 }
