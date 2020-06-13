@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import static com.gianni.frycolor.util.Constantes.EMAIL_PATTERN;;
+import static com.gianni.frycolor.util.Constantes.EMAIL_REGEX;
 
 
 @Entity
@@ -43,7 +43,7 @@ public class User {
 	
 	@NotEmpty
 	@Column(name = "US_EMAIL")
-	@Pattern(regexp = EMAIL_PATTERN, message = "The email format is invalid")
+	@Pattern(regexp = EMAIL_REGEX, message = "The email format is invalid")
 	private String usEmail;
 	
 	@Column(name = "US_STATUS")

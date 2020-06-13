@@ -14,6 +14,8 @@ import com.gianni.frycolor.repository.SessionDao;
 import com.gianni.frycolor.util.SendMail;
 import com.gianni.frycolor.util.Utilities;
 
+import static com.gianni.frycolor.util.Constantes.INVALID_EMAIL_FORMAT;
+
 @Service
 public class SessionService {
 	
@@ -24,6 +26,11 @@ public class SessionService {
 	User user;
 	
 	public void sendChangesPassword(String emailID) {
+		
+		if(!Utilities.validateEmailFormat(emailID)) {
+			throw new EmailException(INVALID_EMAIL_FORMAT);
+		}
+		
 		Integer userId = repository.getUserIdByEmail(emailID.toLowerCase());
 		
 		if(userId == null) {

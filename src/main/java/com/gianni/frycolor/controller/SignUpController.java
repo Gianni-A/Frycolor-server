@@ -11,7 +11,7 @@ import com.gianni.frycolor.exception.UserExistException;
 import com.gianni.frycolor.exception.UserValidationsException;
 import com.gianni.frycolor.service.SignUpService;
 
-import static com.gianni.frycolor.util.Constantes.*;
+import static com.gianni.frycolor.util.Constantes.HUBO_ERROR;
 
 @RestController
 public class SignUpController implements SignUpControllerApi {

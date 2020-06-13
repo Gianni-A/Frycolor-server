@@ -4,6 +4,9 @@ import java.nio.file.FileSystems;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import static com.gianni.frycolor.util.Constantes.EMAIL_REGEX;
 
 
 public class Utilities {
@@ -51,6 +54,17 @@ public class Utilities {
 		SimpleDateFormat formatDateTime = new SimpleDateFormat("yyyy-MM-dd");
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		return formatDateTime.format(timestamp);
+	}
+	
+	public static boolean validateEmailFormat(String email) {
+		Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
+		
+		if (email == null) {
+			return false;
+		}
+
+		Matcher matcher = EMAIL_PATTERN.matcher(email);
+		return matcher.matches();
 	}
 
 }
