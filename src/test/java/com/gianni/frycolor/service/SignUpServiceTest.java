@@ -25,29 +25,31 @@ import com.gianni.frycolor.util.SendMail;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(SendMail.class)
+@PowerMockIgnore("javax.net.ssl.*") //Need to set it to avoid the error for UserExistException test
 public class SignUpServiceTest {
 	
 	private SignUpService service;
+	private UserInfo userInfo;
 	
 	@Before
 	public void setup() {
 		service = new SignUpService();
 		service.data = mock(SignUpDao.class);
 		service.userInfo = mock(UserInformation.class);
+		userInfo = new UserInfo();
 	}
 	
 	@Test
 	//Verify if given data will be map correctly
 	public void signUpUser() throws Exception {
-		UserInfo userInfo = new UserInfo();
 		when(service.data.findByName(anyString())).thenReturn(0);
 		
 		PowerMockito.mockStatic(SendMail.class);
 		PowerMockito.doNothing().when(SendMail.class, "sendEmail", anyString(), anyString());
 		
-		when(service.data.save(any(User.class))).thenReturn(userInfo.getUserInfo());
+		when(service.data.save(any(User.class))).thenReturn(userInfo.getUser());
 		
-		User results = service.signUpUser(userInfo.getUserInfo());
+		User results = service.signUpUser(userInfo.getUser());
 		
 		Assert.assertEquals(1, results.getUsId());
 		Assert.assertEquals("Test", results.getUsUser());
@@ -63,13 +65,11 @@ public class SignUpServiceTest {
 		
 	}
 	
-	//Getting error on the exception
-	/*@Test(expected = UserExistException.class)
+	@Test(expected = UserExistException.class)
 	public void signUpUserException() {
-		when(service.data.findByName(anyString())).thenReturn(0);
-		when(service.data.findByEmail(anyString())).thenReturn(0);
-		UserInfo userInfo = new UserInfo();
-		service.signUpUser(userInfo.getUserInfo());
-	}*/
+		when(service.data.findByName(anyString())).thenReturn(10);
+		when(service.data.findByEmail(anyString())).thenReturn(10);
+		service.signUpUser(userInfo.getUser());
+	}
 	
 }
