@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,9 +33,6 @@ public class ProfileUserService {
 	
 	@Autowired
 	UserInformation uInf;
-	
-	@Autowired
-	ServletContext context;
 	
 	@Autowired
 	ValidationsDao utilValidations;

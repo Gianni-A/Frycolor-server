@@ -23,7 +23,7 @@ public class UserInfo {
 		userInfo.setUsInfName("testName");
 		userInfo.setUsInfLastname("testLastName");
 		userInfo.setUsInfBirthday("1995-05-24");
-		userInfo.setUsInfCity("Farminton hills");
+		userInfo.setUsInfCity("Farmington Hills");
 		userInfo.setUsInfState("Michigan");
 		
 		return userInfo;
