@@ -49,6 +49,12 @@ public class NewsFeedService {
 	
 	String dateTime = "";
 	
+	@Autowired
+	public void setNewsFeedDao(NewsFeedDao repository) {newsRepository = repository;}
+	
+	@Autowired
+	public void setUserCommentsDao(UserCommentsDao repository) {userCommentsRepository = repository;}
+	
 	public NewsFeed saveNews(MultipartFile pathImage, String input_comment, int userId) {
 		dateTime = Utilities.getTimestamp();
 		newsFeed.setUsMdId(0);
