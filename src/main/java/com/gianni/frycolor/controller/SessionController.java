@@ -20,8 +20,7 @@ public class SessionController implements SessionControllerApi {
 	@Override
 	public ResponseEntity requestChangePasswordForgotten(String emailID) {
 		try {
-			service.sendChangesPassword(emailID);
-			return new ResponseEntity(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(service.sendChangesPassword(emailID));
 		} 
 		catch(UserExistException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -34,8 +33,7 @@ public class SessionController implements SessionControllerApi {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ResponseEntity changePasswordForgotten(String userId, String newPassword) {
-		service.changePasswordForgotten(userId, newPassword);
-		return new ResponseEntity(HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.OK).body(service.changePasswordForgotten(userId, newPassword));
 	}
 
 }

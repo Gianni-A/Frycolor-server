@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.exception.EmailException;
 import com.gianni.frycolor.exception.UserExistException;
+import com.gianni.frycolor.model.ResponseSuccessMsg;
 import com.gianni.frycolor.repository.SessionDao;
 import com.gianni.frycolor.util.SendMail;
 import com.gianni.frycolor.util.Utilities;
@@ -25,7 +26,7 @@ public class SessionService {
 	@Autowired
 	User user;
 	
-	public void sendChangesPassword(String emailID) {
+	public ResponseSuccessMsg sendChangesPassword(String emailID) {
 		
 		if(!Utilities.validateEmailFormat(emailID)) {
 			throw new EmailException(INVALID_EMAIL_FORMAT);
@@ -45,9 +46,12 @@ public class SessionService {
 			throw new EmailException(e.getMessage());
 		}
 		
+		ResponseSuccessMsg response = new ResponseSuccessMsg();
+		response.setMessage("Email sent it");
+		return response;
 	}
 	
-	public void changePasswordForgotten(String userId, String newPassword) {
+	public ResponseSuccessMsg changePasswordForgotten(String userId, String newPassword) {
 		String userIdDecoded = Utilities.encodeOrDecodeBase64(userId, false);
 		user = repository.getUserCredentials(Integer.parseInt(userIdDecoded));
 		user.setUsPassword(newPassword);
@@ -56,6 +60,11 @@ public class SessionService {
 		user.setUsTsUpdated(dateTime);
 		
 		repository.save(user);
+		
+		ResponseSuccessMsg response = new ResponseSuccessMsg();
+		response.setMessage("Password has been changed");
+		
+		return response;
 	}
 	
 }
