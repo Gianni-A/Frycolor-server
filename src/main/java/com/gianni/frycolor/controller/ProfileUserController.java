@@ -14,6 +14,8 @@ import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.exception.FriendsException;
 import com.gianni.frycolor.exception.MediaException;
 import com.gianni.frycolor.exception.UserExistException;
+import com.gianni.frycolor.exception.UserValidationsException;
+import com.gianni.frycolor.model.RequestChangePassword;
 import com.gianni.frycolor.service.ProfileUserService;
 
 @RestController
@@ -86,6 +88,16 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 		
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public ResponseEntity changePassword(RequestChangePassword changePasswordInfo) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(service.changePassword(changePasswordInfo));
+		} catch(UserValidationsException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
 
 }

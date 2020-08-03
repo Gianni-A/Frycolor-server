@@ -10,13 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.entities.UserFriends;
 import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.exception.FriendsException;
 import com.gianni.frycolor.exception.MediaException;
 import com.gianni.frycolor.exception.UserExistException;
+import com.gianni.frycolor.exception.UserValidationsException;
+import com.gianni.frycolor.model.RequestChangePassword;
+import com.gianni.frycolor.model.ResponseSuccessMsg;
 import com.gianni.frycolor.repository.FriendsDao;
 import com.gianni.frycolor.repository.ProfileUserDao;
+import com.gianni.frycolor.repository.SessionDao;
 import com.gianni.frycolor.util.Utilities;
 import com.gianni.frycolor.util.ValidationsDao;
 
@@ -32,10 +37,19 @@ public class ProfileUserService {
 	FriendsDao repFriend;
 	
 	@Autowired
+	User user;
+	
+	@Autowired
 	UserInformation uInf;
 	
 	@Autowired
 	ValidationsDao utilValidations;
+	
+	@Autowired
+	SessionDao repSession;
+	
+	@Autowired
+	ProfileUserDao repoProfile;
 	
 	final public String PATH_MEDIA_IMAGE_PROFILE = "media\\profile_images\\";
 	
@@ -117,6 +131,25 @@ public class ProfileUserService {
 		uInf.setUsInfTsUpdated(Utilities.getTimestamp());
 		
 		return repository.save(uInf);
+	}
+	
+	public ResponseSuccessMsg changePassword(RequestChangePassword changePasswordInfo) {
+		user = repSession.getOne(changePasswordInfo.getUserId());
+
+		//Validate password in order to able to change
+		if(!user.getUsPassword().equals(changePasswordInfo.getActualPassword())) {
+			throw new UserValidationsException("The password does't match with the actual one");
+		}
+		
+		user.setUsPassword(changePasswordInfo.getNewPassword());
+		user.setUsTsUpdated(Utilities.getTimestamp());
+		
+		repSession.save(user);
+		
+		ResponseSuccessMsg response = new ResponseSuccessMsg();
+		response.setMessage("Password has been change");
+		
+		return response;
 	}
 
 }

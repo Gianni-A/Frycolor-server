@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.gianni.frycolor.entities.User;
 
-@Repository
 public interface SessionDao extends JpaRepository<User, Integer> {
 
 	@Query(value = "SELECT us_id FROM users_app WHERE us_email = :emailID", nativeQuery = true)

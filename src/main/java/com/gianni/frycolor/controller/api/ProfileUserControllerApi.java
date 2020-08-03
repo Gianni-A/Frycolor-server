@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gianni.frycolor.entities.UserInformation;
+import com.gianni.frycolor.model.RequestChangePassword;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -51,5 +53,19 @@ public interface ProfileUserControllerApi {
 	ResponseEntity updateUserInformation(
 			@ApiParam(value = "Payload information of the user to be update", required = true)
 			@Valid @RequestBody UserInformation userInformation);
+	
+	
+	@SuppressWarnings("rawtypes")
+	@PutMapping("/profile/password")
+	@ApiOperation(value = "Change the password from the profile")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successfully password changed"),
+	    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+	})
+	ResponseEntity changePassword(
+			@ApiParam(value = "Payload information that contains: userId, actualPassword, newPassword", required = true)
+			@RequestBody RequestChangePassword changePasswordInfo);
 
 }
