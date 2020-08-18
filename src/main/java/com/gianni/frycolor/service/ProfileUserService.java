@@ -133,7 +133,8 @@ public class ProfileUserService {
 		return repository.save(uInf);
 	}
 	
-	public ResponseSuccessMsg changePassword(RequestChangePassword changePasswordInfo) {
+	public User changePassword(RequestChangePassword changePasswordInfo) {
+
 		user = repSession.getOne(changePasswordInfo.getUserId());
 
 		//Validate password in order to able to change
@@ -144,12 +145,7 @@ public class ProfileUserService {
 		user.setUsPassword(changePasswordInfo.getNewPassword());
 		user.setUsTsUpdated(Utilities.getTimestamp());
 		
-		repSession.save(user);
-		
-		ResponseSuccessMsg response = new ResponseSuccessMsg();
-		response.setMessage("Password has been change");
-		
-		return response;
+		return repSession.save(user);
 	}
 
 }

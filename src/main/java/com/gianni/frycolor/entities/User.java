@@ -15,6 +15,8 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -49,6 +51,7 @@ public class User {
 	@Column(name = "US_STATUS")
 	private int usStatus;
 	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@JoinColumn(name = "US_INF_ID")
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private UserInformation usInfId;
