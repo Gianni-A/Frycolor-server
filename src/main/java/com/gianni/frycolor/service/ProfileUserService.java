@@ -25,6 +25,8 @@ import com.gianni.frycolor.repository.SessionDao;
 import com.gianni.frycolor.util.Utilities;
 import com.gianni.frycolor.util.ValidationsDao;
 
+import springfox.documentation.service.ResponseMessage;
+
 import static com.gianni.frycolor.util.Constantes.*;
 
 @Service
@@ -78,11 +80,13 @@ public class ProfileUserService {
 	}
 	
 	public List<UserInformation> getListFriends(int userId) {
-		List<Integer> idsUser = repFriend.getIdListFriends(userId);
+		User user = repSession.getOne(userId);
+		
+		List<UserFriends> listFriends = repFriend.getIdListFriends(user);
+		
 		List<UserInformation> infoFriends = new ArrayList<UserInformation>();
-		for (int userFrdId : idsUser) {
-			infoFriends.add(repFriend.getInfFriend(userFrdId));
-		}
+		
+		listFriends.stream().forEach(friend -> infoFriends.add(friend.getFrdUsIdUf().getUsInfId()));
 		
 		if(infoFriends.size() <= 0) {
 			throw new FriendsException("There is no friend listed");
@@ -91,23 +95,35 @@ public class ProfileUserService {
 		return infoFriends;
 	}
 	
-	public void addFriend(UserFriends userFriend) {
-		String dateTime = Utilities.getTimestamp();
-		userFriend.setFrdTsCreated(dateTime);
-		userFriend.setFrdTsUpdated(dateTime);
-		
-		int friendResponse = repFriend.addNewFriend(userFriend.getFrdUsId(), 
-				                                    userFriend.getFrdUsIdUf(),
-				                                    userFriend.getFrdTsCreated(),
-				                                    userFriend.getFrdTsUpdated());
-		if(friendResponse == 0) {
+	public UserFriends addFriend(int userId, int friendId) {
+		try {
+			String dateTime = Utilities.getTimestamp();
+			UserFriends userFriend = new UserFriends();
+			userFriend.setFrdTsCreated(dateTime);
+			userFriend.setFrdTsUpdated(dateTime);
+			
+			User user = repSession.getOne(userId);
+			User friend = repSession.getOne(friendId);
+			
+			userFriend.setFrdUsId(user);
+			userFriend.setFrdUsIdUf(friend);
+			
+			return repFriend.save(userFriend);
+		} catch(Exception e) {
 			throw new FriendsException("Error to add a friend");
 		}
 	}
 	
-	public void deleteFriend(UserFriends userFriend) {
+	public ResponseSuccessMsg deleteFriend(int userId, int friendId) {
 		try {
-			repFriend.deleteFriend(userFriend.getFrdUsId(), userFriend.getFrdUsIdUf());
+			User user = repSession.getOne(userId);
+			User friend = repSession.getOne(friendId);
+			
+			repFriend.deleteFriend(user, friend);
+			
+			ResponseSuccessMsg message = new ResponseSuccessMsg("User deleted successfully");
+			return message;
+			
 		} catch(Exception e) {
 			throw new FriendsException(HUBO_ERROR+e.getMessage());
 		}

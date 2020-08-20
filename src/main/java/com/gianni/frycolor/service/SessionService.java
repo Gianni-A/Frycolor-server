@@ -46,8 +46,7 @@ public class SessionService {
 			throw new EmailException(e.getMessage());
 		}
 		
-		ResponseSuccessMsg response = new ResponseSuccessMsg();
-		response.setMessage("Email sent it");
+		ResponseSuccessMsg response = new ResponseSuccessMsg("Email sent it");
 		return response;
 	}
 	
@@ -61,8 +60,7 @@ public class SessionService {
 		
 		repository.save(user);
 		
-		ResponseSuccessMsg response = new ResponseSuccessMsg();
-		response.setMessage("Password has been changed");
+		ResponseSuccessMsg response = new ResponseSuccessMsg("Password has been changed");
 		
 		return response;
 	}

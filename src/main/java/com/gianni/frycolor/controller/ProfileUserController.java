@@ -58,10 +58,9 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity addFriend(UserFriends userFriends) {
+	public ResponseEntity addFriend(int userId, int friendId) {
 		try {
-			service.addFriend(userFriends);
-			return new ResponseEntity(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(service.addFriend(userId, friendId));
 		} catch (FriendsException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
@@ -70,10 +69,9 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity deleteFriend(UserFriends userFriend) {
+	public ResponseEntity deleteFriend(int userId, int friendId) {
 		try {
-			service.deleteFriend(userFriend);
-			return new ResponseEntity(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(service.deleteFriend(userId, friendId));
 		} catch(FriendsException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
