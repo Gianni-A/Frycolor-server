@@ -32,7 +32,7 @@ public class PostListService {
 		ResponsePost res;
 		List<Post> postList = new ArrayList<>();
 		List<ResponsePost> responseList;
-		Optional<UserComments> comments;
+		UserComments comments;
 		String pathImage = "";
 		int contReactions = 0;
 		int contResponseReactions = 0;
@@ -40,10 +40,10 @@ public class PostListService {
 		
 		for(NewsFeed news : listNewsFeed) {
 			post = new Post();
-			comments = repositoryImpl.getComment(news.getUsCommentId());
-			pathImage = repositoryImpl.getPathImage(news.getUsMdId());
+			comments = repositoryImpl.getComment(news.getUsCommentId().getUsComId());
+			pathImage = repositoryImpl.getPathImage(news.getUsMdId().getUsMdId());
 			contReactions = repositoryImpl.getTotalReactionsByNwId(news.getNwId());
-			nameUser = repositoryImpl.getCompleteName(news.getUsId());
+			nameUser = repositoryImpl.getCompleteName(news.getUsId().getUsId());
 			
 			//Object for the News
 			post.setNwId(news.getNwId());
@@ -92,20 +92,20 @@ public class PostListService {
 		ResponsePost res;
 		List<Post> postList = new ArrayList<>();
 		List<ResponsePost> responseList;
-		Optional<UserComments> comments;
+		UserComments comments;
 		String pathImage = "";
 		int contReactions = 0;
 		int contResponseReactions = 0;
 		String nameUser = "";
 		
 		for(NewsFeed news : listNewsFeed) {
-			pathImage = repositoryImpl.getPathImage(news.getUsMdId());
+			pathImage = repositoryImpl.getPathImage(news.getUsMdId().getUsMdId());
 			
 			if(pathImage != "") {
 				post = new Post();
-				comments = repositoryImpl.getComment(news.getUsCommentId());
+				comments = repositoryImpl.getComment(news.getUsCommentId().getUsComId());
 				contReactions = repositoryImpl.getTotalReactionsByNwId(news.getNwId());
-				nameUser = repositoryImpl.getCompleteName(news.getUsId());
+				nameUser = repositoryImpl.getCompleteName(news.getUsId().getUsId());
 				
 				//Object for the News
 				post.setNwId(news.getNwId());

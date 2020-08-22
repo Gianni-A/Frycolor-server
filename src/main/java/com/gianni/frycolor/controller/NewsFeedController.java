@@ -37,16 +37,12 @@ public class NewsFeedController implements NewsFeedControllerApi {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ResponseEntity deleteNews(int nwId) {
-		service.deleteNews(nwId);
-		return new ResponseEntity(HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.OK).body(service.deleteNews(nwId));
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ResponseEntity addOrRemoveReactionToPost(NewsReaction newsReaction) {
-		service.addOrRemoveReactionToPost(newsReaction);
-		return new ResponseEntity(HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.OK).body(service.addOrRemoveReactionToPost(newsReaction));
 	}
-
-	
 }

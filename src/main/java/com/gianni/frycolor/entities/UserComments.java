@@ -2,12 +2,17 @@ package com.gianni.frycolor.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,9 +32,10 @@ public class UserComments {
 	@Column(name = "US_COM_COMMENT")
 	private String usComComment;
 
-	@Column(name = "US_ID")
+	@JoinColumn(name = "US_ID")
 	@ApiModelProperty(notes = "The ID of the user, it is a foreign key")
-	private int usId;
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+	private User usId;
 	
 	@Column(name = "US_COM_TS_CREATED")
 	private String usComTsCreated;
@@ -53,11 +59,11 @@ public class UserComments {
 		this.usComComment = usComComment;
 	}
 
-	public int getUsId() {
+	public User getUsId() {
 		return usId;
 	}
 
-	public void setUsId(int usId) {
+	public void setUsId(User usId) {
 		this.usId = usId;
 	}
 

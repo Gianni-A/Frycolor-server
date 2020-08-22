@@ -10,6 +10,7 @@ import com.gianni.frycolor.model.RequestNewsResponse;
 import com.gianni.frycolor.repository.NewsFeedDao;
 import com.gianni.frycolor.repository.NewsResponseDao;
 import com.gianni.frycolor.repository.ResponseReactionDao;
+import com.gianni.frycolor.repository.SessionDao;
 import com.gianni.frycolor.repository.UserCommentsDao;
 import com.gianni.frycolor.util.Utilities;
 import com.gianni.frycolor.util.ValidationsDao;
@@ -38,12 +39,15 @@ public class NewsResponseDaoImpl {
 	@Autowired
 	private ValidationsDao validations;
 	
+	@Autowired
+	private SessionDao userRepository;
+	
 	private String dateTime;
 	
 	public NewsResponse addResponse(RequestNewsResponse request) {
 		dateTime = Utilities.getTimestamp();
 		//Adding a comment into user_comments
-		userComments.setUsId(request.getUsId());
+		userComments.setUsId(userRepository.getOne(request.getUsId()));
 		userComments.setUsComComment(request.getComment());
 		userComments.setUsComTsCreated(dateTime);
 		userComments.setUsComTsUpdated(dateTime);

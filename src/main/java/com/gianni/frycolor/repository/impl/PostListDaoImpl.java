@@ -46,8 +46,8 @@ public class PostListDaoImpl {
 		return repoNewsFeed.getNewsFeedList(userId);
 	}
 	
-	public Optional<UserComments> getComment(int commentId) {
-		return repoComments.findById(commentId);
+	public UserComments getComment(int commentId) {
+		return repoComments.getOne(commentId);
 	}
 	
 	public String getPathImage(int mediaId) {

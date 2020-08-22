@@ -10,11 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.gianni.frycolor.entities.NewsFeed;
 import com.gianni.frycolor.entities.NewsReaction;
+import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.entities.UserComments;
 import com.gianni.frycolor.entities.UserMedia;
 import com.gianni.frycolor.exception.NewsException;
+import com.gianni.frycolor.model.ResponseSuccessMsg;
 import com.gianni.frycolor.repository.NewsFeedDao;
 import com.gianni.frycolor.repository.NewsReactionDao;
+import com.gianni.frycolor.repository.SessionDao;
 import com.gianni.frycolor.repository.UserCommentsDao;
 import com.gianni.frycolor.repository.UserMediaDao;
 import com.gianni.frycolor.util.Utilities;
@@ -45,6 +48,9 @@ public class NewsFeedService {
 	@Autowired
 	private UserComments userComments;
 	
+	@Autowired
+	private SessionDao userRepository;
+	
 	final public String PATH_MEDIA_IMAGE_PROFILE = "media\\post\\";
 	
 	String dateTime = "";
@@ -57,8 +63,7 @@ public class NewsFeedService {
 	
 	public NewsFeed saveNews(MultipartFile pathImage, String input_comment, int userId) {
 		dateTime = Utilities.getTimestamp();
-		newsFeed.setUsMdId(0);
-		newsFeed.setUsCommentId(0);
+		User user = userRepository.getOne(userId);
 		
 		//Add an image if there is one in the request
 		if(!pathImage.getOriginalFilename().isEmpty()) {
@@ -79,13 +84,13 @@ public class NewsFeedService {
 			}
 			
 			userMedia.setUsMdId(0);
-			userMedia.setUsId(userId);
+			userMedia.setUsId(user);
 			userMedia.setUsMdPath(pathImage.getOriginalFilename());
 			userMedia.setUsMdTsCreated(dateTime);
 			userMedia.setUsMdTsUpdated(dateTime);
 			userMediaRepository.save(userMedia);
 			
-			newsFeed.setUsMdId(userMedia.getUsMdId());
+			newsFeed.setUsMdId(userMedia);
 		}
 		
 		//Add a comment if there is one in the request
@@ -96,18 +101,19 @@ public class NewsFeedService {
 			}
 			
 			userComments.setUsComId(0);
-			userComments.setUsId(userId);
+			userComments.setUsId(user);
 			userComments.setUsComComment(input_comment);
 			userComments.setUsComTsCreated(dateTime);
 			userComments.setUsComTsUpdated(dateTime);
 			userCommentsRepository.save(userComments);
 			
-			newsFeed.setUsCommentId(userComments.getUsComId());
+			newsFeed.setUsCommentId(userComments);
 		}
 		
+		//Set 0 nw_id to create one
 		newsFeed.setNwId(0);
 		newsFeed.setNwStatus(1);
-		newsFeed.setUsId(userId);
+		newsFeed.setUsId(user);
 		newsFeed.setNwTsCreated(dateTime);
 		newsFeed.setNwTsUpdated(dateTime);
 		
@@ -124,7 +130,7 @@ public class NewsFeedService {
 		return userCommentsRepository.save(request);
 	}
 	
-	public void deleteNews(int nwId) {
+	public ResponseSuccessMsg deleteNews(int nwId) {
 		NewsFeed request = new NewsFeed();
 		dateTime = Utilities.getTimestamp();
 		
@@ -133,19 +139,27 @@ public class NewsFeedService {
 		request.setNwTsUpdated(dateTime);
 		
 		newsRepository.save(request);
+		
+		ResponseSuccessMsg message = new ResponseSuccessMsg("Post deleted");
+		return message;
 	}
 	
-	public void addOrRemoveReactionToPost(NewsReaction newsReaction) {
+	public ResponseSuccessMsg addOrRemoveReactionToPost(NewsReaction newsReaction) {
 		dateTime = Utilities.getTimestamp();
+		ResponseSuccessMsg message = new ResponseSuccessMsg("");
 		
 		if(newsReaction.getNwrId() == 0) {
 			//Add a reaction
 			newsReaction.setNwrTsCreated(dateTime);	
 			nwReactionRepository.save(newsReaction);
+			message = new ResponseSuccessMsg("Reaction added");
+			return message;
 		}
 		else {
 			//Delete reaction
 			nwReactionRepository.delete(newsReaction);
+			message = new ResponseSuccessMsg("Reaction deleted");
+			return message;
 		}
 	}
 

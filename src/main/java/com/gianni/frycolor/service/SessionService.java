@@ -23,9 +23,6 @@ public class SessionService {
 	@Autowired
 	SessionDao repository;
 	
-	@Autowired
-	User user;
-	
 	public ResponseSuccessMsg sendChangesPassword(String emailID) {
 		
 		if(!Utilities.validateEmailFormat(emailID)) {
@@ -52,7 +49,7 @@ public class SessionService {
 	
 	public ResponseSuccessMsg changePasswordForgotten(String userId, String newPassword) {
 		String userIdDecoded = Utilities.encodeOrDecodeBase64(userId, false);
-		user = repository.getUserCredentials(Integer.parseInt(userIdDecoded));
+		User user = repository.getUserCredentials(Integer.parseInt(userIdDecoded));
 		user.setUsPassword(newPassword);
 		
 		String dateTime = Utilities.getTimestamp();
