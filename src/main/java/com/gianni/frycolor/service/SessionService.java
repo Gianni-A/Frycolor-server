@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.exception.EmailException;
 import com.gianni.frycolor.exception.UserExistException;
+import com.gianni.frycolor.exception.UserValidationsException;
 import com.gianni.frycolor.model.ResponseSuccessMsg;
 import com.gianni.frycolor.repository.SessionDao;
 import com.gianni.frycolor.util.SendMail;
@@ -50,6 +51,9 @@ public class SessionService {
 	public ResponseSuccessMsg changePasswordForgotten(String userId, String newPassword) {
 		String userIdDecoded = Utilities.encodeOrDecodeBase64(userId, false);
 		User user = repository.getUserCredentials(Integer.parseInt(userIdDecoded));
+		if(user == null) {
+			throw new UserExistException("The user does not exits");
+		}
 		user.setUsPassword(newPassword);
 		
 		String dateTime = Utilities.getTimestamp();
