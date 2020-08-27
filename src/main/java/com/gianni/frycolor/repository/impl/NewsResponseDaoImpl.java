@@ -47,6 +47,7 @@ public class NewsResponseDaoImpl {
 	public NewsResponse addResponse(RequestNewsResponse request) {
 		dateTime = Utilities.getTimestamp();
 		//Adding a comment into user_comments
+		userComments.setUsComId(0);
 		userComments.setUsId(userRepository.getOne(request.getUsId()));
 		userComments.setUsComComment(request.getComment());
 		userComments.setUsComTsCreated(dateTime);
@@ -54,6 +55,7 @@ public class NewsResponseDaoImpl {
 		userComments = userCommentsRepository.save(userComments);
 		
 		//Adding the response
+		newsResponse.setNwResId(0);
 		newsResponse.setUsId(request.getUsId());
 		newsResponse.setUsComId(userComments.getUsComId());
 		newsResponse.setNwComOriginId(request.getNwComOriginId());
