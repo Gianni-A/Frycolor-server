@@ -29,8 +29,7 @@ public class PostListController implements PostListControllerApi {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ResponseEntity getNewsWithFriends(int userId, int pagination) {
-		// TODO Auto-generated method stub
-		return null;
+		return ResponseEntity.status(HttpStatus.OK).body(service.getNewsWithFriends(userId, pagination));
 	}
 
 	@SuppressWarnings("rawtypes")

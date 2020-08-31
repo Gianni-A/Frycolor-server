@@ -2,6 +2,7 @@ package com.gianni.frycolor.controller.api;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public interface NewsFeedControllerApi {
 	//Add a post
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/newsfeed/newpost")
-	@ApiOperation(value = "Enlist all newsfeed for the user is logged")
+	@ApiOperation(value = "Save a new post from the user")
 	@ApiResponses(value = {
 	    @ApiResponse(code = 200, message = "Successfully get all news from the user"),
 	    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),

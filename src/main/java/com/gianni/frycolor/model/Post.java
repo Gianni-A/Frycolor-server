@@ -11,7 +11,7 @@ import com.gianni.frycolor.entities.UserComments;
 public class Post {
 	
 	private int nwId;
-	private UserComments comment;
+	private String comment;
 	private String image;
 	private int contReactions;
 	private String nameUser;
@@ -24,10 +24,10 @@ public class Post {
 	public void setNwId(int nwId) {
 		this.nwId = nwId;
 	}
-	public UserComments getComment() {
+	public String getComment() {
 		return comment;
 	}
-	public void setComment(UserComments comment) {
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 	public String getImage() {

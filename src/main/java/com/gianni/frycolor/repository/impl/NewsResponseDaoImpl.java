@@ -1,12 +1,17 @@
 package com.gianni.frycolor.repository.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gianni.frycolor.entities.NewsResponse;
 import com.gianni.frycolor.entities.ResponseReaction;
+import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.entities.UserComments;
 import com.gianni.frycolor.model.RequestNewsResponse;
+import com.gianni.frycolor.model.ResponsePost;
 import com.gianni.frycolor.repository.NewsFeedDao;
 import com.gianni.frycolor.repository.NewsResponseDao;
 import com.gianni.frycolor.repository.ResponseReactionDao;
@@ -45,6 +50,8 @@ public class NewsResponseDaoImpl {
 	private String dateTime;
 	
 	public NewsResponse addResponse(RequestNewsResponse request) {
+		User user = userRepository.getOne(request.getUsId());
+		
 		dateTime = Utilities.getTimestamp();
 		//Adding a comment into user_comments
 		userComments.setUsComId(0);
@@ -56,8 +63,8 @@ public class NewsResponseDaoImpl {
 		
 		//Adding the response
 		newsResponse.setNwResId(0);
-		newsResponse.setUsId(request.getUsId());
-		newsResponse.setUsComId(userComments.getUsComId());
+		newsResponse.setUsId(user);
+		newsResponse.setUsComId(userComments);
 		newsResponse.setNwComOriginId(request.getNwComOriginId());
 		newsResponse.setNwResStatus(1);
 		newsResponse.setNwResTsCreated(dateTime);
@@ -129,6 +136,26 @@ public class NewsResponseDaoImpl {
 	
 	public UserComments getCommentById(int comId) {
 		return userCommentsRepository.getOne(comId);
+	}
+	
+	public List<ResponsePost> getAllResponseFromPost(int origin) {
+		List<ResponsePost> listResponse = new ArrayList();
+		
+		List<NewsResponse> nwsResponse = repository.getAllResponsesByNwId(origin);
+		nwsResponse.stream().forEach(n -> {
+			ResponsePost response = new ResponsePost();
+			
+			response.setNwResId(n.getNwResId());
+			response.setNameUser(n.getUsId().getUsInfId().getUsInfName() + " " + n.getUsId().getUsInfId().getUsInfLastname());
+			response.setComment(n.getUsComId().getUsComComment());
+			
+			int contReactions = responseReactionRepository.getCountResReactionNews(n.getNwResId());
+			response.setContReactions(contReactions);
+			
+			listResponse.add(response);
+		});
+		
+		return listResponse;
 	}
 	
 }

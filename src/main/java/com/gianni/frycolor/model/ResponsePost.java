@@ -10,7 +10,7 @@ import com.gianni.frycolor.entities.UserComments;
 public class ResponsePost {
 
 	private int nwResId;
-	private UserComments comment;
+	private String comment;
 	private String nameUser;
 	private int contReactions;
 	
@@ -20,10 +20,10 @@ public class ResponsePost {
 	public void setNwResId(int nwResId) {
 		this.nwResId = nwResId;
 	}
-	public UserComments getComment() {
+	public String getComment() {
 		return comment;
 	}
-	public void setComment(UserComments comment) {
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 	public String getNameUser() {
