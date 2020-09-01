@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.exception.EmailException;
 import com.gianni.frycolor.exception.UserExistException;
-import com.gianni.frycolor.exception.UserValidationsException;
 import com.gianni.frycolor.model.ResponseSuccessMsg;
 import com.gianni.frycolor.repository.SessionDao;
 import com.gianni.frycolor.util.SendMail;

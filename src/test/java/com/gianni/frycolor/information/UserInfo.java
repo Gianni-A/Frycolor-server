@@ -11,6 +11,18 @@ public class UserInfo {
 		user.setUsEmail("test@hot.com");
 		user.setUsUser("Test");
 		user.setUsPassword("123456");
+		user.setUsInfId(getUserInformation());
+		user.setUsStatus(1);
+		
+		return user;
+	}
+	
+	public User getUserFriend() {
+		User user = new User();
+		user.setUsId(2);
+		user.setUsEmail("test2@hot.com");
+		user.setUsUser("Test 2");
+		user.setUsPassword("987654");
 		user.setUsInfId(new UserInformation());
 		user.setUsStatus(1);
 		

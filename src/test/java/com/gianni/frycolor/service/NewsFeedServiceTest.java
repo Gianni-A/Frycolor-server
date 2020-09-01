@@ -42,7 +42,7 @@ public class NewsFeedServiceTest {
 		when(mockUsCommentsDao.save(any(UserComments.class))).thenReturn(commentsInfo.getUserComments());
 		UserComments comments = service.editNews(1, "Test comment");
 		Assert.assertEquals(1, comments.getUsComId());
-		Assert.assertEquals(2, comments.getUsId());
+		Assert.assertEquals(1, comments.getUsId().getUsId());
 		Assert.assertEquals("Test Comment", comments.getUsComComment());
 	}
 	

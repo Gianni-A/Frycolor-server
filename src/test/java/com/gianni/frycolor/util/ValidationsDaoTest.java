@@ -2,9 +2,7 @@ package com.gianni.frycolor.util;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -16,7 +14,6 @@ import com.gianni.frycolor.repository.ProfileUserDao;
 
 public class ValidationsDaoTest {
 	
-	private ProfileUserDao dao;
 	private ValidationsDao service;
 	
 	@Before

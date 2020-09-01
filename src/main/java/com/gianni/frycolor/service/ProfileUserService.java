@@ -25,8 +25,6 @@ import com.gianni.frycolor.repository.SessionDao;
 import com.gianni.frycolor.util.Utilities;
 import com.gianni.frycolor.util.ValidationsDao;
 
-import springfox.documentation.service.ResponseMessage;
-
 import static com.gianni.frycolor.util.Constantes.*;
 
 @Service

@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.gianni.frycolor.controller.api.ProfileFriendApi;
 import com.gianni.frycolor.controller.api.ProfileMediaApi;
 import com.gianni.frycolor.controller.api.ProfileUserControllerApi;
-import com.gianni.frycolor.entities.UserFriends;
 import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.exception.FriendsException;
 import com.gianni.frycolor.exception.MediaException;

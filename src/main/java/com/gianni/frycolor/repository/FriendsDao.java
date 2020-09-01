@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.entities.UserFriends;
-import com.gianni.frycolor.entities.UserInformation;
 
 
 public interface FriendsDao extends JpaRepository<UserFriends, Integer> {

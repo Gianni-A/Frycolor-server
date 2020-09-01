@@ -26,7 +26,7 @@ public class PostListService {
 	private NewsResponseDaoImpl repoResponseImpl;
 	
 	public List<Post> getNewsWithFriends(int userId, int pagination) {
-		List<Post> listPost = new ArrayList();
+		List<Post> listPost = new ArrayList<>();
 		List<PostModel> list = repositoryImpl.getAllListPost(userId);
 		list.stream().forEach(p -> {
 			Post post = new Post();

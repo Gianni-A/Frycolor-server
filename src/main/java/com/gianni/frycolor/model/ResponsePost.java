@@ -1,10 +1,7 @@
 package com.gianni.frycolor.model;
 
-import java.util.Optional;
 
 import org.springframework.stereotype.Component;
-
-import com.gianni.frycolor.entities.UserComments;
 
 @Component
 public class ResponsePost {

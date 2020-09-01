@@ -139,7 +139,7 @@ public class NewsResponseDaoImpl {
 	}
 	
 	public List<ResponsePost> getAllResponseFromPost(int origin) {
-		List<ResponsePost> listResponse = new ArrayList();
+		List<ResponsePost> listResponse = new ArrayList<>();
 		
 		List<NewsResponse> nwsResponse = repository.getAllResponsesByNwId(origin);
 		nwsResponse.stream().forEach(n -> {
