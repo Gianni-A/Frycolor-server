@@ -23,9 +23,6 @@ public class SessionService {
 	@Autowired
 	SessionDao repository;
 	
-	@Autowired
-	User user;
-	
 	public ResponseSuccessMsg sendChangesPassword(String emailID) {
 		
 		if(!Utilities.validateEmailFormat(emailID)) {
@@ -46,14 +43,16 @@ public class SessionService {
 			throw new EmailException(e.getMessage());
 		}
 		
-		ResponseSuccessMsg response = new ResponseSuccessMsg();
-		response.setMessage("Email sent it");
+		ResponseSuccessMsg response = new ResponseSuccessMsg("Email sent it");
 		return response;
 	}
 	
 	public ResponseSuccessMsg changePasswordForgotten(String userId, String newPassword) {
 		String userIdDecoded = Utilities.encodeOrDecodeBase64(userId, false);
-		user = repository.getUserCredentials(Integer.parseInt(userIdDecoded));
+		User user = repository.getUserCredentials(Integer.parseInt(userIdDecoded));
+		if(user == null) {
+			throw new UserExistException("The user does not exits");
+		}
 		user.setUsPassword(newPassword);
 		
 		String dateTime = Utilities.getTimestamp();
@@ -61,8 +60,7 @@ public class SessionService {
 		
 		repository.save(user);
 		
-		ResponseSuccessMsg response = new ResponseSuccessMsg();
-		response.setMessage("Password has been changed");
+		ResponseSuccessMsg response = new ResponseSuccessMsg("Password has been changed");
 		
 		return response;
 	}

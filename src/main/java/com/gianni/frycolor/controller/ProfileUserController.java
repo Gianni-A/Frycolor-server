@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.gianni.frycolor.controller.api.ProfileFriendApi;
 import com.gianni.frycolor.controller.api.ProfileMediaApi;
 import com.gianni.frycolor.controller.api.ProfileUserControllerApi;
-import com.gianni.frycolor.entities.UserFriends;
 import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.exception.FriendsException;
 import com.gianni.frycolor.exception.MediaException;
@@ -58,10 +57,9 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity addFriend(UserFriends userFriends) {
+	public ResponseEntity addFriend(int userId, int friendId) {
 		try {
-			service.addFriend(userFriends);
-			return new ResponseEntity(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(service.addFriend(userId, friendId));
 		} catch (FriendsException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
@@ -70,10 +68,9 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity deleteFriend(UserFriends userFriend) {
+	public ResponseEntity deleteFriend(int userId, int friendId) {
 		try {
-			service.deleteFriend(userFriend);
-			return new ResponseEntity(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(service.deleteFriend(userId, friendId));
 		} catch(FriendsException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}

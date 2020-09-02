@@ -2,9 +2,12 @@ package com.gianni.frycolor.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -20,16 +23,17 @@ public class UserMedia {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "US_MD_ID", columnDefinition = "int")
+	@Column(name = "US_MD_ID", columnDefinition = "int default 0")
 	@ApiModelProperty(notes = "The database generated media ID")
 	private int usMdId;
 	
 	@Column(name = "US_MD_PATH")
 	private String usMdPath;
 	
-	@Column(name = "US_ID")
+	@JoinColumn(name = "US_ID")
 	@ApiModelProperty(notes = "The foreign key of the id user for the table users_app")
-	private int usId;
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+	private User usId;
 	
 	@Column(name = "US_MD_TS_CREATED")
 	private String usMdTsCreated;
@@ -53,11 +57,11 @@ public class UserMedia {
 		this.usMdPath = usMdPath;
 	}
 
-	public int getUsId() {
+	public User getUsId() {
 		return usId;
 	}
 
-	public void setUsId(int usId) {
+	public void setUsId(User usId) {
 		this.usId = usId;
 	}
 

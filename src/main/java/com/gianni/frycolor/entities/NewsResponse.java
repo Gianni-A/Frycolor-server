@@ -2,9 +2,12 @@ package com.gianni.frycolor.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -25,12 +28,14 @@ public class NewsResponse {
 	private int nwResId;
 	
 	@ApiModelProperty(notes = "User ID from the table users_app (User.java)")
-	@Column(name = "US_ID")
-	private int usId;
+	@JoinColumn(name = "US_ID")
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+	private User usId;
 	
 	@ApiModelProperty(notes = "Comment ID from the table user_comments (UserComments.java)")
-	@Column(name = "US_COM_ID")
-	private int usComId;
+	@JoinColumn(name = "US_COM_ID")
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = UserComments.class)
+	private UserComments usComId;
 	
 	//This field is going to implement when we want to add response to the responses of a comment.
 	@ApiModelProperty(notes = "NewsFeed or Comment ID from the tables news and user_comments (NewsFeed.java) | (UserComments.java).")
@@ -55,19 +60,19 @@ public class NewsResponse {
 		this.nwResId = nwResId;
 	}
 
-	public int getUsId() {
+	public User getUsId() {
 		return usId;
 	}
 
-	public void setUsId(int usId) {
+	public void setUsId(User usId) {
 		this.usId = usId;
 	}
 
-	public int getUsComId() {
+	public UserComments getUsComId() {
 		return usComId;
 	}
 
-	public void setUsComId(int usComId) {
+	public void setUsComId(UserComments usComId) {
 		this.usComId = usComId;
 	}
 

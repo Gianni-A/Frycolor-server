@@ -2,7 +2,6 @@ package com.gianni.frycolor.service;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,6 +12,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.entities.UserFriends;
 import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.exception.FriendsException;
@@ -21,6 +21,7 @@ import com.gianni.frycolor.information.FriendsInfo;
 import com.gianni.frycolor.information.UserInfo;
 import com.gianni.frycolor.repository.FriendsDao;
 import com.gianni.frycolor.repository.ProfileUserDao;
+import com.gianni.frycolor.repository.SessionDao;
 import com.gianni.frycolor.util.ValidationsDao;
 
 import org.junit.Assert;
@@ -40,6 +41,7 @@ public class ProfileUserServiceTest {
 		service = new ProfileUserService();
 		service.repository = mock(ProfileUserDao.class);
 		service.repFriend = mock(FriendsDao.class);
+		service.repSession = mock(SessionDao.class);
 		mockFriends = service.repFriend;
 		service.utilValidations = mock(ValidationsDao.class);
 		userInfo = new UserInfo();
@@ -84,7 +86,8 @@ public class ProfileUserServiceTest {
 	
 	@Test(expected = FriendsException.class)
 	public void getListFriendsTestException() {
-		when(mockFriends.getIdListFriends(anyInt())).thenReturn(new ArrayList());
+		when(service.repSession.getOne(anyInt())).thenReturn(userInfo.getUser());
+		when(mockFriends.getIdListFriends(any(User.class))).thenReturn(new ArrayList<>());
 		service.getListFriends(USER_ID_TEST);
 	}
 	
@@ -92,29 +95,31 @@ public class ProfileUserServiceTest {
 	public void getListFriendsTest() {
 		List<UserInformation> listFriends = null;
 		FriendsInfo friendsInfo = new FriendsInfo();
-		when(service.repFriend.getIdListFriends(anyInt())).thenReturn(friendsInfo.getListIdsFriends());
-		when(mockFriends.getInfFriend(anyInt())).thenReturn(userInfo.getUserInformation());
+		when(service.repFriend.getIdListFriends(any(User.class))).thenReturn(friendsInfo.getListIdsFriends());
 		listFriends = service.getListFriends(USER_ID_TEST);
 		Assert.assertNotNull(listFriends);
 	}
 	
 	@Test
 	public void addFriendTest() {
-		when(mockFriends.addNewFriend(anyInt(), anyInt(), anyString(), anyString())).thenReturn(1);
-		service.addFriend(friendsInfo.getUserFriends());
-		verify(mockFriends).addNewFriend(anyInt(), anyInt(), anyString(), anyString());
+		when(service.repSession.getOne(anyInt())).thenReturn(userInfo.getUser());
+		when(service.repSession.getOne(anyInt())).thenReturn(userInfo.getUserFriend());
+		when(service.repFriend.save(any(UserFriends.class))).thenReturn(friendsInfo.getUserFriends());
+		UserFriends friend = service.addFriend(1,2);
+		Assert.assertEquals(1, friend.getFrdUsId().getUsId());
+		Assert.assertEquals(2, friend.getFrdUsIdUf().getUsId());
 	}
 	
-	@Test(expected = FriendsException.class)
+	/*@Test(expected = FriendsException.class)
 	public void addFriendTestException() {
 		when(mockFriends.addNewFriend(anyInt(), anyInt(), anyString(), anyString())).thenReturn(0);
 		service.addFriend(friendsInfo.getUserFriends());
-	}
+	}*/
 	
 	@Test
 	public void deleteFriendTest() throws Exception {
 		mockFriends.delete(friendsInfo.getUserFriends());
-		service.deleteFriend(friendsInfo.getUserFriends());
+		service.deleteFriend(1,2);
 		verify(mockFriends).delete(any(UserFriends.class));
 	}
 	

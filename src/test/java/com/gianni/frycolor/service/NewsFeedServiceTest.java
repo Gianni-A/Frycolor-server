@@ -3,13 +3,14 @@ package com.gianni.frycolor.service;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
+import com.gianni.frycolor.entities.NewsFeed;
 import com.gianni.frycolor.entities.UserComments;
 import com.gianni.frycolor.information.CommentsInfo;
 import com.gianni.frycolor.information.NewsFeedInfo;
@@ -23,6 +24,7 @@ public class NewsFeedServiceTest {
 	private UserCommentsDao mockUsCommentsDao;
 	
 	private CommentsInfo commentsInfo;
+	private NewsFeedInfo newsFeedInfo;
 	
 	@Before
 	public void setup() {
@@ -34,24 +36,25 @@ public class NewsFeedServiceTest {
 		service.setUserCommentsDao(mockUsCommentsDao);
 		
 		commentsInfo = new CommentsInfo();
+		newsFeedInfo = new NewsFeedInfo();
 	}
 	
 	@Test
 	public void editNewsTest() {
+		when(mockNewsFeedDao.getOne(anyInt())).thenReturn(newsFeedInfo.getNewsFeed());
 		when(mockUsCommentsDao.getOne(anyInt())).thenReturn(commentsInfo.getUserComments());
 		when(mockUsCommentsDao.save(any(UserComments.class))).thenReturn(commentsInfo.getUserComments());
-		UserComments comments = service.editNews(1, "Test comment");
-		Assert.assertEquals(1, comments.getUsComId());
-		Assert.assertEquals(2, comments.getUsId());
-		Assert.assertEquals("Test Comment", comments.getUsComComment());
+		when(mockNewsFeedDao.save(any(NewsFeed.class))).thenReturn(newsFeedInfo.getNewsFeed());
+		NewsFeed nw = service.editNews(1, "Test");
+		Assert.assertNotNull(nw);
 	}
 	
-	@Ignore
+
 	@Test
 	public void deleteNewsTest() {
-		NewsFeedInfo newsInfo = new NewsFeedInfo();
-		when(mockNewsFeedDao.getOne(anyInt())).thenReturn(newsInfo.getNewsFeed());
-		
+		when(mockNewsFeedDao.getOne(anyInt())).thenReturn(newsFeedInfo.getNewsFeed());
+		service.deleteNews(1);
+		verify(mockNewsFeedDao).save(any(NewsFeed.class));
 	}
 
 }

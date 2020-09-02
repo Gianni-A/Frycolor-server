@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.gianni.frycolor.entities.UserFriends;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -26,8 +24,10 @@ public interface ProfileFriendApi {
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
 	ResponseEntity addFriend(
-			@ApiParam(value = "Payload information of the user with its friendID", required = true)
-			@RequestBody UserFriends userFriend);
+			@ApiParam(value = "ID of the user who is adding a friend", required = true)
+			@RequestParam("userId") int userId,
+			@ApiParam(value = "ID of the friend whom is adding by the user", required = true)
+			@RequestParam("friendId") int friendId);
 	
 	
 	@SuppressWarnings("rawtypes")
@@ -40,8 +40,10 @@ public interface ProfileFriendApi {
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
 	ResponseEntity deleteFriend(
-			@ApiParam(value = "Payload of the userId and his friendId", required = true)
-			@RequestBody UserFriends userFriend);
+			@ApiParam(value = "ID of the user who is deleting a friend", required = true)
+			@RequestParam("userId") int userId,
+			@ApiParam(value = "ID of the friend whom is deleting by the user", required = true)
+			@RequestParam("friendId") int friendId);
 
 
 	@SuppressWarnings("rawtypes")

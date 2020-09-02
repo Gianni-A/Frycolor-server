@@ -1,16 +1,13 @@
 package com.gianni.frycolor.model;
 
-import java.util.Optional;
 
 import org.springframework.stereotype.Component;
-
-import com.gianni.frycolor.entities.UserComments;
 
 @Component
 public class ResponsePost {
 
 	private int nwResId;
-	private Optional<UserComments> comment;
+	private String comment;
 	private String nameUser;
 	private int contReactions;
 	
@@ -20,10 +17,10 @@ public class ResponsePost {
 	public void setNwResId(int nwResId) {
 		this.nwResId = nwResId;
 	}
-	public Optional<UserComments> getComment() {
+	public String getComment() {
 		return comment;
 	}
-	public void setComment(Optional<UserComments> comment) {
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 	public String getNameUser() {

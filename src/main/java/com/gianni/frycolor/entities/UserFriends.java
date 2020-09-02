@@ -2,10 +2,15 @@ package com.gianni.frycolor.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -21,13 +26,17 @@ public class UserFriends {
 	@ApiModelProperty(notes = "The database generated userFriend ID")
 	private int frdId;
 	
-	@Column(name = "FRD_US_ID", columnDefinition = "int")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JoinColumn(name = "FRD_US_ID")
 	@ApiModelProperty(notes = "The ID of the user owner")
-	private int frdUsId;
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+	private User frdUsId;
 	
-	@Column(name = "FRD_US_ID_UF", columnDefinition = "int")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JoinColumn(name = "FRD_US_ID_UF")
 	@ApiModelProperty(notes = "The ID of the user of its friend")
-	private int frdUsIdUf;
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+	private User frdUsIdUf;
 	
 	@Column(name = "FRD_TS_CREATED")
 	private String frdTsCreated;
@@ -43,19 +52,19 @@ public class UserFriends {
 		this.frdId = frdId;
 	}
 
-	public int getFrdUsId() {
+	public User getFrdUsId() {
 		return frdUsId;
 	}
 
-	public void setFrdUsId(int frdUsId) {
+	public void setFrdUsId(User frdUsId) {
 		this.frdUsId = frdUsId;
 	}
 
-	public int getFrdUsIdUf() {
+	public User getFrdUsIdUf() {
 		return frdUsIdUf;
 	}
 
-	public void setFrdUsIdUf(int frdUsIdUf) {
+	public void setFrdUsIdUf(User frdUsIdUf) {
 		this.frdUsIdUf = frdUsIdUf;
 	}
 

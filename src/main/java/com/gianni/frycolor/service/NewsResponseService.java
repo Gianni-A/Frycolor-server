@@ -37,7 +37,8 @@ public class NewsResponseService {
 		ValidateResponsesModel validation = new ValidateResponsesModel();
 		NewsResponse getResponse = repositoryImpl.getResponseById(nwResId);
 		
-		validation.setUsId(getResponse.getUsId());
+		
+		validation.setUsId(getResponse.getUsId().getUsId());
 		validation.setComment(comment);
 		validation.setNwResComOriginId(nwResId);
 		validation.setNwComOriginId(0);
@@ -47,7 +48,7 @@ public class NewsResponseService {
 			throw new NewsResponseException(validateMsg);
 		}
 		
-		UserComments editComment = repositoryImpl.getCommentById(getResponse.getUsComId());
+		UserComments editComment = repositoryImpl.getCommentById(getResponse.getUsComId().getUsComId());
 		editComment.setUsComComment(comment);
 		repositoryImpl.editComment(editComment);
 		

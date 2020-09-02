@@ -61,7 +61,6 @@ public class User {
 	
 	@Column(name = "US_TS_UPDATED")
 	private String usTsUpdated;
-	
 
 	public int getUsId() {
 		return usId;

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,7 @@ public interface NewsFeedControllerApi {
 	//Add a post
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/newsfeed/newpost")
-	@ApiOperation(value = "Enlist all newsfeed for the user is logged")
+	@ApiOperation(value = "Save a new post from the user")
 	@ApiResponses(value = {
 	    @ApiResponse(code = 200, message = "Successfully get all news from the user"),
 	    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -40,7 +41,7 @@ public interface NewsFeedControllerApi {
 	
 	//Edit a post
 	@SuppressWarnings("rawtypes")
-	@PatchMapping("/newsfeed/{commentId}/edit")
+	@PutMapping("/newsfeed/{nwId}/edit")
 	@ApiOperation(value = "User can edit a post, in this case they can edit just for comments")
 	@ApiResponses(value = {
 	    @ApiResponse(code = 200, message = "Successfully update a post (Comment)"),
@@ -49,8 +50,8 @@ public interface NewsFeedControllerApi {
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
 	ResponseEntity editNews(
-			@ApiParam(value = "Comment Id, which is the comment where is the post that the user selected to edit", required = true)
-			@PathVariable("commentId") int commentId,
+			@ApiParam(value = "Newsfeed Id, which is the comment where is the post that the user selected to edit", required = true)
+			@PathVariable("nwId") int nwId,
 			@ApiParam(value = "The comment value where the user want to edit the post", required = true)
 			@RequestParam("inputComment") String inputComment);
 	

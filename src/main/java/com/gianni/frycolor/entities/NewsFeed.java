@@ -2,19 +2,24 @@ package com.gianni.frycolor.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Component
 @Table(name = "news")
-//@ApiModel(description = "All details about the news feed of the user ")
+@ApiModel(description = "All details about the news feed of the user ")
 public class NewsFeed {
 	
 	@Id
@@ -24,16 +29,19 @@ public class NewsFeed {
 	private int nwId;
 	
 	@ApiModelProperty(notes = "User ID from the table users_app (User.java)")
-	@Column(name = "US_ID")
-	private int usId;
+	@JoinColumn(name = "US_ID")
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+	private User usId;
 	
 	@ApiModelProperty(notes = "Comment ID from the table user_comments (UserComments.java)")
-	@Column(name = "US_COMMENT_ID")
-	private int usCommentId;
+	@JoinColumn(name = "US_COMMENT_ID")
+	@OneToOne(fetch = FetchType.LAZY, targetEntity = UserComments.class)
+	private UserComments usCommentId;
 
 	@ApiModelProperty(notes = "User Media ID, from the table user_media (UserMedia.java)")
-	@Column(name = "US_MD_ID")
-	private int usMdId;
+	@JoinColumn(name = "US_MD_ID")
+	@OneToOne(fetch = FetchType.LAZY, targetEntity = UserMedia.class)
+	private UserMedia usMdId;
 	
 	@Column(name = "NW_STATUS")
 	@ApiModelProperty(notes = "The status means if it is 1 = can show the post, 0 = the post is hide")
@@ -53,27 +61,27 @@ public class NewsFeed {
 		this.nwId = nwId;
 	}
 
-	public int getUsId() {
+	public User getUsId() {
 		return usId;
 	}
 
-	public void setUsId(int usId) {
+	public void setUsId(User usId) {
 		this.usId = usId;
 	}
 
-	public int getUsCommentId() {
+	public UserComments getUsCommentId() {
 		return usCommentId;
 	}
 
-	public void setUsCommentId(int usCommentId) {
+	public void setUsCommentId(UserComments usCommentId) {
 		this.usCommentId = usCommentId;
 	}
 
-	public int getUsMdId() {
+	public UserMedia getUsMdId() {
 		return usMdId;
 	}
 
-	public void setUsMdId(int usMdId) {
+	public void setUsMdId(UserMedia usMdId) {
 		this.usMdId = usMdId;
 	}
 
