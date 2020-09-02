@@ -30,6 +30,7 @@ public interface NewsFeedDao extends JpaRepository<NewsFeed, Integer> {
 			"	LEFT JOIN UserComments uc ON n.usCommentId = uc.usComId" + 
 			"	LEFT JOIN UserMedia um ON n.usMdId = um.usMdId" + 
 			"	WHERE uf.frdUsId = :userId AND n.nwStatus = 1" +
+			"   GROUP BY uf.frdUsId, n.nwId, ui.usInfId, uc.usComId, um.usMdId" +
 			"   ORDER BY n.nwTsUpdated", nativeQuery = false)
 	List<PostModel> getAllListPost(@Param("userId") User userId);
 }

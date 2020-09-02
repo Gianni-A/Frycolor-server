@@ -62,8 +62,14 @@ public class NewsFeedService {
 	public void setUserCommentsDao(UserCommentsDao repository) {userCommentsRepository = repository;}
 	
 	public NewsFeed saveNews(MultipartFile pathImage, String input_comment, int userId) {
+		
+		if(pathImage.getOriginalFilename().isEmpty() && input_comment.isEmpty()) {
+			throw new NewsException("Needs to have a comment or image");
+		}
+		
 		dateTime = Utilities.getTimestamp();
 		User user = userRepository.getOne(userId);
+		newsFeed = new NewsFeed();
 		
 		//Add an image if there is one in the request
 		if(!pathImage.getOriginalFilename().isEmpty()) {
@@ -120,14 +126,35 @@ public class NewsFeedService {
 		return newsRepository.save(newsFeed);
 	}
 
-	public UserComments editNews(int commentId, String inputComment) {
-		UserComments request = new UserComments();
-		dateTime = Utilities.getTimestamp();
-		request = userCommentsRepository.getOne(commentId);
-		request.setUsComComment(inputComment);
-		request.setUsComTsUpdated(dateTime);
+	public NewsFeed editNews(int nwId, String inputComment) {
+		if(inputComment.isEmpty()) {
+			throw new NewsException("The Input should not be empty");
+		}
 		
-		return userCommentsRepository.save(request);
+		NewsFeed nw = newsRepository.getOne(nwId);
+		dateTime = Utilities.getTimestamp();
+		
+		
+		if(!inputComment.isEmpty()) {
+			UserComments comment = new UserComments();
+			if(nw.getUsCommentId() != null) {
+				comment = userCommentsRepository.getOne(nw.getUsCommentId().getUsComId());
+			}
+			else {
+				comment.setUsId(nw.getUsId());
+				comment.setUsComTsCreated(dateTime);
+			}
+			
+			comment.setUsComComment(inputComment);
+			comment.setUsComTsUpdated(dateTime);
+			userCommentsRepository.save(comment);
+			
+			nw.setUsCommentId(comment);
+		}
+		
+		nw.setNwTsUpdated(dateTime);
+		
+		return newsRepository.save(nw);
 	}
 	
 	public ResponseSuccessMsg deleteNews(int nwId) {

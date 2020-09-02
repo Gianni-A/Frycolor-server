@@ -23,15 +23,19 @@ public class NewsFeedController implements NewsFeedControllerApi {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.saveNews(file, comment, userId));
 		} catch (NewsException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 		
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity editNews(int commentId, String inputComment) {
-		return ResponseEntity.status(HttpStatus.OK).body(service.editNews(commentId, inputComment));
+	public ResponseEntity editNews(int nwId, String inputComment) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(service.editNews(nwId, inputComment));	
+		} catch(NewsException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
