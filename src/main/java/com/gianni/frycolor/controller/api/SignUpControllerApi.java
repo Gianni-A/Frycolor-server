@@ -1,5 +1,7 @@
 package com.gianni.frycolor.controller.api;
 
+import static com.gianni.frycolor.util.Constantes.SERVER_URL;
+
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@CrossOrigin("*")
+@CrossOrigin(SERVER_URL)
 @Validated
 @RequestMapping("/")
 @Api(value = "User Management System")

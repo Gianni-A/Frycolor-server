@@ -14,7 +14,9 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@CrossOrigin("*")
+import static com.gianni.frycolor.util.Constantes.SERVER_URL;
+
+@CrossOrigin(SERVER_URL)
 public interface NewsFeedControllerApi {
 		
 	//Add a post

@@ -16,6 +16,7 @@ import com.gianni.frycolor.util.SendMail;
 import com.gianni.frycolor.util.Utilities;
 
 import static com.gianni.frycolor.util.Constantes.INVALID_EMAIL_FORMAT;
+import static com.gianni.frycolor.util.Constantes.SERVER_URL;
 
 @Service
 public class SessionService {
@@ -36,7 +37,7 @@ public class SessionService {
 		}
 		
 		String userIdEncoded = Utilities.encodeOrDecodeBase64(String.valueOf(userId), true);
-		String content = "You requested to change your password, please click in this link to procced it: http://localhost:8090/session/password/" + userIdEncoded;
+		String content = "You requested to change your password, please click in this link to procced it: "+ SERVER_URL +"/session/password/" + userIdEncoded;
 		try {
 			SendMail.sendEmail(emailID, content);
 		} catch(MessagingException | IOException e) {

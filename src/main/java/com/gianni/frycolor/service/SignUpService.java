@@ -16,6 +16,8 @@ import com.gianni.frycolor.repository.SignUpDao;
 import com.gianni.frycolor.util.SendMail;
 import com.gianni.frycolor.util.Utilities;
 
+import static com.gianni.frycolor.util.Constantes.SERVER_URL;
+
 @Service
 public class SignUpService {
 	
@@ -47,7 +49,7 @@ public class SignUpService {
 		
 		try {
 			String content = "Thank you for registered at Frycolor, "
-					+ "to finish you need to enter to this URL: http://localhost:8090/users/" + user.getUsId();
+					+ "to finish you need to enter to this URL: "+ SERVER_URL +"/users/" + user.getUsId();
 			
 			SendMail.sendEmail(user.getUsEmail(), content);
 		} catch (MessagingException | IOException e) {
