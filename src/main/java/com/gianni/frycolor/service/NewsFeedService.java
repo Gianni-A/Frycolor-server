@@ -171,23 +171,26 @@ public class NewsFeedService {
 		return message;
 	}
 	
-	public ResponseSuccessMsg addOrRemoveReactionToPost(NewsReaction newsReaction) {
-		dateTime = Utilities.getTimestamp();
-		ResponseSuccessMsg message = new ResponseSuccessMsg("");
+	public ResponseSuccessMsg addOrRemoveReactionToPost(int userId, int nwId) {
+		ResponseSuccessMsg message = null;
+		Integer reaction = nwReactionRepository.getUsersReaction(nwId, userId);
 		
-		if(newsReaction.getNwrId() == 0) {
+		if(reaction == null) {
 			//Add a reaction
-			newsReaction.setNwrTsCreated(dateTime);	
-			nwReactionRepository.save(newsReaction);
+			NewsReaction newReaction = new NewsReaction();
+			newReaction.setNwrId(0);
+			newReaction.setNwId(nwId);
+			newReaction.setUsId(userId);
+			newReaction.setNwrTsCreated( Utilities.getTimestamp() );	
+			nwReactionRepository.save(newReaction);
 			message = new ResponseSuccessMsg("Reaction added");
 			return message;
 		}
 		else {
 			//Delete reaction
-			nwReactionRepository.delete(newsReaction);
+			nwReactionRepository.deleteById(reaction);
 			message = new ResponseSuccessMsg("Reaction deleted");
 			return message;
-		}
+		}	
 	}
-
 }

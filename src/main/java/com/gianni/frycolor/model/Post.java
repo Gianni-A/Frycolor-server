@@ -12,6 +12,7 @@ public class Post {
 	private String image;
 	private int contReactions;
 	private String nameUser;
+	private boolean userLike;
 	private List<ResponsePost> listResponses;
 	
 	
@@ -44,6 +45,12 @@ public class Post {
 	}
 	public void setListResponses(List<ResponsePost> listResponses) {
 		this.listResponses = listResponses;
+	}
+	public boolean isUserLike() {
+		return userLike;
+	}
+	public void setUserLike(boolean userLike) {
+		this.userLike = userLike;
 	}
 	public String getNameUser() {
 		return nameUser;

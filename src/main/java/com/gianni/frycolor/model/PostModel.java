@@ -6,13 +6,15 @@ public class PostModel {
 	private String comment;
 	private String pathImage;
 	private String nameUser;
+	private Integer userLike;
 
-	public PostModel(int nwId, String comment, String pathImage, String nameUser) {
+	public PostModel(int nwId, String comment, String pathImage, Integer userLike, String nameUser) {
 		super();
 		this.nwId = nwId;
 		this.comment = comment;
 		this.pathImage = pathImage;
 		this.nameUser = nameUser;
+		this.userLike = userLike;
 	}
 	
 	public int getNwId() {
@@ -36,10 +38,15 @@ public class PostModel {
 	public String getNameUser() {
 		return nameUser;
 	}
-
 	public void setNameUser(String nameUser) {
 		this.nameUser = nameUser;
 	}
-	
+	public Integer getUserLike() {
+		return userLike;
+	}
+
+	public void setUserLike(Integer userLike) {
+		this.userLike = userLike;
+	}
 
 }

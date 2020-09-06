@@ -17,17 +17,6 @@ public class PostListController implements PostListControllerApi {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity getNewsPerUser(int userId, int pagination) {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(service.getNewsPerUser(userId, pagination));
-		}
-		catch(PostListException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	@Override
 	public ResponseEntity getNewsWithFriends(int userId, int pagination) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.getNewsWithFriends(userId, pagination));
 	}

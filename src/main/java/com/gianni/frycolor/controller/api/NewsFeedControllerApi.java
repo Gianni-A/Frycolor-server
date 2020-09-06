@@ -6,11 +6,8 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.gianni.frycolor.entities.NewsReaction;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -82,7 +79,9 @@ public interface NewsFeedControllerApi {
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
 	ResponseEntity addOrRemoveReactionToPost(
-			@ApiParam(value = "Payload of the newsId and the userId", required = true)
-			@RequestBody NewsReaction newsReaction);
+			@ApiParam(value = "UserId to recognize what user is reaction or not a post", required = true)
+			@RequestParam("userId") int userId,
+			@ApiParam(value = "Post Id, where is used to filter with the user the reaction of a post", required = true)
+			@RequestParam("nwId") int nwId);
 
 }
