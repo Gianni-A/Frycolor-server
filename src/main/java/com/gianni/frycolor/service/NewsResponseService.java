@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gianni.frycolor.entities.NewsResponse;
-import com.gianni.frycolor.entities.ResponseReaction;
 import com.gianni.frycolor.entities.UserComments;
 import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.exception.NewsResponseException;
@@ -72,7 +71,6 @@ public class NewsResponseService {
 		repositoryImpl.deleteResponse(nwResponse);
 	}
 	
-	@SuppressWarnings("unused")
 	public ResponseSuccessMsg addOrRemoveReaction(int nwResId, int userId) {
 		String validateMsg = validateResponseForReaction(userId, nwResId);
 		if(!validateMsg.isEmpty()) {

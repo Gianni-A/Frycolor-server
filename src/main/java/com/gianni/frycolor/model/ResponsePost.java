@@ -10,6 +10,7 @@ public class ResponsePost {
 	private String comment;
 	private String nameUser;
 	private int contReactions;
+	private boolean userLike;
 	
 	public int getNwResId() {
 		return nwResId;
@@ -34,5 +35,11 @@ public class ResponsePost {
 	}
 	public void setContReactions(int contReactions) {
 		this.contReactions = contReactions;
+	}
+	public boolean isUserLike() {
+		return userLike;
+	}
+	public void setUserLike(boolean userLike) {
+		this.userLike = userLike;
 	}
 }

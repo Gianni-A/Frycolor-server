@@ -10,6 +10,7 @@ import com.gianni.frycolor.entities.NewsResponse;
 import com.gianni.frycolor.entities.ResponseReaction;
 import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.entities.UserComments;
+import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.model.RequestNewsResponse;
 import com.gianni.frycolor.model.ResponsePost;
 import com.gianni.frycolor.repository.NewsFeedDao;
@@ -141,7 +142,7 @@ public class NewsResponseDaoImpl {
 		return userCommentsRepository.getOne(comId);
 	}
 	
-	public int getResponseReaction(int nwResId, int userId) {
+	public Integer getResponseReaction(int nwResId, int userId) {
 		return responseReactionRepository.getResponseReaction(nwResId, userId);
 	}
 	
@@ -155,13 +156,15 @@ public class NewsResponseDaoImpl {
 		List<NewsResponse> nwsResponse = repository.getAllResponsesByNwId(origin);
 		nwsResponse.stream().forEach(n -> {
 			ResponsePost response = new ResponsePost();
+			UserInformation userInfo = n.getUsId().getUsInfId();
 			
 			response.setNwResId(n.getNwResId());
-			response.setNameUser(n.getUsId().getUsInfId().getUsInfName() + " " + n.getUsId().getUsInfId().getUsInfLastname());
+			response.setNameUser(userInfo.getUsInfName() + " " + userInfo.getUsInfLastname());
 			response.setComment(n.getUsComId().getUsComComment());
 			
 			int contReactions = getCountResReactionNews(n.getNwResId());
 			response.setContReactions(contReactions);
+			response.setUserLike(getResponseReaction(n.getNwResId(), n.getUsId().getUsId()) != null ? true : false);
 			
 			listResponse.add(response);
 		});

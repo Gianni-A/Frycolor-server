@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gianni.frycolor.controller.api.NewsResponseControllerApi;
-import com.gianni.frycolor.entities.ResponseReaction;
 import com.gianni.frycolor.exception.NewsResponseException;
 import com.gianni.frycolor.model.RequestNewsResponse;
 import com.gianni.frycolor.service.NewsResponseService;
