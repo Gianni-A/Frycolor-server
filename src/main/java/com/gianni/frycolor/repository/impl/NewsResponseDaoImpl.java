@@ -92,14 +92,17 @@ public class NewsResponseDaoImpl {
 		repository.save(response);
 	}
 	
-	public ResponseReaction addReactionResponse(ResponseReaction reaction) {
-		dateTime = Utilities.getTimestamp();
-		reaction.setRrTsCreated(dateTime);
-		return responseReactionRepository.save(reaction);
+	public void addReactionResponse(int nwResId, int userId) {
+		ResponseReaction reaction = new ResponseReaction();
+		reaction.setRrId(0);
+		reaction.setNwResId(nwResId);
+		reaction.setUsId(userId);
+		reaction.setRrTsCreated( Utilities.getTimestamp() );
+		responseReactionRepository.save(reaction);
 	}
 	
-	public void deleteReactionResponse(ResponseReaction reaction) {
-		responseReactionRepository.delete(reaction);
+	public void deleteReactionResponse(int nwResId) {
+		responseReactionRepository.deleteById(nwResId);
 	}
 	
 	public boolean userStatusActive(int userId) {
@@ -138,6 +141,14 @@ public class NewsResponseDaoImpl {
 		return userCommentsRepository.getOne(comId);
 	}
 	
+	public int getResponseReaction(int nwResId, int userId) {
+		return responseReactionRepository.getResponseReaction(nwResId, userId);
+	}
+	
+	public int getCountResReactionNews(int nwrId) {
+		return responseReactionRepository.getCountResReactionNews(nwrId);
+	}
+	
 	public List<ResponsePost> getAllResponseFromPost(int origin) {
 		List<ResponsePost> listResponse = new ArrayList<>();
 		
@@ -149,7 +160,7 @@ public class NewsResponseDaoImpl {
 			response.setNameUser(n.getUsId().getUsInfId().getUsInfName() + " " + n.getUsId().getUsInfId().getUsInfLastname());
 			response.setComment(n.getUsComId().getUsComComment());
 			
-			int contReactions = responseReactionRepository.getCountResReactionNews(n.getNwResId());
+			int contReactions = getCountResReactionNews(n.getNwResId());
 			response.setContReactions(contReactions);
 			
 			listResponse.add(response);

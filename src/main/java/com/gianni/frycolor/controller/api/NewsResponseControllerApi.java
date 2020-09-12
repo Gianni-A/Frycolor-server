@@ -76,7 +76,9 @@ public interface NewsResponseControllerApi {
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
 	ResponseEntity AddOrRemoveReaction(
-			@ApiParam(value = "Payload of the responseReaction", required = true)
-			@RequestBody ResponseReaction responseReaction);
+			@ApiParam(value = "Id of the Response from a post", required = true)
+			@RequestParam("nwResId") int nwResId,
+			@ApiParam(value = "userId related to the response of a post", required = true)
+			@RequestParam("userId") int userId);
 	
 }

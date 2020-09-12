@@ -12,5 +12,8 @@ public interface ResponseReactionDao extends JpaRepository<ResponseReaction, Int
 	
 	@Query(value = "SELECT count(1) FROM response_reaction WHERE nw_res_id = :nwResId", nativeQuery=true)
 	int getCountResReactionNews(@Param("nwResId") int nwResId);
+	
+	@Query(value = "SELECT rr_id FROM response_reaction WHERE nw_res_id = :nwResId AND us_id = :userId", nativeQuery = true)
+	Integer getResponseReaction(@Param("nwResId") int nwResId, @Param("userId") int userId);
 
 }

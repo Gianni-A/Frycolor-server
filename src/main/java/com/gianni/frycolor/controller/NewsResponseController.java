@@ -46,10 +46,9 @@ public class NewsResponseController implements NewsResponseControllerApi {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity AddOrRemoveReaction(ResponseReaction responseReaction) {
+	public ResponseEntity AddOrRemoveReaction(int nwResId, int userId) {
 		try {
-			service.addOrRemoveReaction(responseReaction);
-			return new ResponseEntity(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(service.addOrRemoveReaction(nwResId, userId));
 		} catch(NewsResponseException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 		}

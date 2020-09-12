@@ -6,8 +6,11 @@ import org.springframework.stereotype.Service;
 import com.gianni.frycolor.entities.NewsResponse;
 import com.gianni.frycolor.entities.ResponseReaction;
 import com.gianni.frycolor.entities.UserComments;
+import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.exception.NewsResponseException;
 import com.gianni.frycolor.model.RequestNewsResponse;
+import com.gianni.frycolor.model.ResponseModelResponses;
+import com.gianni.frycolor.model.ResponseSuccessMsg;
 import com.gianni.frycolor.model.ValidateResponsesModel;
 import com.gianni.frycolor.repository.impl.NewsResponseDaoImpl;
 
@@ -17,8 +20,8 @@ public class NewsResponseService {
 	@Autowired
 	private NewsResponseDaoImpl repositoryImpl;
 	
-	
-	public NewsResponse addResponse(RequestNewsResponse request) {
+	public ResponseModelResponses addResponse(RequestNewsResponse request) {
+		ResponseModelResponses response = new ResponseModelResponses();
 		ValidateResponsesModel validation = new ValidateResponsesModel();
 		validation.setComment(request.getComment());
 		validation.setUsId(request.getUsId());
@@ -30,7 +33,14 @@ public class NewsResponseService {
 			throw new NewsResponseException(validateMsg);
 		}
 		
-		return repositoryImpl.addResponse(request);
+		NewsResponse saveValue = repositoryImpl.addResponse(request);
+		UserInformation user = saveValue.getUsId().getUsInfId();
+		response.setNameUser(user.getUsInfName() + " " + user.getUsInfLastname());
+		response.setComment(saveValue.getUsComId().getUsComComment());
+		response.setNwId(saveValue.getNwComOriginId());
+		response.setNwResId(saveValue.getNwResId());
+		
+		return response;
 	}
 	
 	public NewsResponse editResponse(int nwResId, String comment) {
@@ -62,18 +72,26 @@ public class NewsResponseService {
 		repositoryImpl.deleteResponse(nwResponse);
 	}
 	
-	public void addOrRemoveReaction(ResponseReaction responseReaction) {
-		String validateMsg = validateResponseForReaction(responseReaction.getUsId(), responseReaction.getNwResId());
+	@SuppressWarnings("unused")
+	public ResponseSuccessMsg addOrRemoveReaction(int nwResId, int userId) {
+		String validateMsg = validateResponseForReaction(userId, nwResId);
 		if(!validateMsg.isEmpty()) {
 			throw new NewsResponseException(validateMsg);
 		}
 		
-		if(responseReaction.getRrId() != 0) {
-			repositoryImpl.deleteReactionResponse(responseReaction);
+		Integer reaction = repositoryImpl.getResponseReaction(nwResId, userId);
+		ResponseSuccessMsg message = null;
+		
+		if(reaction != null) {
+			repositoryImpl.deleteReactionResponse(reaction);
+			message = new ResponseSuccessMsg("Reaction of a response deleted");
 		}
 		else {
-			repositoryImpl.addReactionResponse(responseReaction);
+			repositoryImpl.addReactionResponse(nwResId, userId);
+			message = new ResponseSuccessMsg("Reaction of a response added");
 		}
+		
+		return message;
 	}
 	
 	//Validations before to insert or edit the response
