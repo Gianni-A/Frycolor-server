@@ -15,6 +15,17 @@ public class SessionController implements SessionControllerApi {
 	
 	@Autowired
 	SessionService service;
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	public ResponseEntity logIn(String username, String password) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(service.logIn(username, password));
+		}
+		catch(UserExistException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
