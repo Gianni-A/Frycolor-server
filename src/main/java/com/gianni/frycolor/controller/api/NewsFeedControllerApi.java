@@ -31,7 +31,7 @@ public interface NewsFeedControllerApi {
 	})
 	ResponseEntity saveNews(
 			@ApiParam(value = "File (Image) of the user profile", required = false)
-			@RequestParam("file") MultipartFile file,
+			@RequestParam(value = "file", required = false) MultipartFile file,
 			@ApiParam(value = "comment field is not require, the user can only upload an image or a comment", required = false)
 			@RequestParam("comment") String comment,
 			@ApiParam(value = "userId is required to insert a new post", required = true)

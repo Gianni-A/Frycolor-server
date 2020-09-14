@@ -63,7 +63,7 @@ public class NewsFeedService {
 	
 	public NewsFeed saveNews(MultipartFile pathImage, String input_comment, int userId) {
 		
-		if(pathImage.getOriginalFilename().isEmpty() && input_comment.isEmpty()) {
+		if(pathImage == null && input_comment.isEmpty()) {
 			throw new NewsException("Needs to have a comment or image");
 		}
 		
@@ -71,13 +71,14 @@ public class NewsFeedService {
 		User user = userRepository.getOne(userId);
 		newsFeed = new NewsFeed();
 		
+		
 		//Add an image if there is one in the request
-		if(!pathImage.getOriginalFilename().isEmpty()) {
+		if(pathImage != null) {
 			try {
 				if(pathImage.getSize() > 5000000) {
 					throw new NewsException("The image is too heaver, please under 5 mb");
 				}
-				
+				userMedia = new UserMedia();
 				String mediaDirectory = Utilities.getPath(PATH_MEDIA_IMAGE_PROFILE);
 				File convertFile = new File(mediaDirectory + pathImage.getOriginalFilename());
 				convertFile.createNewFile();
@@ -106,6 +107,7 @@ public class NewsFeedService {
 				throw new NewsException("The maximum character per comment is 180");
 			}
 			
+			userComments = new UserComments();
 			userComments.setUsComId(0);
 			userComments.setUsId(user);
 			userComments.setUsComComment(input_comment);
