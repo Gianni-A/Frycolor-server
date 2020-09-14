@@ -2,7 +2,6 @@ package com.gianni.frycolor.controller.api;
 
 import static com.gianni.frycolor.util.Constantes.SERVER_URL;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +17,7 @@ import io.swagger.annotations.ApiResponses;
 public interface ProfileMediaApi {
 	
 	@SuppressWarnings("rawtypes")
-	@PostMapping(value = "/profile/media", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/profile/media")
 	@ApiOperation(value = "Add an image of the user profile")
 	@ApiResponses(value = {
 	    @ApiResponse(code = 200, message = "Successfully user IDS information added"),
