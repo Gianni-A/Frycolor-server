@@ -28,6 +28,7 @@ public class PostListService {
 			Post post = new Post();
 			
 			post.setNwId(p.getNwId());
+			post.setImageProfile(p.getImageProfile());
 			//Be careful on the name, if the user doesn't have a lastname, the query will get you the name null complete
 			post.setNameUser(p.getNameUser());
 			

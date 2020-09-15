@@ -21,7 +21,7 @@ public interface NewsFeedDao extends JpaRepository<NewsFeed, Integer> {
 	List<NewsFeed> getNewsFeedList(@Param("userId") int userId);
 
 	@Query(value = "SELECT" + 
-			"	new com.gianni.frycolor.model.PostModel(n.nwId,uc.usComComment,um.usMdPath,nr.nwrId," +
+			"	new com.gianni.frycolor.model.PostModel(n.nwId,uc.usComComment,um.usMdPath,nr.nwrId,ui.usInfPath_image," +
 		    "   CONCAT(ui.usInfName, ' ', ui.usInfLastname))" +
 			"	FROM" + 
 			"	NewsFeed n" + 

@@ -1,6 +1,5 @@
 package com.gianni.frycolor.util;
 
-import java.nio.file.FileSystems;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
@@ -12,10 +11,11 @@ import static com.gianni.frycolor.util.Constantes.EMAIL_REGEX;
 public class Utilities {
 	
 	public static String getPath(String path) {
-		String projectDirectory = FileSystems.getDefault()
+		/*String projectDirectory = FileSystems.getDefault()
 		        .getPath("")
 		        .toAbsolutePath()
-		        .toString();
+		        .toString();*/
+		String projectDirectory = "C:\\Things of mine\\Trabajos\\Proyectos personales\\React\\Frycolor";
 		String setPath = projectDirectory + "\\" + path;
 		return setPath;
 	}

@@ -51,7 +51,7 @@ public class ProfileUserService {
 	@Autowired
 	ProfileUserDao repoProfile;
 	
-	final public String PATH_MEDIA_IMAGE_PROFILE = "media\\profile_images\\";
+	final public String PATH_MEDIA_IMAGE_PROFILE = "media\\profiles\\";
 	
 	public UserInformation getUserInformation(int userId) {	
 		uInf = repository.getUserInfoById(userId);
@@ -59,9 +59,7 @@ public class ProfileUserService {
 			throw new UserExistException("User not found");
 		}
 		
-		//Formating PathImage of the user profile
-		String pathImageProfile = Utilities.getPath(PATH_MEDIA_IMAGE_PROFILE);
-		uInf.setUsInfPath_image(pathImageProfile + uInf.getUsInfPath_image());
+		uInf.setUsInfPath_image(uInf.getUsInfPath_image());
 		
 		return uInf;
 		

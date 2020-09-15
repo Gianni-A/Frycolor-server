@@ -11,6 +11,7 @@ public class Post {
 	private String comment;
 	private String image;
 	private int contReactions;
+	private String imageProfile;
 	private String nameUser;
 	private boolean userLike;
 	private List<ResponsePost> listResponses;
@@ -51,6 +52,12 @@ public class Post {
 	}
 	public void setUserLike(boolean userLike) {
 		this.userLike = userLike;
+	}
+	public String getImageProfile() {
+		return imageProfile;
+	}
+	public void setImageProfile(String imageProfile) {
+		this.imageProfile = imageProfile;
 	}
 	public String getNameUser() {
 		return nameUser;
