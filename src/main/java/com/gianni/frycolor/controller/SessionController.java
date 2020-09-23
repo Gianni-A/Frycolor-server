@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gianni.frycolor.controller.api.SessionControllerApi;
 import com.gianni.frycolor.exception.EmailException;
 import com.gianni.frycolor.exception.UserExistException;
+import com.gianni.frycolor.exception.UserValidationsException;
 import com.gianni.frycolor.service.SessionService;
 
 @RestController
@@ -22,7 +23,7 @@ public class SessionController implements SessionControllerApi {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.logIn(username, password));
 		}
-		catch(UserExistException e) {
+		catch(UserValidationsException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
