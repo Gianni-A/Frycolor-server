@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiResponses;
 public interface ProfileUserControllerApi {
 	
 	@SuppressWarnings("rawtypes")
-	@GetMapping("/profile/{userId}")
+	@GetMapping("/profile/{userId}/{userIdLogged}")
 	@ApiOperation(value = "Gives information of the user")
 	@ApiResponses(value = {
 		    @ApiResponse(code = 200, message = "Successfully found"),
@@ -39,7 +39,9 @@ public interface ProfileUserControllerApi {
 		})
 	ResponseEntity getUserInformation(
 			@ApiParam(value = "UserID value to find their information", required = true) 
-			@PathVariable("userId") int userId);
+			@PathVariable("userId") int userId,
+			@ApiParam(value = "UserID that is logged to the system", required = true) 
+			@PathVariable("userIdLogged") int userIdLogged);
 	
 	
 	@SuppressWarnings("rawtypes")

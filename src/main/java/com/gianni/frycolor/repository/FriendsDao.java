@@ -17,6 +17,11 @@ public interface FriendsDao extends JpaRepository<UserFriends, Integer> {
 	@Query(value = "SELECT uf FROM UserFriends uf WHERE uf.frdUsId = :userId", nativeQuery = false)
 	List<UserFriends> getIdListFriends(@Param("userId") User userId);
 	
+	@Query(value = "SELECT count(frd_id) FROM user_friends WHERE "
+			+ "(frd_us_id = :userId AND frd_us_id_uf = :userIdLogged) OR "
+			+ "(frd_us_id = :userIdLogged AND frd_us_id_uf = :userId)", nativeQuery = true)
+	Integer isFriendWithUserLogged(@Param("userId") int userId, @Param("userIdLogged") int userIdLogged);
+	
 	
 	@Transactional
 	@Modifying

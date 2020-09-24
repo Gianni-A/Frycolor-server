@@ -19,6 +19,7 @@ import com.gianni.frycolor.exception.UserExistException;
 import com.gianni.frycolor.exception.UserValidationsException;
 import com.gianni.frycolor.model.RequestChangePassword;
 import com.gianni.frycolor.model.ResponseSuccessMsg;
+import com.gianni.frycolor.model.UserProfileModel;
 import com.gianni.frycolor.repository.FriendsDao;
 import com.gianni.frycolor.repository.ProfileUserDao;
 import com.gianni.frycolor.repository.SessionDao;
@@ -53,16 +54,24 @@ public class ProfileUserService {
 	
 	final public String PATH_MEDIA_IMAGE_PROFILE = "media\\profiles\\";
 	
-	public UserInformation getUserInformation(int userId) {	
+	public UserProfileModel getUserInformation(int userId, int userIdLogged) {
+		UserProfileModel userModel = new UserProfileModel();
+		
 		uInf = repository.getUserInfoById(userId);
 		if(uInf == null) {
 			throw new UserExistException("User not found");
 		}
 		
 		uInf.setUsInfPath_image(uInf.getUsInfPath_image());
+		userModel.setUserInformation(uInf);
 		
-		return uInf;
+		//Validate if the user that is being getting information is a friends of the user that is logged
+		if(userId != userIdLogged) {
+			Integer friends = repFriend.isFriendWithUserLogged(userId, userIdLogged);
+			userModel.setFriend(friends != 0 ? true : false);
+		}
 		
+		return userModel;
 	}
 	
 	public UserInformation updateUserInformation(UserInformation userInformation) {
@@ -84,9 +93,9 @@ public class ProfileUserService {
 		
 		listFriends.stream().forEach(friend -> infoFriends.add(friend.getFrdUsIdUf().getUsInfId()));
 		
-		if(infoFriends.size() <= 0) {
+		/*if(infoFriends.size() <= 0) {
 			throw new FriendsException("There is no friend listed");
-		}
+		}*/
 		
 		return infoFriends;
 	}

@@ -25,9 +25,9 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity getUserInformation(int userInfId) {
+	public ResponseEntity getUserInformation(int userInfId, int userIdLogged) {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(service.getUserInformation(userInfId));
+			return ResponseEntity.status(HttpStatus.OK).body(service.getUserInformation(userInfId, userIdLogged));
 		}
 		catch (UserExistException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
