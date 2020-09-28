@@ -31,7 +31,31 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 		
 		//I added this line due to I was getting error on the frontend app about CORS
-		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+		http.cors().configurationSource(request -> getCorsConfig());
+	}
+	
+	private CorsConfiguration getCorsConfig() {
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.addAllowedOrigin("*");
+		config.addAllowedHeader("Access-Control-Expose-Headers");
+		config.addAllowedHeader("X-Requested-With");
+		config.addAllowedHeader("Authorization");
+		config.addAllowedHeader("Content-Type");
+		config.addAllowedHeader("If-None-Match");
+		config.addAllowedHeader("Access-Control-Allow-Headers");
+		config.addExposedHeader("Access-Control-Allow-Origin");
+		config.addExposedHeader("Access-Control-Allow-Headers");
+		config.addExposedHeader("ETag");
+		config.addAllowedMethod("GET");
+		config.addAllowedMethod("POST");
+		config.addAllowedMethod("PUT");
+		config.addAllowedMethod("DELETE");
+		config.addAllowedMethod("OPTIONS");
+		config.addAllowedMethod("HEAD");
+		config.applyPermitDefaultValues();
+		
+		return config;
 	}
 	
 	@Override

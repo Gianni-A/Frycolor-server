@@ -1,7 +1,6 @@
 package com.gianni.frycolor.controller.api;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +13,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-import static com.gianni.frycolor.util.Constantes.SERVER_URL;
-
-@CrossOrigin(SERVER_URL)
 public interface NewsFeedControllerApi {
 		
 	//Add a post

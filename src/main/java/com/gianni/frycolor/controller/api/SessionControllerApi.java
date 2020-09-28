@@ -1,9 +1,6 @@
 package com.gianni.frycolor.controller.api;
 
-import static com.gianni.frycolor.util.Constantes.SERVER_URL;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +12,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@CrossOrigin(SERVER_URL)
 @RequestMapping("/")
 @Api(value = "Session Management System")
 public interface SessionControllerApi {
