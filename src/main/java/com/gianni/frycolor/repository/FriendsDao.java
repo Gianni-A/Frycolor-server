@@ -14,7 +14,7 @@ import com.gianni.frycolor.entities.UserFriends;
 
 public interface FriendsDao extends JpaRepository<UserFriends, Integer> {
 	
-	@Query(value = "SELECT uf FROM UserFriends uf WHERE uf.frdUsId = :userId", nativeQuery = false)
+	@Query(value = "SELECT uf FROM UserFriends uf WHERE uf.frdUsId = :userId OR uf.frdUsIdUf = :userId", nativeQuery = false)
 	List<UserFriends> getIdListFriends(@Param("userId") User userId);
 	
 	@Query(value = "SELECT count(frd_id) FROM user_friends WHERE "
@@ -25,6 +25,6 @@ public interface FriendsDao extends JpaRepository<UserFriends, Integer> {
 	
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE FROM UserFriends WHERE frdUsId = :user AND frdUsIdUf = :friend", nativeQuery = false)
+	@Query(value = "DELETE FROM UserFriends WHERE (frdUsId = :user AND frdUsIdUf = :friend) OR (frdUsId = :friend AND frdUsIdUf = :user)", nativeQuery = false)
 	void deleteFriend(@Param("user") User user, @Param("friend") User friend);
 }

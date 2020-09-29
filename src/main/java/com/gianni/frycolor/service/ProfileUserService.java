@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,11 +89,21 @@ public class ProfileUserService {
 		User user = repSession.getOne(userId);
 		
 		List<UserFriends> listFriends = repFriend.getIdListFriends(user);
-		
+		Iterator<UserFriends> iterator = listFriends.iterator();
 		List<UserInformation> infoFriends = new ArrayList<UserInformation>();
-		
-		listFriends.stream().forEach(friend -> infoFriends.add(friend.getFrdUsIdUf().getUsInfId()));
-		
+		try {
+			UserFriends f = iterator.next();
+			
+			//See who is logged and decide which column to take to list their friends
+			if(f.getFrdUsId().getUsId() == userId) {
+				listFriends.stream().forEach(friend -> infoFriends.add(friend.getFrdUsIdUf().getUsInfId()));
+			}
+			else {
+				listFriends.stream().forEach(friend -> infoFriends.add(friend.getFrdUsId().getUsInfId()));
+			}			
+		} catch(Exception e) {
+			
+		}
 		/*if(infoFriends.size() <= 0) {
 			throw new FriendsException("There is no friend listed");
 		}*/
