@@ -5,7 +5,8 @@ import com.gianni.frycolor.entities.UserInformation;
 public class UserProfileModel {
 	
 	private UserInformation userInformation;
-	private boolean isFriend = false;
+	private String statusFriend;
+	private int friendRequestId;
 	
 	public UserInformation getUserInformation() {
 		return userInformation;
@@ -13,10 +14,16 @@ public class UserProfileModel {
 	public void setUserInformation(UserInformation userInformation) {
 		this.userInformation = userInformation;
 	}
-	public boolean isFriend() {
-		return isFriend;
+	public String getStatusFriend() {
+		return statusFriend;
 	}
-	public void setFriend(boolean isFriend) {
-		this.isFriend = isFriend;
+	public void setStatusFriend(String statusFriend) {
+		this.statusFriend = statusFriend;
+	}
+	public int getFriendRequestId() {
+		return friendRequestId;
+	}
+	public void setFriendRequestId(int friendRequestId) {
+		this.friendRequestId = friendRequestId;
 	}
 }

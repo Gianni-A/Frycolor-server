@@ -54,16 +54,31 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 		}
 	}
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	public ResponseEntity listFriendRequest(int userIdLogged) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(service.getListFriendRequest(userIdLogged));
+		} catch(FriendsException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
+	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity addFriend(int userId, int friendId) {
+	public ResponseEntity friendRequest(int userId, int friendId) {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(service.addFriend(userId, friendId));
+			return ResponseEntity.status(HttpStatus.OK).body(service.friendRequest(userId, friendId));
 		} catch (FriendsException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
-		
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	public ResponseEntity approveRejectFriend(int userFriendId, String action) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.approveRejectFriend(userFriendId, action));
 	}
 
 	@SuppressWarnings("rawtypes")

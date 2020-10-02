@@ -38,6 +38,10 @@ public class UserFriends {
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
 	private User frdUsIdUf;
 	
+	@Column(name = "FRD_STATUS")
+	@ApiModelProperty(notes = "Status: 0 for waiting to approve the request and 1 the request is accepted")
+	private int frdStatus;
+	
 	@Column(name = "FRD_TS_CREATED")
 	private String frdTsCreated;
 	
@@ -66,6 +70,14 @@ public class UserFriends {
 
 	public void setFrdUsIdUf(User frdUsIdUf) {
 		this.frdUsIdUf = frdUsIdUf;
+	}
+	
+	public int getFrdStatus() {
+		return frdStatus;
+	}
+
+	public void setFrdStatus(int frdStatus) {
+		this.frdStatus = frdStatus;
 	}
 
 	public String getFrdTsCreated() {

@@ -14,13 +14,17 @@ import com.gianni.frycolor.entities.UserFriends;
 
 public interface FriendsDao extends JpaRepository<UserFriends, Integer> {
 	
-	@Query(value = "SELECT uf FROM UserFriends uf WHERE uf.frdUsId = :userId OR uf.frdUsIdUf = :userId", nativeQuery = false)
+	@Query(value = "SELECT uf FROM UserFriends uf WHERE (uf.frdUsId = :userId OR uf.frdUsIdUf = :userId) AND uf.frdStatus = 1", nativeQuery = false)
 	List<UserFriends> getIdListFriends(@Param("userId") User userId);
 	
-	@Query(value = "SELECT count(frd_id) FROM user_friends WHERE "
-			+ "(frd_us_id = :userId AND frd_us_id_uf = :userIdLogged) OR "
-			+ "(frd_us_id = :userIdLogged AND frd_us_id_uf = :userId)", nativeQuery = true)
-	Integer isFriendWithUserLogged(@Param("userId") int userId, @Param("userIdLogged") int userIdLogged);
+	@Query(value = "SELECT uf FROM UserFriends uf WHERE uf.frdUsIdUf = :userId AND uf.frdStatus = 0", nativeQuery = false)
+	List<UserFriends> getListFriendRequest(@Param("userId") User userIdLogged);
+	
+	
+	@Query(value = "SELECT uf FROM UserFriends uf WHERE "
+			+ "(uf.frdUsId = :userId AND uf.frdUsIdUf = :userIdLogged) OR "
+			+ "(uf.frdUsId = :userIdLogged AND uf.frdUsIdUf = :userId)", nativeQuery = false)
+	UserFriends isFriendWithUserLogged(@Param("userId") User userId, @Param("userIdLogged") User userIdLogged);
 	
 	
 	@Transactional

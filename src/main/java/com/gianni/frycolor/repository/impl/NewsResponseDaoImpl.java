@@ -150,7 +150,7 @@ public class NewsResponseDaoImpl {
 		return responseReactionRepository.getCountResReactionNews(nwrId);
 	}
 	
-	public List<ResponsePost> getAllResponseFromPost(int origin) {
+	public List<ResponsePost> getAllResponseFromPost(int origin, int userIdLogged) {
 		List<ResponsePost> listResponse = new ArrayList<>();
 		
 		List<NewsResponse> nwsResponse = repository.getAllResponsesByNwId(origin);
@@ -164,7 +164,7 @@ public class NewsResponseDaoImpl {
 			
 			int contReactions = getCountResReactionNews(n.getNwResId());
 			response.setContReactions(contReactions);
-			response.setUserLike(getResponseReaction(n.getNwResId(), n.getUsId().getUsId()) != null ? true : false);
+			response.setUserLike(getResponseReaction(n.getNwResId(), userIdLogged) != null ? true : false);
 			
 			listResponse.add(response);
 		});
