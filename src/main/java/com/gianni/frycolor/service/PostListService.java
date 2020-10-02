@@ -31,6 +31,7 @@ public class PostListService {
 			post.setNwId(p.getNwId());
 			post.setImageProfile(p.getImageProfile());
 			//Be careful on the name, if the user doesn't have a lastname, the query will get you the name null complete
+			post.setUserId(p.getUserId());
 			post.setNameUser(p.getNameUser());
 			
 			if(p.getComment() != null) post.setComment(p.getComment());
@@ -42,7 +43,7 @@ public class PostListService {
 			post.setContReactions(contReactions);
 			post.setUserLike( p.getUserLike() != null ? true : false );
 			
-			List<ResponsePost> listResponses = repoResponseImpl.getAllResponseFromPost(p.getNwId());
+			List<ResponsePost> listResponses = repoResponseImpl.getAllResponseFromPost(p.getNwId(), userId);
 			post.setListResponses(listResponses);
 			
 			listPost.add(post);
@@ -62,6 +63,7 @@ public class PostListService {
 		List<PostModel> list = repositoryImpl.getAllListPost(userId);
 		list.stream()
 			.filter(p -> p.getPathImage() != null)
+			.filter(p -> p.getUserId() == userId)
 			.forEach(p -> {
 				Post post = new Post();
 				
@@ -79,7 +81,7 @@ public class PostListService {
 				post.setContReactions(contReactions);
 				post.setUserLike( p.getUserLike() != null ? true : false );
 				
-				List<ResponsePost> listResponses = repoResponseImpl.getAllResponseFromPost(p.getNwId());
+				List<ResponsePost> listResponses = repoResponseImpl.getAllResponseFromPost(p.getNwId(), userId);
 				post.setListResponses(listResponses);
 				
 				listPhotos.add(post);

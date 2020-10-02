@@ -22,7 +22,7 @@ public interface NewsFeedDao extends JpaRepository<NewsFeed, Integer> {
 
 	@Query(value = "SELECT" + 
 			"	new com.gianni.frycolor.model.PostModel(n.nwId,uc.usComComment,um.usMdPath,nr.nwrId,ui.usInfPath_image," +
-		    "   CONCAT(ui.usInfName, ' ', ui.usInfLastname))" +
+		    "   ui.usInfId,CONCAT(ui.usInfName, ' ', ui.usInfLastname))" +
 			"	FROM" + 
 			"	NewsFeed n" + 
 			"	INNER JOIN UserFriends uf ON (n.usId = uf.frdUsIdUf OR n.usId = uf.frdUsId) OR n.usId = :userId" + 
@@ -31,8 +31,8 @@ public interface NewsFeedDao extends JpaRepository<NewsFeed, Integer> {
 			"	LEFT JOIN UserComments uc ON n.usCommentId = uc.usComId" + 
 			"	LEFT JOIN UserMedia um ON n.usMdId = um.usMdId" + 
 			"   LEFT JOIN NewsReaction nr ON n.nwId = nr.nwId AND nr.usId = :userId" +
-			"	WHERE ((uf.frdUsId = :userId OR uf.frdUsIdUf = :userId) OR n.usId = :userId) AND n.nwStatus = 1" +
-			"   GROUP BY uf.frdUsId, n.nwId, ui.usInfId, uc.usComId, um.usMdId, nr.nwrId" +
-			"   ORDER BY n.nwTsUpdated", nativeQuery = false)
+			"	WHERE ((uf.frdUsId = :userId OR uf.frdUsIdUf = :userId) OR n.usId = :userId) AND n.nwStatus = 1 AND uf.frdStatus = 1" +
+			"   GROUP BY n.nwId, ui.usInfId, uc.usComId, um.usMdId, nr.nwrId" +
+			"   ORDER BY n.nwTsUpdated DESC", nativeQuery = false)
 	List<PostModel> getAllListPost(@Param("userId") User userId);
 }
