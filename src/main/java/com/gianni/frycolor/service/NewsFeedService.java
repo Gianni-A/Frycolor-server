@@ -61,6 +61,9 @@ public class NewsFeedService {
 	@Autowired
 	public void setUserCommentsDao(UserCommentsDao repository) {userCommentsRepository = repository;}
 	
+	@Autowired
+	public void seNewsReactionDao(NewsReactionDao repository) {nwReactionRepository = repository;}
+	
 	public NewsFeed saveNews(MultipartFile pathImage, String input_comment, int userId) {
 		
 		if(pathImage == null && input_comment.isEmpty()) {
