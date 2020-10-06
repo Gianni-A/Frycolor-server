@@ -123,12 +123,7 @@ public class ProfileUserService {
 				}
 			});
 			
-		} catch(Exception e) {
-			
-		}
-		/*if(infoFriends.size() <= 0) {
-			throw new FriendsException("There is no friend listed");
-		}*/
+		} catch(Exception e) {}
 		
 		return infoFriends;
 	}

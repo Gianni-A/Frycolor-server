@@ -2,6 +2,7 @@ package com.gianni.frycolor.information;
 
 import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.entities.UserInformation;
+import com.gianni.frycolor.model.RequestChangePassword;
 
 public class UserInfo {
 	
@@ -29,6 +30,18 @@ public class UserInfo {
 		return user;
 	}
 	
+	public User getUserLogged() {
+		User user = new User();
+		user.setUsId(3);
+		user.setUsEmail("test3@hot.com");
+		user.setUsUser("Test 3");
+		user.setUsPassword("854967");
+		user.setUsInfId(new UserInformation());
+		user.setUsStatus(1);
+		
+		return user;
+	}
+	
 	public UserInformation getUserInformation() {
 		UserInformation userInfo = new UserInformation();
 		userInfo.setUsInfId(1);
@@ -39,6 +52,15 @@ public class UserInfo {
 		userInfo.setUsInfState("Michigan");
 		
 		return userInfo;
+	}
+	
+	public RequestChangePassword getReqChangePasswordInfo() {
+		RequestChangePassword request = new RequestChangePassword();
+		request.setUserId(1);
+		request.setActualPassword("123456");
+		request.setNewPassword("new-password");
+		
+		return request;
 	}
 
 }
