@@ -19,6 +19,9 @@ public class NewsResponseService {
 	@Autowired
 	private NewsResponseDaoImpl repositoryImpl;
 	
+	@Autowired
+	public void setNewsResponseDaoImp(NewsResponseDaoImpl repository) {repositoryImpl = repository;}
+	
 	public ResponseModelResponses addResponse(RequestNewsResponse request) {
 		ResponseModelResponses response = new ResponseModelResponses();
 		ValidateResponsesModel validation = new ValidateResponsesModel();
