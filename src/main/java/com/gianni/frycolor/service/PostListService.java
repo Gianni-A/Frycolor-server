@@ -22,6 +22,12 @@ public class PostListService {
 	@Autowired
 	private NewsResponseDaoImpl repoResponseImpl;
 	
+	@Autowired
+	public void setPostListDaoImpl(PostListDaoImpl repository) {repositoryImpl = repository;}
+	
+	@Autowired
+	public void setNewsResponseDaoImpl(NewsResponseDaoImpl repository) {repoResponseImpl = repository;}
+	
 	public List<Post> getNewsWithFriends(int userId, int pagination) {
 		List<Post> listPost = new ArrayList<>();
 		List<PostModel> list = repositoryImpl.getAllListPost(userId);

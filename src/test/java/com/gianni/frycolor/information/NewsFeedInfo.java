@@ -1,8 +1,13 @@
 package com.gianni.frycolor.information;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.gianni.frycolor.entities.NewsFeed;
 import com.gianni.frycolor.entities.NewsResponse;
+import com.gianni.frycolor.model.PostModel;
 import com.gianni.frycolor.model.RequestNewsResponse;
+import com.gianni.frycolor.model.ResponsePost;
 
 public class NewsFeedInfo {
 	
@@ -50,6 +55,26 @@ public class NewsFeedInfo {
 		responses.setComment("");
 		
 		return responses;
+	}
+	
+	public List<PostModel> getListPostModel() {
+		List<PostModel> listPost = new ArrayList<>();
+		PostModel post = new PostModel(1, "CommentTest", "PathImage", 5, "ProfileImage", 3, "TestUser");
+		listPost.add(post);
+		
+		return listPost;
+	}
+	
+	public List<ResponsePost> getListResponsePost() {
+		List<ResponsePost> listResponses = new ArrayList<>();
+		ResponsePost response = new ResponsePost();
+		response.setNwResId(1);
+		response.setComment("Testing comment");
+		response.setNameUser("Username Test");
+		response.setContReactions(15);
+		response.setUserLike(false);
+		
+		return listResponses;
 	}
 
 }
