@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.gianni.frycolor.entities.NewsFeed;
 import com.gianni.frycolor.entities.NewsResponse;
+import com.gianni.frycolor.model.Post;
 import com.gianni.frycolor.model.PostModel;
 import com.gianni.frycolor.model.RequestNewsResponse;
+import com.gianni.frycolor.model.ResponseModelResponses;
 import com.gianni.frycolor.model.ResponsePost;
 
 public class NewsFeedInfo {
@@ -76,5 +78,39 @@ public class NewsFeedInfo {
 		
 		return listResponses;
 	}
+	
+	public List<Post> getListPost() {
+		List<Post> listPost = new ArrayList<>();
+		listPost.add(getPost());
+		
+		return listPost;
+	}
+	
+	public ResponseModelResponses getResponseModelResponses() {
+		ResponseModelResponses responses = new ResponseModelResponses();
+		responses.setNameUser("TestUser");
+		responses.setComment("TestComment");
+		responses.setNwId(20);
+		responses.setNwResId(30);
+		
+		return responses;
+	}
+	
+	private Post getPost() {
+		Post post = new Post();
+		post.setNwId(1);
+		post.setComment("TestComment");
+		post.setImage("PathImage");
+		post.setContReactions(10);
+		post.setImageProfile("PathImageProfile");
+		post.setUserId(1);
+		post.setNameUser("TestUser");
+		post.setUserLike(true);
+		post.setListResponses(getListResponsePost());
+		
+		return post;
+	}
+	
+	
 
 }

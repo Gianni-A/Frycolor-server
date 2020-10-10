@@ -1,8 +1,12 @@
 package com.gianni.frycolor.information;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.gianni.frycolor.entities.User;
 import com.gianni.frycolor.entities.UserInformation;
 import com.gianni.frycolor.model.RequestChangePassword;
+import com.gianni.frycolor.model.UserProfileModel;
 
 public class UserInfo {
 	
@@ -54,6 +58,12 @@ public class UserInfo {
 		return userInfo;
 	}
 	
+	public List<UserInformation> getListUserInformation() {
+		List<UserInformation> listUsers = new ArrayList<>();
+		listUsers.add(getUserInformation());
+		return listUsers;
+	}
+	
 	public RequestChangePassword getReqChangePasswordInfo() {
 		RequestChangePassword request = new RequestChangePassword();
 		request.setUserId(1);
@@ -61,6 +71,15 @@ public class UserInfo {
 		request.setNewPassword("new-password");
 		
 		return request;
+	}
+	
+	public UserProfileModel getUserProfileModel() {
+		UserProfileModel user = new UserProfileModel();
+		user.setFriendRequestId(15);
+		user.setStatusFriend("ACTIVE");
+		user.setUserInformation(getUserInformation());
+		
+		return user;
 	}
 
 }
