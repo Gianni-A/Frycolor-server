@@ -21,11 +21,13 @@ import com.gianni.frycolor.service.ProfileUserService;
 public class ProfileUserController implements ProfileUserControllerApi, ProfileFriendApi, ProfileMediaApi {
 	
 	@Autowired
-	ProfileUserService service;
+	private ProfileUserService service;
+	
+	@Autowired
+	public void setProfileUserService(ProfileUserService repository) {service = repository;}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity getUserInformation(int userInfId, int userIdLogged) {
+	public ResponseEntity<?> getUserInformation(int userInfId, int userIdLogged) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.getUserInformation(userInfId, userIdLogged));
 		}
@@ -34,9 +36,8 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity updateUserInformation(UserInformation userInformation) {
+	public ResponseEntity<?> updateUserInformation(UserInformation userInformation) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.updateUserInformation(userInformation));
 		}
@@ -45,9 +46,8 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity getListFriends(int userId) {
+	public ResponseEntity<?> getListFriends(int userId) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.getListFriends(userId));
 		} catch(FriendsException e) {
@@ -55,9 +55,8 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 		}
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity listFriendRequest(int userIdLogged) {
+	public ResponseEntity<?> listFriendRequest(int userIdLogged) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.getListFriendRequest(userIdLogged));
 		} catch(FriendsException e) {
@@ -65,9 +64,8 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity friendRequest(int userId, int friendId) {
+	public ResponseEntity<?> friendRequest(int userId, int friendId) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.friendRequest(userId, friendId));
 		} catch (FriendsException e) {
@@ -75,15 +73,13 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 		}
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity approveRejectFriend(int userFriendId, String action) {
+	public ResponseEntity<?> approveRejectFriend(int userFriendId, String action) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.approveRejectFriend(userFriendId, action));
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity deleteFriend(int userId, int friendId) {
+	public ResponseEntity<?> deleteFriend(int userId, int friendId) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.deleteFriend(userId, friendId));
 		} catch(FriendsException e) {
@@ -91,9 +87,8 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity addOrUpdateMediaProfile(MultipartFile file, int userId) {
+	public ResponseEntity<?> addOrUpdateMediaProfile(MultipartFile file, int userId) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.addOrUpdateMediaProfile(file, userId));
 		} catch (MediaException e) {
@@ -102,9 +97,8 @@ public class ProfileUserController implements ProfileUserControllerApi, ProfileF
 		
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity changePassword(RequestChangePassword changePasswordInfo) {
+	public ResponseEntity<?> changePassword(RequestChangePassword changePasswordInfo) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.changePassword(changePasswordInfo));
 		} catch(UserValidationsException e) {

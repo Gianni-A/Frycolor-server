@@ -15,11 +15,13 @@ import com.gianni.frycolor.service.SessionService;
 public class SessionController implements SessionControllerApi {
 	
 	@Autowired
-	SessionService service;
+	private SessionService service;
 	
-	@SuppressWarnings("rawtypes")
+	@Autowired
+	public void setSessionService(SessionService repository) {service = repository;}
+	
 	@Override
-	public ResponseEntity logIn(String username, String password) {
+	public ResponseEntity<?> logIn(String username, String password) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.logIn(username, password));
 		}
@@ -28,9 +30,8 @@ public class SessionController implements SessionControllerApi {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity requestChangePasswordForgotten(String emailID) {
+	public ResponseEntity<?> requestChangePasswordForgotten(String emailID) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.sendChangesPassword(emailID));
 		} 
@@ -42,9 +43,8 @@ public class SessionController implements SessionControllerApi {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity changePasswordForgotten(String userId, String newPassword) {
+	public ResponseEntity<?> changePasswordForgotten(String userId, String newPassword) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.changePasswordForgotten(userId, newPassword));
 		}

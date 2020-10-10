@@ -15,10 +15,12 @@ public class NewsFeedController implements NewsFeedControllerApi {
 	
 	@Autowired
 	private NewsFeedService service;
+	
+	@Autowired
+	public void setNewsFeedService(NewsFeedService repository) {service = repository;}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity saveNews(MultipartFile file, String comment, int userId) {
+	public ResponseEntity<?> saveNews(MultipartFile file, String comment, int userId) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.saveNews(file, comment, userId));
 		} catch (NewsException e) {
@@ -27,9 +29,8 @@ public class NewsFeedController implements NewsFeedControllerApi {
 		
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity editNews(int nwId, String inputComment) {
+	public ResponseEntity<?> editNews(int nwId, String inputComment) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.editNews(nwId, inputComment));	
 		} catch(NewsException e) {
@@ -37,15 +38,13 @@ public class NewsFeedController implements NewsFeedControllerApi {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity deleteNews(int nwId) {
+	public ResponseEntity<?> deleteNews(int nwId) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.deleteNews(nwId));
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity addOrRemoveReactionToPost(int userId, int nwId) {
+	public ResponseEntity<?> addOrRemoveReactionToPost(int userId, int nwId) {
 		return ResponseEntity.status(HttpStatus.OK).body(service.addOrRemoveReactionToPost(userId, nwId));
 	}
 }

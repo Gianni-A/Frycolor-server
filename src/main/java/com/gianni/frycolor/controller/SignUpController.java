@@ -17,11 +17,13 @@ import static com.gianni.frycolor.util.Constantes.HUBO_ERROR;
 public class SignUpController implements SignUpControllerApi {
 	
 	@Autowired
-	SignUpService signUpService;
+	private SignUpService signUpService;
 	
-	@SuppressWarnings("rawtypes")
+	@Autowired
+	public void setSignUpService(SignUpService repository) {signUpService = repository;}
+
 	@Override
-	public ResponseEntity signUpUser(User user) {
+	public ResponseEntity<?> signUpUser(User user) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(signUpService.signUpUser(user));	
 		}
@@ -33,16 +35,15 @@ public class SignUpController implements SignUpControllerApi {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity updateUserRegister(int userId) {
+	public ResponseEntity<?> updateUserRegister(int userId) {
 		try {
 			signUpService.setStatusRegisterUser(userId);
 		} catch(UserValidationsException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 		
-		return new ResponseEntity(HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 }

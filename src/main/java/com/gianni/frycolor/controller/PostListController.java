@@ -14,10 +14,12 @@ public class PostListController implements PostListControllerApi {
 	
 	@Autowired
 	private PostListService service;
+	
+	@Autowired
+	public void setPostListService(PostListService repository) {service = repository;}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity getNewsWithFriends(int userId, int pagination) {
+	public ResponseEntity<?> getNewsWithFriends(int userId, int pagination) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.getNewsWithFriends(userId, pagination));
 		}
@@ -26,9 +28,8 @@ public class PostListController implements PostListControllerApi {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity getNewsJustImages(int userId, int pagination) {
+	public ResponseEntity<?> getNewsJustImages(int userId, int pagination) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.getNewsJustImages(userId, pagination));
 		}

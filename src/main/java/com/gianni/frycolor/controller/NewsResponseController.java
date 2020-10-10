@@ -15,10 +15,12 @@ public class NewsResponseController implements NewsResponseControllerApi {
 	
 	@Autowired
 	private NewsResponseService service;
+	
+	@Autowired
+	public void setNewsResponseService(NewsResponseService repository) {service = repository;}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity addResponse(RequestNewsResponse request) {
+	public ResponseEntity<?> addResponse(RequestNewsResponse request) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.addResponse(request));
 		} catch(NewsResponseException e) {
@@ -26,9 +28,8 @@ public class NewsResponseController implements NewsResponseControllerApi {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity editResponse(int nwResId, String comment) {
+	public ResponseEntity<?> editResponse(int nwResId, String comment) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.editResponse(nwResId, comment));
 		} catch (NewsResponseException e) {
@@ -36,16 +37,14 @@ public class NewsResponseController implements NewsResponseControllerApi {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity deleteResponse(int nwResId) {
+	public ResponseEntity<?> deleteResponse(int nwResId) {
 		service.deleteResponse(nwResId);
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public ResponseEntity AddOrRemoveReaction(int nwResId, int userId) {
+	public ResponseEntity<?> AddOrRemoveReaction(int nwResId, int userId) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(service.addOrRemoveReaction(nwResId, userId));
 		} catch(NewsResponseException e) {
