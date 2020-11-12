@@ -16,6 +16,7 @@ public class Post {
 	private String nameUser;
 	private boolean userLike;
 	private List<ResponsePost> listResponses;
+	private String dateTime;
 	
 	
 	public int getNwId() {
@@ -72,5 +73,10 @@ public class Post {
 	public void setImageProfile(String imageProfile) {
 		this.imageProfile = imageProfile;
 	}
-
+	public String getDateTime() {
+		return dateTime;
+	}
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
+	}
 }

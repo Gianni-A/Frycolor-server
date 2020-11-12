@@ -165,6 +165,7 @@ public class NewsResponseDaoImpl {
 			int contReactions = getCountResReactionNews(n.getNwResId());
 			response.setContReactions(contReactions);
 			response.setUserLike(getResponseReaction(n.getNwResId(), userIdLogged) != null ? true : false);
+			response.setDateTime(n.getNwResTsUpdated());
 			
 			listResponse.add(response);
 		});

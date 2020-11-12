@@ -61,7 +61,7 @@ public class NewsFeedInfo {
 	
 	public List<PostModel> getListPostModel() {
 		List<PostModel> listPost = new ArrayList<>();
-		PostModel post = new PostModel(1, "CommentTest", "PathImage", 5, "ProfileImage", 3, "TestUser");
+		PostModel post = new PostModel(1, "CommentTest", "PathImage", 5, "ProfileImage", 3, "2020-11-11", "TestUser");
 		listPost.add(post);
 		
 		return listPost;

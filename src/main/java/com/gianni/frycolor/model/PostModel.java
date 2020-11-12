@@ -9,8 +9,9 @@ public class PostModel {
 	private int userId;
 	private String nameUser;
 	private Integer userLike;
+	private String dateTime;
 
-	public PostModel(int nwId, String comment, String pathImage, Integer userLike, String imageProfile, int userId, String nameUser) {
+	public PostModel(int nwId, String comment, String pathImage, Integer userLike, String imageProfile, int userId, String dateTime, String nameUser) {
 		super();
 		this.nwId = nwId;
 		this.comment = comment;
@@ -19,6 +20,7 @@ public class PostModel {
 		this.userId = userId;
 		this.nameUser = nameUser;
 		this.userLike = userLike;
+		this.dateTime = dateTime;
 	}
 	
 	public int getNwId() {
@@ -68,4 +70,11 @@ public class PostModel {
 		this.userLike = userLike;
 	}
 
+	public String getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
+	}
 }

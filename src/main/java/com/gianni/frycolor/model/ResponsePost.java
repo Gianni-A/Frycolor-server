@@ -11,6 +11,7 @@ public class ResponsePost {
 	private String nameUser;
 	private int contReactions;
 	private boolean userLike;
+	private String dateTime;
 	
 	public int getNwResId() {
 		return nwResId;
@@ -41,5 +42,11 @@ public class ResponsePost {
 	}
 	public void setUserLike(boolean userLike) {
 		this.userLike = userLike;
+	}
+	public String getDateTime() {
+		return dateTime;
+	}
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
 	}
 }

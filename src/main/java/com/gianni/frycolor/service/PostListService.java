@@ -39,6 +39,7 @@ public class PostListService {
 			//Be careful on the name, if the user doesn't have a lastname, the query will get you the name null complete
 			post.setUserId(p.getUserId());
 			post.setNameUser(p.getNameUser());
+			post.setDateTime(p.getDateTime());
 			
 			if(p.getComment() != null) post.setComment(p.getComment());
 			
