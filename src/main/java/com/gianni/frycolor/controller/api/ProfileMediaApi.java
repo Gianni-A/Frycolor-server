@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiResponses;
 
 public interface ProfileMediaApi {
 	
-	@SuppressWarnings("rawtypes")
 	@PostMapping(value = "/profile/media")
 	@ApiOperation(value = "Add an image of the user profile")
 	@ApiResponses(value = {
@@ -21,7 +20,7 @@ public interface ProfileMediaApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity addOrUpdateMediaProfile(
+	ResponseEntity<?> addOrUpdateMediaProfile(
 			@ApiParam(value = "File (Image) of the user profile", required = true)
 			@RequestParam("file") MultipartFile file,
 			@ApiParam(value = "UserId to identify what user should change his image profile", required = true)

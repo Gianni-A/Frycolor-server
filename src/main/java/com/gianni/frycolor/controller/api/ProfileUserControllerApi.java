@@ -24,7 +24,6 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "Profile Management System")
 public interface ProfileUserControllerApi {
 	
-	@SuppressWarnings("rawtypes")
 	@GetMapping("/profile/{userId}/{userIdLogged}")
 	@ApiOperation(value = "Gives information of the user")
 	@ApiResponses(value = {
@@ -33,14 +32,13 @@ public interface ProfileUserControllerApi {
 		    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 		    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 		})
-	ResponseEntity getUserInformation(
+	ResponseEntity<?> getUserInformation(
 			@ApiParam(value = "UserID value to find their information", required = true) 
 			@PathVariable("userId") int userId,
 			@ApiParam(value = "UserID that is logged to the system", required = true) 
 			@PathVariable("userIdLogged") int userIdLogged);
 	
 	
-	@SuppressWarnings("rawtypes")
 	@PutMapping("/profile")
 	@ApiOperation(value = "Update user information giving the userID")
 	@ApiResponses(value = {
@@ -49,12 +47,11 @@ public interface ProfileUserControllerApi {
 		    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 		    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 		})
-	ResponseEntity updateUserInformation(
+	ResponseEntity<?> updateUserInformation(
 			@ApiParam(value = "Payload information of the user to be update", required = true)
 			@Valid @RequestBody UserInformation userInformation);
 	
 	
-	@SuppressWarnings("rawtypes")
 	@PutMapping("/profile/password")
 	@ApiOperation(value = "Change the password from the profile")
 	@ApiResponses(value = {
@@ -63,7 +60,7 @@ public interface ProfileUserControllerApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity changePassword(
+	ResponseEntity<?> changePassword(
 			@ApiParam(value = "Payload information that contains: userId, actualPassword, newPassword", required = true)
 			@RequestBody RequestChangePassword changePasswordInfo);
 

@@ -23,7 +23,6 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "User Management System")
 public interface SignUpControllerApi {
 	
-	@SuppressWarnings("rawtypes")
 	@PostMapping("/users")
 	@ApiOperation(value = "Create an user")
 	@ApiResponses(value = {
@@ -32,19 +31,18 @@ public interface SignUpControllerApi {
 		    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 		    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 		})
-	ResponseEntity signUpUser(
+	ResponseEntity<?> signUpUser(
 			@ApiParam(value = "User object containing the information of a user", required = true) 
 			@Valid @RequestBody User user);
 	
 	
 	
-	@SuppressWarnings("rawtypes")
 	@PatchMapping("/users/{userId}")
 	@ApiOperation(value = "Update register status of a user")
 	@ApiResponses(value = {
 		    @ApiResponse(code = 201, message = "Successfully updated"),
 		    @ApiResponse(code = 500, message = "Error on the server")
 		})
-	ResponseEntity updateUserRegister(@PathVariable("userId") int userId);
+	ResponseEntity<?> updateUserRegister(@PathVariable("userId") int userId);
 
 }

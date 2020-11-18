@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiResponses;
 
 public interface PostListControllerApi {
 	
-	@SuppressWarnings("rawtypes")
 	@GetMapping("/postlist/friends/{userId}/{pagination}")
 	@ApiOperation(value = "Enlist newsfeed's user, including his friends")
 	@ApiResponses(value = {
@@ -20,7 +19,7 @@ public interface PostListControllerApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity getNewsWithFriends(
+	ResponseEntity<?> getNewsWithFriends(
 			@ApiParam(value = "userId is required to find all his news and his friends", required = true)
 			@PathVariable("userId") int userId,
 			@ApiParam(value = "Pagination, the number of posts to show", required = true)
@@ -28,7 +27,6 @@ public interface PostListControllerApi {
 	
 	
 	
-	@SuppressWarnings("rawtypes")
 	@GetMapping("/postlist/images/{userId}/{pagination}")
 	@ApiOperation(value = "Enlist image's feed foreach user")
 	@ApiResponses(value = {
@@ -37,7 +35,7 @@ public interface PostListControllerApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity getNewsJustImages(
+	ResponseEntity<?> getNewsJustImages(
 			@ApiParam(value = "userId is required to find all his news", required = true)
 			@PathVariable("userId") int userId,
 			@ApiParam(value = "Pagination, the number of posts to show", required = true)

@@ -17,14 +17,13 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "Authentication token JWT")
 public interface TokenControllerApi {
 	
-	@SuppressWarnings("rawtypes")
 	@PostMapping("/authenticate")
 	@ApiOperation(value = "Authenticate and get a token to use endpoints")
 	@ApiResponses(value = {
 	    @ApiResponse(code = 200, message = "Successfully get token"),
 	    @ApiResponse(code = 500, message = "The username or password is wrong")
 	})
-	ResponseEntity createAuthenticationToken(
+	ResponseEntity<?> createAuthenticationToken(
 			@ApiParam(value = "Payload that contains user and password to authenticate", required = true)
 			@RequestBody AuthenticationRequest authenticationRequest);
 

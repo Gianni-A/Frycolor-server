@@ -16,7 +16,6 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "Session Management System")
 public interface SessionControllerApi {
 	
-	@SuppressWarnings("rawtypes")
 	@PostMapping("/session/login")
 	@ApiOperation(value = "Request to change the password forgotten")
 	@ApiResponses(value = {
@@ -25,14 +24,13 @@ public interface SessionControllerApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity logIn(
+	ResponseEntity<?> logIn(
 			@ApiParam(value = "The username, credentials to identify if the user is already on the system", required = true)
 			@RequestParam("username") String username,
 			@ApiParam(value = "The password, credentials to identify if the user is already on the system", required = true)
 			@RequestParam("password") String password);
 	
 	
-	@SuppressWarnings("rawtypes")
 	@PostMapping("/session/password")
 	@ApiOperation(value = "Request to change the password forgotten")
 	@ApiResponses(value = {
@@ -41,12 +39,11 @@ public interface SessionControllerApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity requestChangePasswordForgotten(
+	ResponseEntity<?> requestChangePasswordForgotten(
 			@ApiParam(value = "Email ID to identify the user wanted to change the password", required = true)
 			@RequestParam("emailID") String emailID);
 	
 	
-	@SuppressWarnings("rawtypes")
 	@PutMapping("/session/password")
 	@ApiOperation(value = "Change the password forgotten")
 	@ApiResponses(value = {
@@ -55,7 +52,7 @@ public interface SessionControllerApi {
 	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
-	ResponseEntity changePasswordForgotten(
+	ResponseEntity<?> changePasswordForgotten(
 			@ApiParam(value = "UserId to identify which user needs to change his password", required = true)
 			@RequestParam("userId") String userId,
 			@ApiParam(value = "The password text is going to be change", required = true)
