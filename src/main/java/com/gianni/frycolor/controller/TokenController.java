@@ -23,7 +23,7 @@ public class TokenController implements TokenControllerApi {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(new AuthenticationResponse(service.createToken(authenticationRequest)));
 		} catch (TokenException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
 		}
 		
 	}
