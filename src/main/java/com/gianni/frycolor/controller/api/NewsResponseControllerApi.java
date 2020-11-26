@@ -45,7 +45,7 @@ public interface NewsResponseControllerApi {
 			@RequestParam("comment") String comment);
 	
 	
-	@DeleteMapping("/newsresponse/{nwResId}/delete")
+	@DeleteMapping("/newsresponse/{nwId}/delete/{nwResId}")
 	@ApiOperation(value = "It deletes an existing response")
 	@ApiResponses(value = {
 	    @ApiResponse(code = 200, message = "Successfully to delete an existing response to the post (for now)"),
@@ -54,6 +54,8 @@ public interface NewsResponseControllerApi {
 	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	})
 	ResponseEntity<?> deleteResponse(
+			@ApiParam(value = "NewsFeed Id to send back to the Id of the post from the response", required = true)
+			@PathVariable("nwId") int nwId,
 			@ApiParam(value = "Response Id to identify the response which is going to being deleted", required = true)
 			@PathVariable("nwResId") int nwResId);
 	

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ResponsePost {
 
+	private int userId;
 	private int nwResId;
 	private String comment;
 	private String nameUser;
@@ -13,6 +14,13 @@ public class ResponsePost {
 	private boolean userLike;
 	private String dateTime;
 	
+	
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	public int getNwResId() {
 		return nwResId;
 	}

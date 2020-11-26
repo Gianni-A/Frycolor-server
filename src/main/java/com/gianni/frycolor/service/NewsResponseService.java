@@ -11,6 +11,7 @@ import com.gianni.frycolor.model.RequestNewsResponse;
 import com.gianni.frycolor.model.ResponseModelResponses;
 import com.gianni.frycolor.model.ResponseSuccessMsg;
 import com.gianni.frycolor.model.ValidateResponsesModel;
+import com.gianni.frycolor.repository.impl.NewsFeedDaoImpl;
 import com.gianni.frycolor.repository.impl.NewsResponseDaoImpl;
 
 @Service
@@ -18,6 +19,8 @@ public class NewsResponseService {
 	
 	@Autowired
 	private NewsResponseDaoImpl repositoryImpl;
+	
+	@Autowired NewsFeedDaoImpl repositoryNewsFeedImpl;
 	
 	@Autowired
 	public void setNewsResponseDaoImp(NewsResponseDaoImpl repository) {repositoryImpl = repository;}
@@ -37,6 +40,7 @@ public class NewsResponseService {
 		
 		NewsResponse saveValue = repositoryImpl.addResponse(request);
 		UserInformation user = saveValue.getUsId().getUsInfId();
+		response.setUserId(request.getUsId());
 		response.setNameUser(user.getUsInfName() + " " + user.getUsInfLastname());
 		response.setComment(saveValue.getUsComId().getUsComComment());
 		response.setNwId(saveValue.getNwComOriginId());
@@ -67,11 +71,17 @@ public class NewsResponseService {
 		return repositoryImpl.updateResponse(getResponse);
 	}
 	
-	public void deleteResponse(int nwResId) {
+	public ResponseSuccessMsg deleteResponse(int nwId, int nwResId) {
+		
 		NewsResponse nwResponse = new NewsResponse();
 		nwResponse = repositoryImpl.getResponseById(nwResId);
 		
 		repositoryImpl.deleteResponse(nwResponse);
+		
+		final String json = "{\"nwId\":"+nwId+", \"nwResId\": "+nwResId+"}";
+		
+		ResponseSuccessMsg message = new ResponseSuccessMsg("Response of a post deleted", json);
+		return message;
 	}
 	
 	public ResponseSuccessMsg addOrRemoveReaction(int nwResId, int userId) {

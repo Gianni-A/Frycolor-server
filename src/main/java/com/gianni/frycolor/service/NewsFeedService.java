@@ -172,7 +172,9 @@ public class NewsFeedService {
 		
 		newsRepository.save(request);
 		
-		ResponseSuccessMsg message = new ResponseSuccessMsg("Post deleted");
+		final String json = "{\"nwId\":"+ nwId +"}";
+		
+		ResponseSuccessMsg message = new ResponseSuccessMsg("Post deleted", json);
 		return message;
 	}
 	

@@ -19,10 +19,8 @@ public interface NewsFeedControllerApi {
 	@PostMapping("/newsfeed/newpost")
 	@ApiOperation(value = "Save a new post from the user")
 	@ApiResponses(value = {
-	    @ApiResponse(code = 200, message = "Successfully get all news from the user"),
-	    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+	    @ApiResponse(code = 201, message = "Successfully created the new post"),
+	    @ApiResponse(code = 500, message = "There is an error on the validations")
 	})
 	ResponseEntity<?> saveNews(
 			@ApiParam(value = "File (Image) of the user profile", required = false)
@@ -38,9 +36,7 @@ public interface NewsFeedControllerApi {
 	@ApiOperation(value = "User can edit a post, in this case they can edit just for comments")
 	@ApiResponses(value = {
 	    @ApiResponse(code = 200, message = "Successfully update a post (Comment)"),
-	    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+	    @ApiResponse(code = 500, message = "The resource you were trying to reach is not found")
 	})
 	ResponseEntity<?> editNews(
 			@ApiParam(value = "Newsfeed Id, which is the comment where is the post that the user selected to edit", required = true)

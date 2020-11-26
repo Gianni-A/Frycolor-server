@@ -38,9 +38,13 @@ public class NewsResponseController implements NewsResponseControllerApi {
 	}
 
 	@Override
-	public ResponseEntity<?> deleteResponse(int nwResId) {
-		service.deleteResponse(nwResId);
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<?> deleteResponse(int nwId,int nwResId) {
+		
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(service.deleteResponse(nwId, nwResId));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
 	}
 
 	@Override

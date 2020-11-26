@@ -158,6 +158,7 @@ public class NewsResponseDaoImpl {
 			ResponsePost response = new ResponsePost();
 			UserInformation userInfo = n.getUsId().getUsInfId();
 			
+			response.setUserId(n.getUsId().getUsId());
 			response.setNwResId(n.getNwResId());
 			response.setNameUser(userInfo.getUsInfName() + " " + userInfo.getUsInfLastname());
 			response.setComment(n.getUsComId().getUsComComment());

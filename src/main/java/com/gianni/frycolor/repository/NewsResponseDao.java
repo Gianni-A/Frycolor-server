@@ -16,7 +16,7 @@ public interface NewsResponseDao extends JpaRepository<NewsResponse, Integer> {
 	int isResponseActive(@Param("nwResId") int nwResId);
 	
 	
-	@Query(value= "SELECT responseList FROM NewsResponse responseList WHERE responseList.nwComOriginId = :nwId", nativeQuery = false)
+	@Query(value= "SELECT responseList FROM NewsResponse responseList WHERE responseList.nwComOriginId = :nwId AND responseList.nwResStatus = 1", nativeQuery = false)
 	List<NewsResponse> getAllResponsesByNwId(@Param("nwId") int nwId);
 
 }

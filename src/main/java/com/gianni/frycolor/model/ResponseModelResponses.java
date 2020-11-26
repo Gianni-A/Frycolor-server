@@ -2,11 +2,19 @@ package com.gianni.frycolor.model;
 
 public class ResponseModelResponses {
 	
+	private int userId;
 	private String nameUser;
 	private String comment;
 	private int nwId;
 	private int nwResId;
 	
+	
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	public String getNameUser() {
 		return nameUser;
 	}
