@@ -162,6 +162,7 @@ public class ProfileUserService {
 	public ResponseSuccessMsg approveRejectFriend(int userFriendId, String action) {
 		String dateTime = Utilities.getTimestamp();
 		UserFriends userFriend = repFriend.getOne(userFriendId);
+		final String json = "{\"frdId\":"+userFriend.getFrdId()+"}";
 		String msg = "";
 		
 		if(action.equals(REQUEST_FRIEND_ACTION)) {
@@ -176,7 +177,7 @@ public class ProfileUserService {
 			msg = "Rejected";
 		}
 		
-		ResponseSuccessMsg message = new ResponseSuccessMsg(msg);
+		ResponseSuccessMsg message = new ResponseSuccessMsg(msg, json);
 		return message;
 	}
 	
